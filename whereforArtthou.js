@@ -5,36 +5,26 @@ function whatIsInAName(collection, source) {
    for (let i = 0; i < collection.length; i++) {
 
        //this variable is for every object key we want to seach for
-        var sourceArray = (Object.keys(source));
+        var sourceArrayKeys = (Object.keys(source));
 
         //this is for every object key value we want to search for
+        var sourceArrayValues = (Object.values(source));
         
         //this will see if the object in the array has the one of the keys we want
-        for (let j = 0; j < sourceArray.length; j++) {
-        if (Object.keys(collection[i]).includes(sourceArray[j])) {
-           
-
-
-            
-            
+        for (let j = 0; j < sourceArrayKeys.length; j++) {
+        if (Object.keys(collection[i]).includes(sourceArrayKeys[j])) {
+            if (Object.keys(collection[i]).includes(sourceArrayValues[j])) {
+                console.log(collection[i]);
+                
+            }
         }
 
         }
-        
-
-        
-        
 
    }
-       // Only change code above this line
-    // console.log(arr);
-    
-    return arr;
-  }
-
-
-
+ 
+}
   
-whatIsInAName([{ "bat": 2 },{ "apple": 1, "bat": 2 }, { "apple": 1, "bat": 2, "cookie": 2 }], { "apple": 1});
+whatIsInAName([{ "bat": 2 },{ "apple": 1, "bat": 2 }, { "apple": 1, "bat": 2, "cookie": 2 }], { "apple": 1, "bat": 2});
 
 
