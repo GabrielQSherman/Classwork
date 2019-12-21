@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>Users</h1>
+
+    <p id="htmlusers"></p>
+
+    <button id = 'userbutton'> Press me for users </button>
+    
+    <script>
+    
+    document.getElementById('userbutton').addEventListener('click', collectName);
+
+    function collectName() {
+
+        const Xhr = new XMLHttpRequest();
+
+        const url = `https://api.github.com/users`;
+
+        //open the channel
+
+        Xhr.open('GET', url, true);
+
+        //when the channel info loads
+
+        Xhr.onload = () => {
+
+            //grab raw text data from  the xhr object
+            let userData = Xhr.responseText;
+                //convert that text into javascript code 'object notation'
+                userData = JSON.parse(userData);
+
+            
+            //itterate through each user 'object'
+            for (let i = 0; i < userData.length; i++) {
+
+                console.log(userData[i].login);
+
+                document.getElementById('htmlusers').innerHTML += (userData[i].login + "<br>");
+                
+            }
+
+
+        }
+
+        //send
+
+        Xhr.send();
+
+
+        
+    }
+    
+    </script>
+</body>
+</html>
