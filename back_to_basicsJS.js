@@ -44,3 +44,10 @@ a = a + 3; //now a is equal to 7
 //you can also add vars together
 var b = 5;
 b = a + b; //now b is equal to 12
+
+//7. 
+//just the same as + is the addition opperator, '-' is the subraction opperator. so...
+
+a = 23 - b //a is equal to 11
+
+var c = b - a; //c will be set to equal 1. or whatever a minus b equals at the time 
