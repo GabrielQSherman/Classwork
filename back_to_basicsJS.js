@@ -30,3 +30,7 @@ var newVar = 3; //this is now an interger variable, but it can be reassined to a
 
 newVar = 'hello world'; //now myVar is a string and there will be no syntax error
 //you can also reasign a variable to another variables value
+
+//5. 
+//variable names are case sensitive, therefore a programer must be careful to check not only their spelling of var names but also where their capitalization
+// this is why camel case is common practice and should be used by all programers
