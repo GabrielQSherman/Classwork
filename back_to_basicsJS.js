@@ -34,3 +34,13 @@ newVar = 'hello world'; //now myVar is a string and there will be no syntax erro
 //5. 
 //variable names are case sensitive, therefore a programer must be careful to check not only their spelling of var names but also where their capitalization
 // this is why camel case is common practice and should be used by all programers
+
+//6. 
+//just like in elementary math the plus sign '+' is used for addition in Javascript. 
+// the proper name is the addition opperator and can be used in the following ways
+var a = 3;
+a = a + 3; //now a is equal to 7
+
+//you can also add vars together
+var b = 5;
+b = a + b; //now b is equal to 12
