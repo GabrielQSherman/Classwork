@@ -8,7 +8,7 @@ var players = {
 var avlPoints = [-5, -4, -3, -2, -1, 1, 2, 4, 7, 10];
 while (players.Gabe[0] <= 25) {
 
-    players[Math.round(Math.random())].[1] += avlPoints[Math.floor(Math.random() * avlPoints.length)];
+    players[Math.round(Math.random())][1] += avlPoints[Math.floor(Math.random() * avlPoints.length)];
     console.log(score);
         
 };
