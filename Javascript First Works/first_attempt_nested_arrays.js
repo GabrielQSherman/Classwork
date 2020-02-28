@@ -1,6 +1,6 @@
 //create a program where names are taken from an arry and randomly placed within a nested arry, then given values points based on their position in the arry
 
-var names = ["Issac", "Dane", "Mack", "Kenna", "Nick", "Jack", "Robert", "Steve", "Matilda"];
+var names = ["Issac", "Dane",, "Nick", "Jack", "Robert", "Steve", "Matilda"];
 var arry = [[],[],[],[],[],[],[],[],[]]
 
 /*

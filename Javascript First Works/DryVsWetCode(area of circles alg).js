@@ -4,7 +4,7 @@
 //DRY == DONT REPEAT YOURSELF (OR YOUR OWN CODE) ie use loops and funcitons when it is reasonable
 //WET == WRITE EVERY TIME
 
-console.log("A random number from 0-1 is the irational number PI, then it is being multiplied by one hundred");
+console.log("A random number from 0-1 is multiplied by 'Pi', then the quotient is multiplied by one hundred");
 
 console.log((Math.PI * Math.random() * 100));
 
