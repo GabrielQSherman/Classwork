@@ -19,7 +19,9 @@ let booked = [107];
 const selectDiv = document.getElementById('selectElementsDiv');
 
 
+//Change css via js file
 
+document.body.style.backgroundImage = 'linear-gradient(rgb(224, 122, 255), red, yellow)';
 
 create_available_select()
 create_booked_select()
