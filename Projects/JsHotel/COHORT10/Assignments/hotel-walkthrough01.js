@@ -15,7 +15,7 @@ butnElm.innerText = 'Available Rooms' //2) Set element's(javascript object) prop
 
 butnElm.onclick = display_available_room; //2 
 
-document.getElementById("bodyID").appendChild(butnElm); //3) 
+document.body.appendChild(butnElm); //3) 
 //Communicates to the HTML page (DOM) that a new child element (butnElm) is going to be appended to the body
 
 //end of button creation for 'available rooms'
@@ -42,6 +42,8 @@ function display_available_room() {
     
         pElement.innerHTML = availableRoom[i]
         // console.log(pElement);
+
+        //YOU NEED TO CREATE A DIV ELEMENT WITH THE ID 'available_rooms'
     
         document.getElementById("available_rooms").appendChild(pElement)
         
