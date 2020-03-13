@@ -121,7 +121,7 @@ let movieRental = {
 
         //             this.availableMovies.push(...this.rentedMovies.splice(i, 1));
 
-                    // console.log(`You have returned ${this.availableMovies[this.availableMovies.length-1]}`);
+        //             console.log(`You have returned ${this.availableMovies[this.availableMovies.length-1]}`);
 
         //             movieReturned = true;
                     
@@ -138,28 +138,33 @@ let movieRental = {
 
         //METHOD TWO utilize methods that clean up code but get the same result
 
-        // movieTitles.forEach( movieName => { //movie name will be equal to each element of the movieTitles array
+        movieTitles.forEach( movieName => { //movie name will be equal to each element of the movieTitles array
 
-        //     // console.log(movieName);
+            console.log(movieName);
 
-        //     let elementIndex = this.rentedMovies.indexOf(movieName);
-        //     //if the element passed to indexOf is not found then it will return -1 
-        //     //otherwise it will return the index number of the first occurance in the given array
+            let movieNameLC = movieName.toLowerCase();
 
-        //     if (elementIndex != -1) { 
+            let elementIndex = this.rentedMovies.indexOf(movieNameLC);
+
+            console.log(elementIndex); 
+            
+            //if the element passed to indexOf is not found then it will return -1 
+            //otherwise it will return the index number of the first occurance in the given array
+
+            if (elementIndex != -1) { //does the element exist in our array
                 
-        //         this.availableMovies.push(...this.rentedMovies.splice(elementIndex, 1));
+                this.availableMovies.push(...this.rentedMovies.splice(elementIndex, 1));
 
-        //         console.log(`You have returned ${movieName}`);
+                console.log(`You have returned ${movieName}`);
 
-        //     } else {
+            } else {
 
-        //         console.log(`${movieName} was not found in our rented movies`);
+                console.log(`${movieName} was not found in our rented movies`);
 
-        //     }
+            }
             
             
-        // });
+        });
 
     }
 
@@ -169,7 +174,7 @@ let movieRental = {
 
 // movieRental.rentAMovieByTitle('tHe Dark KnIgHt')
 
-// movieRental.returnAMovieByTitle('The Matrix', 'Avengers: Endgame', 'Kill Bill II');
+movieRental.returnAMovieByTitle('The Matrix', 'Avengers: Endgame', 'Kill Bill II', 'asdofhds', 'asdf');
 
 // movieRental.returnARandomMovie()
 
