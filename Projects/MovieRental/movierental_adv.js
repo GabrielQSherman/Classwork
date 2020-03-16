@@ -3,7 +3,15 @@ document.body.style.backgroundColor = 'lightblue';
 
 let movieRental = {
 
-    allMovies: [{title: 'Looper', release: 2012, available: true }, {title: 'Back To The Future', release: 1985, available: true }, {title: 'Inception', release: 2010, available: false }, {title: 'Donnie Darko', release: 2001, available: false }, {title: 'Primer', release: 2004, available: true }, { title: 'Terminator 2', release: 1991, available: true }],
+    allMovies: [
+
+        {title: 'Looper',             release: 2012, available: true }, 
+        {title: 'Back To The Future', release: 1985, available: true }, 
+        {title: 'Inception',          release: 2010, available: false }, 
+        {title: 'Donnie Darko',       release: 2001, available: false }, 
+        {title: 'Primer',             release: 2004, available: true }, 
+        {title: 'Terminator 2',       release: 1991, available: true }
+    ],
 
     createAvlDsply() {
 
@@ -69,6 +77,7 @@ let movieRental = {
     rentRandomMov() {
 
         let availableMoviesArr = movieRental.allMovies.filter( elm => {
+
             if ( elm.available ) {
                 return true
             } else {
@@ -76,7 +85,7 @@ let movieRental = {
             }
         })
 
-        console.log(availableMoviesArr);
+        console.log(availableMoviesArr); //returns an array with only the movie objects that have the property 'available' equal true
 
         if (availableMoviesArr == 0) {
 
@@ -84,24 +93,17 @@ let movieRental = {
 
             return
             
-        } else {
-            
-            let ranNum = Math.floor(availableMoviesArr.length * Math.random()),
-
-                movieTitleRenting = availableMoviesArr[ranNum].title,
-
-                indexOfMov = movieRental.allMovies.map( obj => {return obj.title}).indexOf(movieTitleRenting);
-
-                console.log(ranNum, indexOfMov);
-                
-
-             
-              movieRental.allMovies[indexOfMov].available = false;
-
-
         }
+            
+        let ranNum = Math.floor(availableMoviesArr.length * Math.random()),
 
-        
+            movieTitleRenting = availableMoviesArr[ranNum].title,
+
+            indexOfMov = movieRental.allMovies.map( obj => {return obj.title}).indexOf(movieTitleRenting);
+
+            console.log(ranNum, indexOfMov);
+            
+            movieRental.allMovies[indexOfMov].available = false;
 
         // document.getElementById('avlbtn').innerText = 'Update Info';
         // document.getElementById('rntbtn').innerText = 'Update Info';
@@ -112,7 +114,7 @@ let movieRental = {
         
     },
 
-    createHeadingElm(text, size) {
+    createHeadingElm(text, size, id) {
 
         let 
         headingSize = 'h' + size,
@@ -120,7 +122,13 @@ let movieRental = {
 
         head.innerText = text;
 
+        if ( id != undefined ) head.id = id;
+
         return head
+
+    },
+
+    createImgElm (width, height, src, id) {
 
     },
 

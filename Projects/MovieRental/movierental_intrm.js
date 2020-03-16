@@ -9,28 +9,33 @@ let movieRental = {
 
     createAvlDsply() {
 
-        console.log('showing a', movieRental.avlMov);
+        // console.log('showing a', movieRental.avlMov);
 
-        let heading = movieRental.createHeadingElm('Movie Selection', 1),
-            avlDiv = document.getElementById('avldiv'),
+        let heading = movieRental.createHeadingElm('Movie Selection', 1), //create a heading elm
 
-            list = document.createElement('ol');
+            avlDiv = document.getElementById('avldiv'), //get access to the avlDiv inside this method (it is not globally defined)
 
-            avlDiv.innerHTML = ''; //clear div because new elements will be inserted
+            list = document.createElement('ol'); //create the currently 'blank' ordered list element
 
-            for (let i = 0; i < movieRental.avlMov.length; i++) {
+            //THIS PREVENTS REPEATING ELEMENTS ON THE DOM
+            avlDiv.innerHTML = ''; //clear div of all info, new elements will be inserted at end of this method
+
+            for (let i = 0; i < movieRental.avlMov.length; i++) { //itterate through all the available movies
                 
-                let listElm = document.createElement('li');
+                let listElm = document.createElement('li'); //create a new 'list-item' element for each of the elements in the array
 
-                listElm.innerText = movieRental.avlMov[i];
+                listElm.innerText = movieRental.avlMov[i]; //set the inner text to the elements value
 
-                list.appendChild(listElm)
+                list.appendChild(listElm) //append it to the parent list element
+
+                //list-item elements append to the parent 'ol' element one at a time 
                 
             }
+            //the div should be blank inside because the innerHTML was assigned to = '' (nothing)
 
-        avlDiv.appendChild(heading)
+            avlDiv.appendChild(heading) //append the heading first
 
-        avlDiv.appendChild(list)
+            avlDiv.appendChild(list) //then the list follows
 
     }, 
 
@@ -60,7 +65,9 @@ let movieRental = {
         
     },
 
-    rentRandomMov() {
+    rentRandomMov() { 
+        //the purpose of thie method is to only move data from one array to another,
+        // this does not do the work of updating the dom, that is for the 'create display' methods
 
         let arrLength = movieRental.avlMov.length
 
@@ -68,18 +75,22 @@ let movieRental = {
 
             alert('No more movies left')
 
-            return
-            
+            return 
+            //if there are no movies to rent but the user clicks the button,
+            // they should be alerted and the rest of the method discontinued   
+
         }
 
         let ranIndex = Math.floor(arrLength * Math.random());
 
+        //an element is being pushed to RENTED Movies to AVAILABLE Movies. 
+        //splice is the best method to extract data from an array at a specific index. 
+        //splice returns an array so in order to get the data into its pure element form the spread-operator (...) is used
         movieRental.rntMov.push(...movieRental.avlMov.splice(ranIndex,1));
 
         document.getElementById('avlbtn').innerText = 'Update Info';
         document.getElementById('rntbtn').innerText = 'Update Info';
 
-        
     },
 
     createHeadingElm(text, size) {
