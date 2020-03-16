@@ -7,20 +7,22 @@ let movieRental = {
 
     rntMov: ['The Matrix', 'Kill Bill II', 'Avengers: Endgame', 'Joker', 'Saving Private Ryan'],
 
-    
-
     createAvlDsply() {
 
-        let heading = this.createHeadingElm('Movie Selection', 1),
+        console.log('showing a', movieRental.avlMov);
+
+        let heading = movieRental.createHeadingElm('Movie Selection', 1),
             avlDiv = document.getElementById('avldiv'),
 
             list = document.createElement('ol');
 
-            for (let i = 0; i < this.avlMov.length; i++) {
+            avlDiv.innerHTML = ''; //clear div because new elements will be inserted
+
+            for (let i = 0; i < movieRental.avlMov.length; i++) {
                 
                 let listElm = document.createElement('li');
 
-                listElm.innerText = this.avlMov[i];
+                listElm.innerText = movieRental.avlMov[i];
 
                 list.appendChild(listElm)
                 
@@ -34,16 +36,20 @@ let movieRental = {
 
     createRntDsply() {
 
-        let heading = this.createHeadingElm('Movies Out Of Stock', 1),
+        // console.log('showing r', movieRental.rntMov);
+
+        let heading = movieRental.createHeadingElm('Movies Out Of Stock', 1),
             rntDiv = document.getElementById('rntdiv'),
 
             list = document.createElement('ul');
 
-            for (let i = 0; i < this.rntMov.length; i++) {
+            rntDiv.innerHTML = ''; //clear data in div
+
+            for (let i = 0; i < movieRental.rntMov.length; i++) {
                 
                 let listElm = document.createElement('li');
 
-                listElm.innerText = this.rntMov[i];
+                listElm.innerText = movieRental.rntMov[i];
 
                 list.appendChild(listElm)
                 
@@ -54,38 +60,28 @@ let movieRental = {
         
     },
 
-    //this method will create elements that done require dynamic creation, ie some buttons and divs
-    createInitalElement() {
+    rentRandomMov() {
 
-        const avlDiv = document.createElement('div'),
-              rntDiv = document.createElement('div'),
-              avlBtn = document.createElement('button'),
-              rntBtn = document.createElement('button');
+        let arrLength = movieRental.avlMov.length
 
-        avlDiv.id = 'avldiv';
-        rntDiv.id = 'rntdiv';
+        if (arrLength == 0) {
 
-        avlBtn.id = 'avlbtn';
-        rntBtn.id = 'rntbtn';
+            alert('No more movies left')
 
-        avlBtn.innerText = 'See Movie Choices';
-        rntBtn.innerText = 'See What Others Are Watching Now';
+            return
+            
+        }
 
-        avlBtn.onclick = movieRental.createAvlDsply;
-        rntBtn.onclick = movieRental.createRntDsply;
+        let ranIndex = Math.floor(arrLength * Math.random());
 
-        avlDiv.style.backgroundColor = 'pink';
-        rntDiv.style.backgroundColor = 'lightgreen';
+        movieRental.rntMov.push(...movieRental.avlMov.splice(ranIndex,1));
 
-        // avlDiv.style.textAlign = 'center';
+        document.getElementById('avlbtn').innerText = 'Update Info';
+        document.getElementById('rntbtn').innerText = 'Update Info';
 
-        document.body.appendChild(avlDiv);
-        document.body.appendChild(avlBtn);
-        document.body.appendChild(rntDiv);
-        document.body.appendChild(rntBtn);
+        
     },
 
-    //extra function made to make workflow declaring a heading element less repetitive and only appear as one line in the objects methods
     createHeadingElm(text, size) {
 
         let 
@@ -96,6 +92,42 @@ let movieRental = {
 
         return head
 
+    },
+
+    createInitalElement() {
+
+        const avlDiv = document.createElement('div'),
+              rntDiv = document.createElement('div'),
+              avlBtn = document.createElement('button'),
+              rntBtn = document.createElement('button'),
+              randomBtn = document.createElement('button');
+
+        avlDiv.id = 'avldiv';
+        rntDiv.id = 'rntdiv';
+
+        avlBtn.id = 'avlbtn';
+        rntBtn.id = 'rntbtn';
+        randomBtn.id = 'testbtn';
+
+        avlBtn.innerText = 'See Movie Choices';
+        rntBtn.innerText = 'See What Others Are Watching Now';
+        randomBtn.innerText = 'testing'
+
+        avlBtn.onclick = movieRental.createAvlDsply;
+        rntBtn.onclick = movieRental.createRntDsply;
+        randomBtn.onclick = movieRental.rentRandomMov;
+
+        avlDiv.style.backgroundColor = 'pink';
+        rntDiv.style.backgroundColor = 'lightgreen';
+
+        // avlDiv.style.textAlign = 'center';
+        
+        document.body.appendChild(avlDiv);
+        document.body.appendChild(avlBtn);
+        document.body.appendChild(rntDiv);
+        document.body.appendChild(rntBtn);
+        document.body.appendChild(randomBtn);
+
     }
 
 }
@@ -104,18 +136,4 @@ movieRental.createInitalElement()
 
 movieRental.createAvlDsply()
 
-movieRental.createRntDsply()
-
-
-//extra function made to make workflow declaring a heading element less repetitive and only appear as one line in the objects methods
-function createHeadingElm(text, size) {
-
-    let 
-    headingSize = 'h' + size,
-    head = document.createElement(headingSize);
-
-    head.innerText = text;
-
-    return head
-
-}
+movieRental.createRntDsply() 
