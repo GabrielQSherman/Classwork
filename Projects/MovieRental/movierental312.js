@@ -63,7 +63,7 @@ let movieRental = {
 
         console.log(`${this.rentedMovies[ranIndex]} was just now returned.\n`);
 
-
+                             
         //the array that splice returns will not be stored anywhere so "splice's" only purpose is to remove the element
         this.rentedMovies.splice(ranIndex, 1);
 
@@ -80,6 +80,7 @@ let movieRental = {
         for (let i = 0; i < this.availableMovies.length; i++) {
             
             //.toLowerCase() method is only used in our conditional, not modifying the movieTitle or element in database
+            
             if (movieTitle.toLowerCase() === this.availableMovies[i].toLowerCase()) {
 
                 // console.log('That movie is available', i);
@@ -109,32 +110,33 @@ let movieRental = {
         
         //METHOD ONE (harder to read) logically more difficult to wrap ones mind around
 
-        // for (let i = 0; i < movieTitles.length; i++) {
+        for (let i = 0; i < movieTitles.length; i++) {
             
-        //     // console.log(`Attempting to rent ${movieTitles[i]}...`);
+            // console.log(`Attempting to rent ${movieTitles[i]}...`);
 
-        //     let movieReturned = false;
+            let movieReturned = false;
 
-        //     for (let j = 0; j < this.rentedMovies.length; j++) {
+            for (let j = 0; j < this.rentedMovies.length; j++) {
                 
-        //         if ( movieTitles[i].toLowerCase() === this.rentedMovies[j].toLowerCase() ) {
+                if ( movieTitles[i].toLowerCase() === this.rentedMovies[j].toLowerCase() ) {
 
-        //             this.availableMovies.push(...this.rentedMovies.splice(i, 1));
+                    this.availableMovies.push(...this.rentedMovies.splice(i, 1));
 
-        //             console.log(`You have returned ${this.availableMovies[this.availableMovies.length-1]}`);
+                    console.log(`You have returned ${this.availableMovies[this.availableMovies.length-1]}`);
 
-        //             movieReturned = true;
+                    movieReturned = true;
                     
-        //         }
+                }
                 
-        //     }
+            }
 
-        //     if (!movieReturned) { // !varName is a coding shorthand for varName == false, similarly just entering the varName in the conditional is a shorthand for varName == true
-        //         console.log(`${movieTitles[i]} was not found in our rented movies`);
+            if (!movieReturned) { // !varName is a coding shorthand for varName == false, similarly just entering the varName in the conditional is a shorthand for varName == true
                 
-        //     }
+                console.log(`${movieTitles[i]} was not found in our rented movies`);
+                
+            }
             
-        // }
+        }
 
         //METHOD TWO utilize methods that clean up code but get the same result
 
