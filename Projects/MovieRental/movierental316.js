@@ -77,7 +77,7 @@ let movieRental = {
 
     //extra function made to make workflow declaring a heading element less repetitive
     // and only appear as one line in the objects methods
-    createHeadingElm(text, size) {
+    createHeadingElm(text, size, childid) {
 
         //when creating one of these time saving functions you must consider the methods purpose
         //in this case it makes creating a heading element take only one line (see line 12)
@@ -98,10 +98,53 @@ let movieRental = {
 
         head.innerText = text;
 
+        if (childid != undefined && document.getElementById(childid) == null) {
+
+            //not only do you want to check if the childid param was passed as an argument, 
+            //but also that another element has not taken that id, 
+            //remember that an element's id is unique to only element and one element only PER dom
+            head.id = childid
+
+        }
+
         return head 
         //using return varName is very useful. 
         //It allows the complex variable declaration to take place soley inside this method,
-        //then the variable assigned to the method call (see line 12) is going to be equal to the variable 'head' which only has the scope of this method.
+
+    }, 
+
+    createParagraphElm(text, parentID, childID) {
+
+        console.log(parentID, childID);
+
+        //1. 
+        let paragraph = document.createElement('p');
+
+        paragraph.innerText = text;
+
+        // if (childID != undefined) {
+
+        //     paragraph.id = childID;
+
+        // } else {
+
+        //      paragraph.id = 'default';
+
+        // }
+
+        paragraph.id = childID != undefined ? childID : 'default';
+
+        console.log(paragraph);
+        
+        if (document.getElementById(parentID) != null) {
+
+            document.getElementById(parentID).appendChild(paragraph);
+
+        } else {
+
+            document.body.appendChild(paragraph);
+        }
+
 
     }
 
@@ -111,6 +154,10 @@ let movieRental = {
 //METHOD CALLS
 movieRental.createInitalElement()
 
-movieRental.createAvlDsply()
+// movieRental.createAvlDsply()
 
-movieRental.createRntDsply()
+// movieRental.createRntDsply()
+
+movieRental.createParagraphElm('hello world', 'avldiv', 'available')
+movieRental.createParagraphElm('hello asdfworld', 'rntdiv', 'rented')
+movieRental.createParagraphElm('hello asdworld', 'asdf')

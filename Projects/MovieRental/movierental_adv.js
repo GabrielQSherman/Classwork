@@ -78,7 +78,7 @@ let movieRental = {
 
         let availableMoviesArr = movieRental.allMovies.filter( elm => {
 
-            if ( elm.available ) {
+            if ( elm.available == true) {
                 return true
             } else {
                 return false
@@ -87,7 +87,7 @@ let movieRental = {
 
         console.log(availableMoviesArr); //returns an array with only the movie objects that have the property 'available' equal true
 
-        if (availableMoviesArr == 0) {
+        if (availableMoviesArr.length == 0) {
 
             alert('No more movies left')
 
@@ -112,27 +112,40 @@ let movieRental = {
         movieRental.createRntDsply()
 
         
-    },
+    }
+    
 
-    createHeadingElm(text, size, id) {
+}
 
-        let 
-        headingSize = 'h' + size,
-        head = document.createElement(headingSize);
+// movieRental.createInitalElement()
 
-        head.innerText = text;
+// movieRental.createAvlDsply()
 
-        if ( id != undefined ) head.id = id;
+// movieRental.createRntDsply() 
 
-        return head
+let inewmage = movieRental.createImgElm(100,100, 'https://cdn.pixabay.com/photo/2015/02/24/15/41/dog-647528__340.jpg', 'starsImg')
 
-    },
+document.body.appendChild(inewmage)
 
-    createImgElm (width, height, src, id) {
+movieRental.createImgElm = (width, height, src, id) => {
 
-    },
+        let image = document.createElement('img');
 
-    createInitalElement() {
+        image.width = width;
+        image.height = height;
+
+        image.src = src;
+
+        if (id != undefined) image.id = id;
+
+        console.log(image);
+
+        return image
+        
+
+}
+
+movieRental.createInitalElement = () => {
 
         const avlDiv = document.createElement('div'),
               rntDiv = document.createElement('div'),
@@ -166,12 +179,4 @@ let movieRental = {
         document.body.appendChild(rntBtn);
         document.body.appendChild(randomBtn);
 
-    }
-
 }
-
-movieRental.createInitalElement()
-
-movieRental.createAvlDsply()
-
-movieRental.createRntDsply() 
