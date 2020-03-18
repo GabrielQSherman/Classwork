@@ -1,4 +1,4 @@
-function createHeadingElm(text, size, childId) {
+function createHeadingElm(text, size, headId) {
 
         if (parseInt(size) >= 1 && parseInt(size) <= 5) {
 
@@ -16,12 +16,12 @@ function createHeadingElm(text, size, childId) {
 
         head.innerText = text; //text is an arugument of this function that the innerText property will be set to
 
-        if ( childId != undefined && document.getElementById(childId) == null ) {
+        if ( headId != undefined && document.getElementById(headId) == null ) {
 
-            //not only do you want to check if the childId param was passed as an argument, 
+            //not only do you want to check if the Id param was passed as an argument, 
             //but also that another element has not taken that id, 
             //remember that an element's id is unique to only element and one element only PER dom
-            head.id = childId
+            head.id = headId
 
         } else {
             console.log('no id was set or it was already set to another elemnt');
@@ -34,15 +34,15 @@ function createHeadingElm(text, size, childId) {
 
 }
 
-function createParagraphElm(text, childId) { 
+function createParagraphElm(text, paraId) { 
 
     let para = document.createElement('p');
 
     para.innerText = text;
 
-    if (childId != undefined && document.getElementById(childId) == null) {
+    if (paraId != undefined && document.getElementById(paraId) == null) {
 
-        para.id = childId
+        para.id = paraId
         
     }
 
@@ -51,7 +51,7 @@ function createParagraphElm(text, childId) {
 
 }
 
-function createHyperLinkElm( link, text, childId) {
+function createHyperLinkElm( link, text, HyperLinkId) {
 
     let hyperL = document.createElement('a');
 
@@ -65,9 +65,9 @@ function createHyperLinkElm( link, text, childId) {
         hyperL.innerText = text;
     }
 
-    if (childId != undefined && document.getElementById(childId) == null) {
+    if (HyperLinkId != undefined && document.getElementById(HyperLinkId) == null) {
 
-        hyperL.id = childId
+        hyperL.id = HyperLinkId
    
     }
 
@@ -76,23 +76,74 @@ function createHyperLinkElm( link, text, childId) {
 }
 
 
+function createImageElement (imageSrc, imageAlt, ImageId) {
+
+    let image = document.createElement('img');
+
+    image.src = imageSrc;
+
+    image.alt = imageAlt;
+
+    if (ImageId != undefined && document.getElementById(ImageId) == null) {
+
+        list.id = ImageId
+        
+    }
+
+    return image
+}
+
+function createListElement() {
+
+    let list = isOrdered === true ? document.createElement('ol') : document.createElement('ul');
 
 
+    if (listId != undefined && document.getElementById(listId) == null) {
 
-    // let heading1 = createHeadingElm('This is a heading in h3', 3);
+        list.id = listId
+        
+    }
 
-    // let heading2 = createHeadingElm('This heading will default to h5');
+    for (let i = 0; i < listData.length; i++) { //itterate through all the elements in the given array
+                
+        let listElm = document.createElement('li'); //create a new 'list-item' element for each of the elements in the array
+
+        listElm.innerText = listData[i]; //set the inner text to the elements value
+
+        list.appendChild(listElm); //append it to the parent list element
+
+        //list-item elements append to the parent 'ol' element one at a time 
+                
+    }
+
+    return list
     
-    // let heading3 = createHeadingElm('So will this one but for a diffrent reason', 'asdf', 'heading3');
+}
+
+
+
+
+
+    let heading1 = createHeadingElm('This is a heading in h3', 3);
+
+    let heading2 = createHeadingElm('This heading will default to h5');
+    
+    let heading3 = createHeadingElm('So will this one but for a diffrent reason', 'asdf', 'heading3');
 
     let hyperLink1 = createHyperLinkElm('http://careerdevs.com/', 'CareerDevs', 'cdweblink');
 
-    console.log(hyperLink1);
+    let image1 = createImageElement('https://cdn.drawception.com/images/panels/2012/6-27/qH3LsRsxgg-2.png', 'ternary operator chart')
+
+
+
+    // console.log(hyperLink1);
 
     document.body.appendChild(hyperLink1);
      
 
-    // document.body.appendChild(heading1)
-    // document.body.appendChild(heading2)
-    // document.body.appendChild(heading3)
+    document.body.appendChild(heading1)
+    document.body.appendChild(heading2)
+    document.body.appendChild(heading3)
+
+    document.body.appendChild(image1)
 
