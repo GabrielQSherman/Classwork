@@ -9,26 +9,18 @@ let movieRental = {
 
     createAvlDsply() {
 
+        console.log(this);
+        
+
         let heading = movieRental.createHeadingElm('Movie Selection', 1), //create a heading elm (SEE createHeadingElm TO FINDOUT HOW MAKING A HEADING CAN BE WRITTEN SO SIMPLY )
 
             avlDiv = document.getElementById('avldiv'), //get access to the avlDiv inside this method (it is not globally defined)
 
-            list = document.createElement('ul'); //create the currently 'blank' ordered list element
+            list = movieRental.createListElm(false, movieRental.avlMov, 'avlMovList'); //create the currently 'blank' ordered list element
 
             //THIS PREVENTS REPEATING ELEMENTS ON THE DOM
             avlDiv.innerHTML = ''; //clear div of all info, new elements will be inserted at end of this method
 
-            for (let i = 0; i < movieRental.avlMov.length; i++) { //itterate through all the available movies
-                
-                let listElm = document.createElement('li'); //create a new 'list-item' element for each of the elements in the array
-
-                listElm.innerText = movieRental.avlMov[i]; //set the inner text to the elements value
-
-                list.appendChild(listElm) //append it to the parent list element
-
-                //list-item elements append to the parent 'ol' element one at a time 
-                
-            }
             //the div should be blank inside because the innerHTML was assigned to = '' (nothing)
 
             avlDiv.appendChild(heading) //append the heading first
@@ -57,63 +49,109 @@ let movieRental = {
         rntDiv.appendChild(heading)
         rntDiv.appendChild(list)
         
-    },
+    }
 
-    //this method will create elements that do not require dynamic creation, ie some buttons and divs
-    createInitalElement() {
+}
 
-        const avlDiv = document.createElement('div'),
-              rntDiv = document.createElement('div');
 
-        avlDiv.id = 'avldiv';
-        rntDiv.id = 'rntdiv';
 
-        avlDiv.style.backgroundColor = 'pink';
-        rntDiv.style.backgroundColor = 'lightgreen';
+// movieRental.createParagraphElm( 'hello world', 'avldiv', 'available')
+// movieRental.createParagraphElm('hello asdfworld', 'rntdiv', 'rented')
+// movieRental.createParagraphElm('hello asdworld', 'asdf')
 
-        document.body.appendChild(avlDiv);
-        document.body.appendChild(rntDiv);
-    },
+//if isOrdered is true make an ordered list, otherwise make the list unordered
+movieRental.createListElm = (isOrdered, listData, listId) => {
 
-    //extra function made to make workflow declaring a heading element less repetitive
-    // and only appear as one line in the objects methods
-    createHeadingElm(text, size, childid) {
+    let list = isOrdered === true ? document.createElement('ol') : document.createElement('ul');
 
-        //when creating one of these time saving functions you must consider the methods purpose
-        //in this case it makes creating a heading element take only one line (see line 12)
+    // if (isOrdered === true) {
 
-        //parameters are a must because thats what makes these methods time savers and line savers (take up less lines of code, less cluter)
-        //in this case we are making the most simple element, a heading
+    //     console.log('o');
+    //     list = document.createElement('ol');
+        
+    // } else {
 
-        //we want to pass our text input directly into the innerText property of the heading
-        //and to make this method more useful we can also pass the heading-size (1-5) 
+    //     console.log('u');
+    //     list = document.createElement('ul');
 
-        //why is the 'size' param so useful? without it we would need to make 5 seperate methods to achieve the same purpose
+    // }
 
-        //another extremely useful param you can implement into a method like this one is 'id', think about why this could be so useful?
+    if (listId != undefined && document.getElementById(listId) == null) {
 
-        let headingSize = 'h' + size; //creates a string like 'h1', 'h2', etc.
+        list.id = listId
+        
+    }
 
-        let head = document.createElement(headingSize); //pass the string as an argument of createElement so you get the desired heading size
 
-        head.innerText = text;
+    for (let i = 0; i < listData.length; i++) { //itterate through all the elements in the given array
+                
+        let listElm = document.createElement('li'); //create a new 'list-item' element for each of the elements in the array
 
-        if (childid != undefined && document.getElementById(childid) == null) {
+        listElm.innerText = listData[i]; //set the inner text to the elements value
 
-            //not only do you want to check if the childid param was passed as an argument, 
-            //but also that another element has not taken that id, 
-            //remember that an element's id is unique to only element and one element only PER dom
-            head.id = childid
+        list.appendChild(listElm); //append it to the parent list element
 
-        }
+        //list-item elements append to the parent 'ol' element one at a time 
+                
+    }
 
-        return head 
-        //using return varName is very useful. 
-        //It allows the complex variable declaration to take place soley inside this method,
+    return list
 
-    }, 
+};
 
-    createParagraphElm(text, parentID, childID) {
+let arr = [1,2,3,4];
+
+movieRental.createListElm(true, movieRental.avlMov, 'test')
+
+
+
+//this method will create elements that do not require dynamic creation, ie some buttons and divs
+movieRental.createInitalElement = () => {
+
+    console.log('test');
+    
+
+    const avlDiv = document.createElement('div'),
+          rntDiv = document.createElement('div');
+
+    avlDiv.id = 'avldiv';
+    rntDiv.id = 'rntdiv';
+
+    avlDiv.style.backgroundColor = 'pink';
+    rntDiv.style.backgroundColor = 'lightgreen';
+
+    document.body.appendChild(avlDiv);
+    document.body.appendChild(rntDiv);
+
+};
+
+//extra function made to make workflow declaring a heading element less repetitive
+// and only appear as one line in the objects methods
+movieRental.createHeadingElm = (text, size, childid) => {
+
+    let headingSize = 'h' + size; //creates a string like 'h1', 'h2', etc.
+
+    let head = document.createElement(headingSize); //pass the string as an argument of createElement so you get the desired heading size
+
+    head.innerText = text;
+
+    if (childid != undefined && document.getElementById(childid) == null) {
+
+        //not only do you want to check if the childid param was passed as an argument, 
+        //but also that another element has not taken that id, 
+        //remember that an element's id is unique to only element and one element only PER dom
+        head.id = childid
+
+    }
+
+    return head 
+    //using return varName is very useful. 
+    //It allows the complex variable declaration to take place soley inside this method,
+
+};
+
+
+movieRental.createParagraphElm = (text, parentID, childID) => {
 
         console.log(parentID, childID);
 
@@ -146,18 +184,14 @@ let movieRental = {
         }
 
 
-    }
-
-}
-
+};
 
 //METHOD CALLS
+
 movieRental.createInitalElement()
 
-// movieRental.createAvlDsply()
+movieRental.createAvlDsply()
 
-// movieRental.createRntDsply()
+movieRental.createRntDsply()
 
-movieRental.createParagraphElm('hello world', 'avldiv', 'available')
-movieRental.createParagraphElm('hello asdfworld', 'rntdiv', 'rented')
-movieRental.createParagraphElm('hello asdworld', 'asdf')
+
