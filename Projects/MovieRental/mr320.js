@@ -16,19 +16,21 @@ let movieRental = {
 
         let arrayOfRented = movieRental.allMovies.filter( object => { return object.available == false});
 
-        console.log(arrayOfRented);
-        
         // let arrayOfAvailable = movieRental.allMovies.filter( object => { return object.available == true});
 
         arrayOfRented.forEach( movieObject => {
 
             console.log(movieObject.title);
             
-            let movieTitleHeading = createHeading(movieObject.title, 1);
+            let movieTitleHeading = createHeading({text: movieObject.title, size: 1});
 
             document.body.appendChild(movieTitleHeading);
 
-            let movieRelease = createHeading(movieObject.release.toString(), 4);
+            let movieImage = createImg({src: movieObject.img, alt: movieObject.title+' Image Could Not Load', class: 'movieImages'});
+
+            document.body.appendChild(movieImage)
+
+            let movieRelease = createHeading({text: movieObject.release.toString(), size: 4});
 
             document.body.appendChild(movieRelease);
             
@@ -46,15 +48,15 @@ movieRental.displayRented()
 //return the heading element
 
 
-function createHeading(text, size, id) {
+function createHeading(headingObj) {
 
-    let heading = size >= 1 && size <= 5 ? document.createElement('h'+ size) : document.createElement('h4');
+    let heading = headingObj.size >= 1 && headingObj.size <= 5 ? document.createElement('h'+ headingObj.size) : document.createElement('h4');
 
-    heading.innerText = (typeof text == 'string') ? text : 'no text';
+    heading.innerText = (typeof headingObj.text == 'string') ? headingObj.text : 'no text';
 
-    if (id != undefined && document.getElementById(id) == null) {
+    if (headingObj.id != undefined && document.getElementById(headingObj.id) == null) {
 
-        heading.id = id
+        heading.id = headingObj.id
         
     }
 
@@ -62,6 +64,28 @@ function createHeading(text, size, id) {
     
 }
 
+function createImg(imageObj) {
 
-// let heading1= createHeading(true, 2, true)
+    let image = document.createElement('img');
+
+    image.src = imageObj.src != undefined ? imageObj.src : 'https://cdn.arstechnica.net/wp-content/uploads/2016/02/5718897981_10faa45ac3_b-640x624.jpg'
+    
+    image.alt = imageObj.alt != undefined ? imageObj.alt : 'image could not load/broken';
+
+    if (imageObj.id != undefined && document.getElementById(imageObj.id) == null) {
+
+        image.id = imageObj.id;
+    }
+
+    if (imageObj.class != undefined) {
+
+        image.class = imageObj.class;
+        
+    }
+
+    return image 
+}
+
+
+// let heading1= createImg({id: 'stuff'})
 // console.log(heading1);

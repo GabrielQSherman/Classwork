@@ -13,7 +13,6 @@ let movieRentalDB = {
         {title: 'Déjà Vu',            release: 2006, available: true, img: 'https://upload.wikimedia.org/wikipedia/en/thumb/c/cf/DejaVuBigPoster.jpg/220px-DejaVuBigPoster.jpg' }
 
         
-    ],
 
     displayAvailable() {
 
