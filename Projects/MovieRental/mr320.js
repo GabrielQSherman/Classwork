@@ -27,14 +27,12 @@ let movieRental = {
 
                  movieImage = createImg({class: 'movieImages', src: singleMovie.img, alt: singleMovie.title + ' Image'}),
 
-                 IMDBlink = createHyperLink({hrefLink: singleMovie.imbdLink, text: singleMovie.title + ' IMDB Page', class: 'imbdlink'});
+                 IMDBlink = createHyperLink({openNewTab: true, hrefLink: singleMovie.imbdLink, text: singleMovie.title + ' IMDB Page', class: 'imbdlink'});
 
             //append to the child elements to the subdiv (one subdiv for each movie)
             singleMovieDiv.appendChild(movieTitle);
 
             singleMovieDiv.appendChild(movieImage);
-
-            
 
             singleMovieDiv.appendChild(movieRD);
 
@@ -43,7 +41,7 @@ let movieRental = {
             //new variable to determine what div the subdiv(movieDiv) gets appended to 
             let appendLocation;
 
-            //decide what div the movieDiv should be appened, depends on if its avaialble or not
+            //decide what div the movieDiv should be appened, depends on if its available or not
             if ( singleMovie.available === true ) {
 
                 appendLocation = 'aDiv';
@@ -58,11 +56,58 @@ let movieRental = {
             
         });
 
+    },
+
+    createMovieSelects() {
+
+        //create two arrays
+
+        let availableMoviesArr = [],
+            rentedMoviesArr = [];
+
+        movieRental.allMovies.forEach( movieObject => {
+
+            // console.log(movieObject);
+            
+
+            if (movieObject.available === true) {
+
+                availableMoviesArr.push(movieObject.title)
+                
+            } else if (movieObject.available === false) {
+
+                rentedMoviesArr.push(movieObject.title)
+
+            }
+            
+        });
+
+        // console.log(availableMoviesArr, rentedMoviesArr);
+        
+
+        //create two select elements from thoes arrays
+        let avaialbleSelect = createSelectElement({defaultText: 'Select An Available Movie', array: availableMoviesArr, class: 'movieSelects'});
+        let rentedSelect = createSelectElement({defaultText: 'Select A Movie To Return', array: rentedMoviesArr, class: 'movieSelects'});
+        //append them to our sidebar
+
+        document.body.appendChild(avaialbleSelect);
+        document.body.appendChild(rentedSelect);
+
     }
 
 }
 
 //Method/Function Calls
+movieRental.createMovieSelects()
+// let testSelect = createSelectElement(
+//     {
+//         defaultText: 'Test',
+//         array: [1,2,3,4,5,6]
+//     }
+// )
+
+// document.body.appendChild(testSelect);
+
 createInitalDivs()
 
 movieRental.displayAllMovies()
@@ -126,8 +171,7 @@ function createDivElement(divObject) {
         
     }
 
-    console.log(div);
-    
+    // console.log(div);
 
     return div
     
@@ -139,15 +183,26 @@ function createHyperLink(linkObject) {
 
     const link = document.createElement('a');
 
+
+    //set my Id in the case that I define that property in my linkObject
     if (linkObject.id != undefined && document.getElementById(linkObject.id) == null) {
 
         link.id = linkObject.id; 
         
     }
 
+    //set my Id in the case that I define that property in my linkObject
     if (linkObject.class != undefined ) {
 
         link.className = linkObject.class;
+
+    }
+
+    //property name openNewTab
+
+    if ( linkObject.openNewTab === true ) {
+
+        link.target = '_blank';
         
     }
 
@@ -173,4 +228,61 @@ function createInitalDivs() {
 
     document.body.appendChild(rented);
 
+}
+
+// document.createElement('select'); //parent
+
+// document.createElement('option'); //child
+
+
+
+
+function createSelectElement(selectObject) {
+    console.log(selectObject);
+
+    let select = document.createElement('select');
+
+    //id
+
+    if (selectObject.id != undefined && document.getElementById(selectObject.id) == null) {
+        select.id = selectObject.id;
+    }
+    //className
+
+    if (selectObject.class != undefined ) {
+        select.className = selectObject.class;
+    }
+
+    let defaultOpt = document.createElement('option');
+
+    defaultOpt.innerText = selectObject.defaultText == undefined ? 'Select An Option' : selectObject.defaultText;
+
+    defaultOpt.value = '';
+
+    select.appendChild(defaultOpt);
+    //create default option *
+    //set properties of default option *
+    //append it to parent
+
+    for (let i = 0; i < selectObject.array.length; i++) {
+
+        let option = document.createElement('option');
+
+        option.innerText = selectObject.array[i];
+
+        option.value = selectObject.array[i];
+
+        select.appendChild(option);
+    }
+
+    //iterate through a given array, create child element for each one
+    //innerText
+    //value
+    //append to parent
+
+    //optionally add a onchange property (link rent/return methods)
+
+    return select
+    //return
+    
 }
