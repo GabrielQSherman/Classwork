@@ -93,7 +93,15 @@ let movieRental = {
 
     },
 
-    createHeadingElm(text, size) {
+    let headingMethodObj = {
+        text: 'test'
+        size: 1,
+        
+    }
+
+    movieRental.createHeadingElm({})
+
+    createHeadingElm(headObject) {
 
         let 
         headingSize = 'h' + size,

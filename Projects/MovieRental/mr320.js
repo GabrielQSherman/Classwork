@@ -11,7 +11,7 @@ let movieRental = {
         {title: 'Déjà Vu',            release: 2006, available: false, imbdLink: 'https://www.imdb.com/title/tt0453467/', img: 'https://upload.wikimedia.org/wikipedia/en/thumb/c/cf/DejaVuBigPoster.jpg/220px-DejaVuBigPoster.jpg' }
 
     ],
-
+ 
     displayAllMovies() {
 
         this.allMovies.forEach( singleMovie => {
@@ -19,7 +19,8 @@ let movieRental = {
             console.log(singleMovie.img);
 
             //create html element variable that will be appended to the DOM 
-             let singleMovieDiv = createDivElement({class: 'movies'}),
+             let 
+             singleMovieDiv = createDivElement({class: 'movies'}),
 
                  movieTitle = createHeading({size: 2, text: singleMovie.title}),
 
@@ -29,6 +30,9 @@ let movieRental = {
 
                  IMDBlink = createHyperLink({openNewTab: true, hrefLink: singleMovie.imbdLink, text: singleMovie.title + ' IMDB Page', class: 'imbdlink'});
 
+
+            console.log(movieTitle);
+            
             //append to the child elements to the subdiv (one subdiv for each movie)
             singleMovieDiv.appendChild(movieTitle);
 
