@@ -1,0 +1,114 @@
+body {
+    background-color: rgb(0, 0, 0);
+}
+
+#mainContainer {
+    display: flex;
+}
+
+#movieDisplays {
+    flex: 1;
+}
+
+
+#sideBar {
+    flex: .2;
+
+    text-align: center;
+}
+
+#sideBar:hover {
+    flex: .22;
+    transition-duration: 1s;
+
+}
+
+#sideBar>h2{
+
+    background-color: pink;
+
+    padding: 10px;
+
+    border-radius: 25px;
+}
+
+#sideBar>h2:hover{
+
+    background-color: hotpink;
+
+    border-radius: 3px;
+    transition-duration: 1s;
+
+}
+
+#sideBar>select {
+    font-size: x-large;
+    color: white;
+    text-shadow: deeppink 2px 2px;
+    background-color: rgb(230, 132, 230);
+    border: none;
+    border-radius: 10px;
+}
+
+#aDiv {
+
+    background-color: aqua;
+
+}
+
+#rDiv {
+
+    background-color: pink;
+
+}
+
+.movieDivs {
+
+    margin: 3%;
+
+    border-radius: 40px;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+}
+
+.movies {
+    
+    background-image: linear-gradient(rgba(236, 158, 255, 0.644), rgb(206, 71, 71), rgb(255, 255, 29));
+
+    margin-top: 2%;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-bottom: 2%;
+
+    border: double 5px gold;
+    border-radius: 17px;
+
+    text-align: center;
+}
+
+.movies:hover {
+   transform: scale(1.1,1.1);
+   transition-duration: .5s;
+
+} 
+
+
+.movieImages {
+
+    width: 200px;
+
+    height: 300px;
+
+    padding: 10px;
+    border-radius: 17px;
+
+}
+
+.imbdlink{
+    color: white;
+    background-color: black;
+    border-radius: 3px;
+}
