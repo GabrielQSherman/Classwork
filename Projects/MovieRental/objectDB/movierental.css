@@ -15,8 +15,6 @@ body {
     flex: .2;
 
     text-align: center;
-    transition: all ease-out 1s;
-
 }
 
 #sideBar:hover {
@@ -32,8 +30,6 @@ body {
     padding: 10px;
 
     border-radius: 25px;
-    transition: all ease-out 1s;
-
 }
 
 #sideBar>h2:hover{
@@ -76,8 +72,6 @@ body {
 
     flex-wrap: wrap;
 
-    justify-content: center;
-
 }
 
 .movies {
@@ -93,16 +87,6 @@ body {
     border-radius: 17px;
 
     text-align: center;
-
-    transition: all ease-out 2s;
-}
-
-.movies>h2 {
-    text-shadow: rgb(215, 255, 210) 2px 1px;
-}
-
-.movies>h4 {
-    text-shadow: rgb(151, 225, 255) 1px 1px;
 }
 
 .movies:hover {
@@ -110,10 +94,6 @@ body {
    transition-duration: .5s;
 
 } 
-
-.movies>img:hover {
-    opacity: 70%;
-}
 
 
 .movieImages {
