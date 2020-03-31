@@ -1,3 +1,58 @@
+
+document.addEventListener('keydown', userInputEvent, false);
+
+function userInputEvent(input) {
+
+    switch (input.code) {
+
+        case 'ArrowLeft':
+
+            movieRental.AdisplayStart = movieRental.AdisplayStart > 0 ? --movieRental.AdisplayStart : movieRental.allMovies.length-1;
+
+            movieRental.AdisplayEnd = movieRental.AdisplayEnd > 0 ? --movieRental.AdisplayEnd : movieRental.allMovies.length-1;
+
+            movieRental.displayAllMovies()
+
+            break;
+
+        case 'ArrowRight':
+
+            movieRental.AdisplayStart = movieRental.AdisplayStart < movieRental.allMovies.length-1 ? ++movieRental.AdisplayStart : 0;
+
+            movieRental.AdisplayEnd = movieRental.AdisplayEnd < movieRental.allMovies.length-1 ? ++movieRental.AdisplayEnd : 0;
+
+            movieRental.displayAllMovies()
+
+            break;
+
+        case 'Comma':
+
+             movieRental.RdisplayStart = movieRental.RdisplayStart > 0 ? --movieRental.RdisplayStart : movieRental.allMovies.length-1;
+
+            movieRental.RdisplayEnd = movieRental.RdisplayEnd > 0 ? --movieRental.RdisplayEnd : movieRental.allMovies.length-1;
+
+            movieRental.displayAllMovies()
+
+
+            break;
+
+        case 'Period':
+
+             movieRental.RdisplayStart = movieRental.RdisplayStart < movieRental.allMovies.length-1 ? ++movieRental.RdisplayStart : 0;
+
+            movieRental.RdisplayEnd = movieRental.RdisplayEnd < movieRental.allMovies.length-1 ? ++movieRental.RdisplayEnd : 0;
+
+            movieRental.displayAllMovies()
+            
+            break;
+    
+        default:
+            break;
+    }
+    
+}
+
+
 let movieRental = {
      allMovies: [
 
@@ -12,74 +67,50 @@ let movieRental = {
 
     ],
 
-    moviesInA = [],
+    AdisplayStart: 0,
 
-    moviesInR = [],
+    AdisplayEnd: 3,
+
+    RdisplayStart: 0,
+
+    RdisplayEnd: 3,
  
     displayAllMovies() {
 
-        this.allMovies.forEach( singleMovie => {
+        document.getElementById('aDiv').innerHTML = '';
+        document.getElementById('rDiv').innerHTML = '';
 
-            // console.log(singleMovie.img);
+        this.allMovies.sort( (a,b) => {return a.title > b.title } )
 
-            //create html element variable that will be appended to the DOM 
-             let 
-             singleMovieDiv = createDivElement({class: 'movies'}),
+        let moviesInA = this.allMovies.filter( movie => {return movie.available}),
 
-                 movieTitle = createHeading({size: 2, text: singleMovie.title}),
+            moviesInR = this.allMovies.filter( movie => {return !movie.available});
 
-                 movieRD = createHeading({text: `Year Released ${singleMovie.release}`, size: 4}),
+            for (let i = this.AdisplayStart; i < this.AdisplayEnd; i++) {
+                
+                 let AmovieDiv = moviesInA[i] != undefined ? createMovieDiv(moviesInA[i]) : undefined;
 
-                 movieImgDiv = createDivElement({class: 'movieImgDiv'}),
+                if (AmovieDiv != undefined) {
 
-                 movieImage = createImg({class: 'movieImages', src: singleMovie.img, alt: singleMovie.title + ' Image'}),
+                    document.getElementById('aDiv').appendChild(AmovieDiv);
 
-                 IMDBlink = createHyperLink({openNewTab: true, hrefLink: singleMovie.imbdLink, text: singleMovie.title + ' IMDB Page', class: 'imbdlink'});
+                }
+               
 
-
-            // console.log(movieTitle);
-            
-            //append to the child elements to the subdiv (one subdiv for each movie)
-            singleMovieDiv.appendChild(movieTitle);
-
-            singleMovieDiv.appendChild(movieImgDiv);
-
-            singleMovieDiv.appendChild(movieRD);
-
-            singleMovieDiv.appendChild(IMDBlink);
-
-            //new variable to determine what div the subdiv(movieDiv) gets appended to 
-            let appendLocation, clickMeText;
-
-            //decide what div the movieDiv should be appened, depends on if its available or not
-            if ( singleMovie.available === true ) {
-
-                appendLocation = 'aDiv';
-
-                clickMeText = createHeading({size: 5, text: 'Double Click To Rent', class: 'clickme'});
-
-            } else {
-
-                appendLocation = 'rDiv';
-
-                clickMeText = createHeading({size: 5, text: 'Double Click To Return', class: 'clickme'});
             }
 
-            //append movie div to one of the main div containers
-            document.getElementById(appendLocation).appendChild(singleMovieDiv);
+            for (let i = this.RdisplayStart; i < this.RdisplayEnd; i++) {
 
-            //adding ondblclick property to movie element
-            // movieImage.ondblclick = movieRental.transferMovie;
-            clickMeText.ondblclick = movieRental.transferMovie;
+                let RmovieDiv = moviesInR[i] != undefined ? createMovieDiv(moviesInR[i]) : undefined;
+                
+                 if (RmovieDiv != undefined) {
 
+                    document.getElementById('rDiv').appendChild(RmovieDiv);
 
-            // clickMeText.style.display = 'none';
-            clickMeText.value = singleMovie.title;
+                }
+            }
 
-            movieImgDiv.appendChild(movieImage);
-            movieImgDiv.appendChild(clickMeText);
-
-        });
+           
 
     },
 
@@ -378,5 +409,56 @@ function createSelectElement(selectObject) {
 
     return select
     //return
+    
+}
+
+function createMovieDiv(singleMovie) {
+
+     let 
+        singleMovieDiv = createDivElement({class: 'movies'}),
+
+        movieTitle = createHeading({size: 2, text: singleMovie.title}),
+
+        movieRD = createHeading({text: `Year Released ${singleMovie.release}`, size: 4}),
+
+        movieImgDiv = createDivElement({class: 'movieImgDiv'}),
+
+        movieImage = createImg({class: 'movieImages', src: singleMovie.img, alt: singleMovie.title + ' Image'}),
+
+        IMDBlink = createHyperLink({openNewTab: true, hrefLink: singleMovie.imbdLink, text: singleMovie.title + ' IMDB Page', class: 'imbdlink'});
+
+
+        // console.log(movieTitle);
+        
+        //append to the child elements to the subdiv (one subdiv for each movie)
+        singleMovieDiv.appendChild(movieTitle);
+
+        singleMovieDiv.appendChild(movieImgDiv);
+
+        singleMovieDiv.appendChild(movieRD);
+
+        singleMovieDiv.appendChild(IMDBlink);
+
+        let clickMeText;
+
+        if ( singleMovie.available === true ) {
+
+            clickMeText = createHeading({size: 5, text: 'Double Click To Rent', class: 'clickme'});
+
+        } else {
+
+            clickMeText = createHeading({size: 5, text: 'Double Click To Return', class: 'clickme'});
+        }
+
+        //adding ondblclick property to movie element
+        // movieImage.ondblclick = movieRental.transferMovie;
+        clickMeText.ondblclick = movieRental.transferMovie;
+
+        clickMeText.value = singleMovie.title;
+
+        movieImgDiv.appendChild(movieImage);
+        movieImgDiv.appendChild(clickMeText);
+
+        return singleMovieDiv
     
 }
