@@ -111,10 +111,43 @@ body {
 
 } 
 
-.movies>img:hover {
+.movieImgDiv:hover>img {
     opacity: 70%;
+    
+
 }
 
+.movieImgDiv>h5 {
+
+    display: block;
+
+    opacity: 0%;
+
+    position: relative;
+
+    top: -200px;
+
+    background-color: rgba(0, 0, 0, 0.493);
+    color: white;
+
+    padding: 10px;
+    margin-left: 20%;
+    margin-right: 20%;
+
+    border-radius: 10px;
+
+    transition: all ease-out 1s;
+
+}
+
+.movieImgDiv:hover>h5 {
+
+    user-select: none;
+
+    opacity: 100%;
+    cursor: pointer;
+    transition-duration: 1s;
+}
 
 .movieImages {
 
