@@ -7,9 +7,9 @@ function userInputEvent(input) {
 
         case 'ArrowLeft':
 
-            movieRental.AdisplayStart = movieRental.AdisplayStart > 0 ? --movieRental.AdisplayStart : movieRental.allMovies.length-1;
+            movieRental.AdisplayStart = movieRental.AdisplayStart > 0 ? --movieRental.AdisplayStart : movieRental.allMovies.filter( movie => {return movie.available}).length-1;
 
-            movieRental.AdisplayEnd = movieRental.AdisplayEnd > 0 ? --movieRental.AdisplayEnd : movieRental.allMovies.length-1;
+            movieRental.AdisplayEnd = movieRental.AdisplayEnd > 0 ? --movieRental.AdisplayEnd : movieRental.allMovies.filter( movie => {return movie.available}).length-1;
 
             movieRental.displayAllMovies()
 
@@ -17,9 +17,9 @@ function userInputEvent(input) {
 
         case 'ArrowRight':
 
-            movieRental.AdisplayStart = movieRental.AdisplayStart < movieRental.allMovies.length-1 ? ++movieRental.AdisplayStart : 0;
+            movieRental.AdisplayStart = movieRental.AdisplayStart < movieRental.allMovies.filter( movie => {return movie.available}).length-1 ? ++movieRental.AdisplayStart : 0;
 
-            movieRental.AdisplayEnd = movieRental.AdisplayEnd < movieRental.allMovies.length-1 ? ++movieRental.AdisplayEnd : 0;
+            movieRental.AdisplayEnd = movieRental.AdisplayEnd < movieRental.allMovies.filter( movie => {return movie.available}).length-1 ? ++movieRental.AdisplayEnd : 0;
 
             movieRental.displayAllMovies()
 
@@ -27,9 +27,9 @@ function userInputEvent(input) {
 
         case 'Comma':
 
-             movieRental.RdisplayStart = movieRental.RdisplayStart > 0 ? --movieRental.RdisplayStart : movieRental.allMovies.length-1;
+             movieRental.RdisplayStart = movieRental.RdisplayStart > 0 ? --movieRental.RdisplayStart : movieRental.allMovies.filter( movie => {return !movie.available}).length-1;
 
-            movieRental.RdisplayEnd = movieRental.RdisplayEnd > 0 ? --movieRental.RdisplayEnd : movieRental.allMovies.length-1;
+            movieRental.RdisplayEnd = movieRental.RdisplayEnd > 0 ? --movieRental.RdisplayEnd : movieRental.allMovies.filter( movie => {return !movie.available}).length-1;
 
             movieRental.displayAllMovies()
 
@@ -38,9 +38,9 @@ function userInputEvent(input) {
 
         case 'Period':
 
-             movieRental.RdisplayStart = movieRental.RdisplayStart < movieRental.allMovies.length-1 ? ++movieRental.RdisplayStart : 0;
+             movieRental.RdisplayStart = movieRental.RdisplayStart < movieRental.allMovies.filter( movie => {return !movie.available}).length-1 ? ++movieRental.RdisplayStart : 0;
 
-            movieRental.RdisplayEnd = movieRental.RdisplayEnd < movieRental.allMovies.length-1 ? ++movieRental.RdisplayEnd : 0;
+            movieRental.RdisplayEnd = movieRental.RdisplayEnd < movieRental.allMovies.filter( movie => {return !movie.available}).length-1 ? ++movieRental.RdisplayEnd : 0;
 
             movieRental.displayAllMovies()
             
@@ -84,30 +84,73 @@ let movieRental = {
 
         let moviesInA = this.allMovies.filter( movie => {return movie.available}),
 
-            moviesInR = this.allMovies.filter( movie => {return !movie.available});
+            moviesInR = this.allMovies.filter( movie => {return !movie.available}),
 
-            for (let i = this.AdisplayStart; i < this.AdisplayEnd; i++) {
+            aFinished = false, rFinished = false, aIndex = this.AdisplayStart, rIndex = this.RdisplayStart;
+
+
+            while (!aFinished) {
+
+                // console.log(aIndex);
                 
-                 let AmovieDiv = moviesInA[i] != undefined ? createMovieDiv(moviesInA[i]) : undefined;
+
+                let AmovieDiv = moviesInA[aIndex] != undefined ? createMovieDiv(moviesInA[aIndex]) : undefined;
 
                 if (AmovieDiv != undefined) {
 
                     document.getElementById('aDiv').appendChild(AmovieDiv);
 
-                }
-               
+                } else {
 
+                    console.log(aIndex);
+                    
+                }
+
+
+                if (aIndex == moviesInA.length) {
+                    aIndex = 0
+                } else if (aIndex < moviesInA.length) {
+                    aIndex++
+                } else {
+
+                }
+
+                if (aIndex == this.AdisplayEnd) {
+                    aFinished = true
+                }
+                
+                
             }
 
-            for (let i = this.RdisplayStart; i < this.RdisplayEnd; i++) {
+            while (!rFinished) {
 
-                let RmovieDiv = moviesInR[i] != undefined ? createMovieDiv(moviesInR[i]) : undefined;
+                // console.log(rIndex);
                 
-                 if (RmovieDiv != undefined) {
 
-                    document.getElementById('rDiv').appendChild(RmovieDiv);
+                let rmovieDiv = moviesInR[rIndex] != undefined ? createMovieDiv(moviesInR[rIndex]) : undefined;
 
+                if (rmovieDiv != undefined) {
+
+                    document.getElementById('rDiv').appendChild(rmovieDiv);
+
+                } else {
+
+                    console.log(rIndex);
+                    
                 }
+
+
+                if (rIndex == moviesInR.length) {
+                    rIndex = 0
+                } else if (rIndex < moviesInR.length) {
+                    rIndex++
+                }
+
+                if (rIndex == this.RdisplayEnd) {
+                    rFinished = true
+                }
+                
+                
             }
 
            
