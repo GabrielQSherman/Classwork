@@ -1,12 +1,10 @@
 
-document.addEventListener('keydown', userInputEvent, false);
+function movieNavigation() {
 
-function userInputEvent(input) {
-
-    switch (input.code) {
+    switch (this.id) {
 
 
-        case 'ArrowLeft':
+        case 'availableLeft':
 
             movieRental.AdisplayStart = movieRental.AdisplayStart > 0 ? --movieRental.AdisplayStart : movieRental.allMovies.filter( movie => {return movie.available}).length-1;
 
@@ -16,7 +14,7 @@ function userInputEvent(input) {
 
             break;
 
-        case 'ArrowRight':
+        case 'availableRight':
 
             movieRental.AdisplayStart = movieRental.AdisplayStart < movieRental.allMovies.filter( movie => {return movie.available}).length-1 ? ++movieRental.AdisplayStart : 0;
 
@@ -26,7 +24,7 @@ function userInputEvent(input) {
 
             break;
 
-        case 'Comma':
+        case 'rentedLeft':
 
              movieRental.RdisplayStart = movieRental.RdisplayStart > 0 ? --movieRental.RdisplayStart : movieRental.allMovies.filter( movie => {return !movie.available}).length-1;
 
@@ -37,7 +35,7 @@ function userInputEvent(input) {
 
             break;
 
-        case 'Period':
+        case 'rentedRight':
 
              movieRental.RdisplayStart = movieRental.RdisplayStart < movieRental.allMovies.filter( movie => {return !movie.available}).length-1 ? ++movieRental.RdisplayStart : 0;
 
@@ -89,19 +87,15 @@ let movieRental = {
 
             aFinished = false, rFinished = false, aIndex = this.AdisplayStart, rIndex = this.RdisplayStart,
 
-            leftAvlBtn = createImg({src: 'left-arrow.png'}), rightAvlBtn = createImg({src: 'right-arrow.png'}),
-            leftRntBtn = createImg({src: 'left-arrow.png'}), rightRntBtn = createImg({src: 'right-arrow.png'});
+            leftAvlBtn = createImg({src: 'left-arrow.png', class: 'larrows', id: 'availableLeft', alt: ''}), 
+            rightAvlBtn = createImg({src: 'right-arrow.png', class: 'rarrows', id: 'availableRight', alt: ''}),
+            leftRntBtn = createImg({src: 'left-arrow.png', class: 'larrows', id: 'rentedLeft', alt: ''}), 
+            rightRntBtn = createImg({src: 'right-arrow.png', class: 'rarrows', id: 'rentedRight', alt: ''});
 
-            leftAvlBtn.className = 'larrows';
-            rightAvlBtn.className = 'rarrows';
-            leftRntBtn.className = 'larrows';
-            rightRntBtn.className = 'rarrows';
-
-            // leftAvlBtn.innerText = 'larrows';
-            // rightAvlBtn.innerText = 'rarrows';
-            // leftRntBtn.innerText = 'larrows';
-            // rightRntBtn.innerText = 'rarrows';
-
+            leftAvlBtn.onclick = movieNavigation;
+            rightAvlBtn.onclick = movieNavigation;
+            leftRntBtn.onclick = movieNavigation;
+            rightRntBtn.onclick = movieNavigation;
 
             document.getElementById('aDiv').appendChild(leftAvlBtn);
 
