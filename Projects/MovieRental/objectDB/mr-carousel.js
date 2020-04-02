@@ -5,6 +5,7 @@ function userInputEvent(input) {
 
     switch (input.code) {
 
+
         case 'ArrowLeft':
 
             movieRental.AdisplayStart = movieRental.AdisplayStart > 0 ? --movieRental.AdisplayStart : movieRental.allMovies.filter( movie => {return movie.available}).length-1;
@@ -86,8 +87,23 @@ let movieRental = {
 
             moviesInR = this.allMovies.filter( movie => {return !movie.available}),
 
-            aFinished = false, rFinished = false, aIndex = this.AdisplayStart, rIndex = this.RdisplayStart;
+            aFinished = false, rFinished = false, aIndex = this.AdisplayStart, rIndex = this.RdisplayStart,
 
+            leftAvlBtn = createImg({src: 'left-arrow.png'}), rightAvlBtn = createImg({src: 'right-arrow.png'}),
+            leftRntBtn = createImg({src: 'left-arrow.png'}), rightRntBtn = createImg({src: 'right-arrow.png'});
+
+            leftAvlBtn.className = 'larrows';
+            rightAvlBtn.className = 'rarrows';
+            leftRntBtn.className = 'larrows';
+            rightRntBtn.className = 'rarrows';
+
+            // leftAvlBtn.innerText = 'larrows';
+            // rightAvlBtn.innerText = 'rarrows';
+            // leftRntBtn.innerText = 'larrows';
+            // rightRntBtn.innerText = 'rarrows';
+
+
+            document.getElementById('aDiv').appendChild(leftAvlBtn);
 
             while (!aFinished) {
 
@@ -100,10 +116,6 @@ let movieRental = {
 
                     document.getElementById('aDiv').appendChild(AmovieDiv);
 
-                } else {
-
-                    console.log(aIndex);
-                    
                 }
 
 
@@ -121,6 +133,11 @@ let movieRental = {
                 
                 
             }
+
+            document.getElementById('aDiv').appendChild(rightAvlBtn);
+
+            document.getElementById('rDiv').appendChild(leftRntBtn);
+
 
             while (!rFinished) {
 
@@ -152,6 +169,9 @@ let movieRental = {
                 
                 
             }
+
+            document.getElementById('rDiv').appendChild(rightRntBtn);
+
 
            
 
@@ -273,6 +293,8 @@ movieRental.createMovieSelects()
 // movieRental.transferMovie()
 
 //FUNCTIONS THAT CREATE HTML ELEMENTS
+
+
 function createHeading(headingObj) {
 
     let heading = headingObj.size >= 1 && headingObj.size <= 5 ? document.createElement('h'+ headingObj.size) : document.createElement('h4');
