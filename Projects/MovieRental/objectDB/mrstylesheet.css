@@ -13,7 +13,6 @@ body {
 
 #sideBar {
     flex: .2;
-
     text-align: center;
     transition: all ease-out 1s;
 
@@ -26,6 +25,8 @@ body {
 }
 
 #sideBar>h2{
+    position: sticky;
+
 
     background-color: pink;
 
@@ -46,6 +47,8 @@ body {
 }
 
 #sideBar>select {
+    position: sticky;
+
     font-size: x-large;
     color: white;
     text-shadow: deeppink 2px 2px;

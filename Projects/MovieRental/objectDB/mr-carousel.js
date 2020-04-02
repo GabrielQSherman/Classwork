@@ -1,68 +1,16 @@
 
-function movieNavigation() {
-
-    switch (this.id) {
-
-
-        case 'availableLeft':
-
-            movieRental.AdisplayStart = movieRental.AdisplayStart > 0 ? --movieRental.AdisplayStart : movieRental.allMovies.filter( movie => {return movie.available}).length-1;
-
-            movieRental.AdisplayEnd = movieRental.AdisplayEnd > 0 ? --movieRental.AdisplayEnd : movieRental.allMovies.filter( movie => {return movie.available}).length-1;
-
-            movieRental.displayAllMovies()
-
-            break;
-
-        case 'availableRight':
-
-            movieRental.AdisplayStart = movieRental.AdisplayStart < movieRental.allMovies.filter( movie => {return movie.available}).length-1 ? ++movieRental.AdisplayStart : 0;
-
-            movieRental.AdisplayEnd = movieRental.AdisplayEnd < movieRental.allMovies.filter( movie => {return movie.available}).length-1 ? ++movieRental.AdisplayEnd : 0;
-
-            movieRental.displayAllMovies()
-
-            break;
-
-        case 'rentedLeft':
-
-             movieRental.RdisplayStart = movieRental.RdisplayStart > 0 ? --movieRental.RdisplayStart : movieRental.allMovies.filter( movie => {return !movie.available}).length-1;
-
-            movieRental.RdisplayEnd = movieRental.RdisplayEnd > 0 ? --movieRental.RdisplayEnd : movieRental.allMovies.filter( movie => {return !movie.available}).length-1;
-
-            movieRental.displayAllMovies()
-
-
-            break;
-
-        case 'rentedRight':
-
-             movieRental.RdisplayStart = movieRental.RdisplayStart < movieRental.allMovies.filter( movie => {return !movie.available}).length-1 ? ++movieRental.RdisplayStart : 0;
-
-            movieRental.RdisplayEnd = movieRental.RdisplayEnd < movieRental.allMovies.filter( movie => {return !movie.available}).length-1 ? ++movieRental.RdisplayEnd : 0;
-
-            movieRental.displayAllMovies()
-            
-            break;
-    
-        default:
-            break;
-    }
-    
-}
-
-
 let movieRental = {
+
      allMovies: [
 
         {title: 'Looper',             release: 2012, available: false, imbdLink: 'https://www.imdb.com/title/tt1276104/', img: 'https://upload.wikimedia.org/wikipedia/en/0/0a/Looper_poster.jpg' }, 
         {title: 'Back To The Future', release: 1985, available: true, imbdLink: 'https://www.imdb.com/title/tt0088763/', img: 'https://upload.wikimedia.org/wikipedia/en/d/d2/Back_to_the_Future.jpg'}, 
-        {title: 'Inception',          release: 2010, available: false, imbdLink: 'https://www.imdb.com/title/tt1375666/', img: 'https://upload.wikimedia.org/wikipedia/en/2/2e/Inception_%282010%29_theatrical_poster.jpg'}, 
+        {title: 'Inception',          release: 2010, available: true, imbdLink: 'https://www.imdb.com/title/tt1375666/', img: 'https://upload.wikimedia.org/wikipedia/en/2/2e/Inception_%282010%29_theatrical_poster.jpg'}, 
         {title: 'Donnie Darko',       release: 2001, available: true, imbdLink: 'https://www.imdb.com/title/tt0246578/', img: 'https://m.media-amazon.com/images/M/MV5BOGRiOGM5MmUtMmI3Yi00ZTFhLTlhZDYtZGNmOWRmYTM4NWE2XkEyXkFqcGdeQXVyMTYzMDM0NTU@._V1_SY1000_CR0,0,702,1000_AL_.jpg' }, 
-        {title: 'Primer',             release: 2004, available: true, imbdLink: 'https://www.imdb.com/title/tt0390384/', img: 'https://upload.wikimedia.org/wikipedia/en/f/f7/Primer_%282004_film_poster%29.jpg' }, 
+        {title: 'Primer',             release: 2004, available: false, imbdLink: 'https://www.imdb.com/title/tt0390384/', img: 'https://upload.wikimedia.org/wikipedia/en/f/f7/Primer_%282004_film_poster%29.jpg' }, 
         {title: 'Terminator 2',       release: 1991, available: true, imbdLink: 'https://www.imdb.com/title/tt0103064/', img: 'https://m.media-amazon.com/images/M/MV5BMGU2NzRmZjUtOGUxYS00ZjdjLWEwZWItY2NlM2JhNjkxNTFmXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg' },
         {title: 'Source Code',        release: 2011, available: true, imbdLink: 'https://www.imdb.com/title/tt0945513/', img: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e5/Source_Code_Poster.jpg/220px-Source_Code_Poster.jpg' },
-        {title: 'Déjà Vu',            release: 2006, available: false, imbdLink: 'https://www.imdb.com/title/tt0453467/', img: 'https://upload.wikimedia.org/wikipedia/en/thumb/c/cf/DejaVuBigPoster.jpg/220px-DejaVuBigPoster.jpg' }
+        {title: 'Déjà Vu',            release: 2006, available: true, imbdLink: 'https://www.imdb.com/title/tt0453467/', img: 'https://upload.wikimedia.org/wikipedia/en/thumb/c/cf/DejaVuBigPoster.jpg/220px-DejaVuBigPoster.jpg' }
 
     ],
 
@@ -79,99 +27,119 @@ let movieRental = {
         document.getElementById('aDiv').innerHTML = '';
         document.getElementById('rDiv').innerHTML = '';
 
-        this.allMovies.sort( (a,b) => {return a.title > b.title } )
+        let moviesInA = this.allMovies.filter( movie => {return movie.available}).sort( (a,b) => {return a.release > b.release }),
 
-        let moviesInA = this.allMovies.filter( movie => {return movie.available}),
+            moviesInR = this.allMovies.filter( movie => {return !movie.available}).sort( (a,b) => {return a.release > b.release }),
 
-            moviesInR = this.allMovies.filter( movie => {return !movie.available}),
+            aFinished = false, rFinished = false, aCount = 0, rCount = 0, aIndex = this.AdisplayStart, rIndex = this.RdisplayStart,
 
-            aFinished = false, rFinished = false, aIndex = this.AdisplayStart, rIndex = this.RdisplayStart,
-
-            leftAvlBtn = createImg({src: 'left-arrow.png', class: 'larrows', id: 'availableLeft', alt: ''}), 
-            rightAvlBtn = createImg({src: 'right-arrow.png', class: 'rarrows', id: 'availableRight', alt: ''}),
-            leftRntBtn = createImg({src: 'left-arrow.png', class: 'larrows', id: 'rentedLeft', alt: ''}), 
-            rightRntBtn = createImg({src: 'right-arrow.png', class: 'rarrows', id: 'rentedRight', alt: ''});
+            leftAvlBtn  = createImg({src: 'left-arrow.png', alt: '',  class: 'larrows', id: 'availableLeft'}), 
+            rightAvlBtn = createImg({src: 'right-arrow.png', alt: '', class: 'rarrows', id: 'availableRight'}),
+            leftRntBtn  = createImg({src: 'left-arrow.png', alt: '',  class: 'larrows', id: 'rentedLeft'}), 
+            rightRntBtn = createImg({src: 'right-arrow.png', alt: '', class: 'rarrows', id: 'rentedRight'});
 
             leftAvlBtn.onclick = movieNavigation;
             rightAvlBtn.onclick = movieNavigation;
             leftRntBtn.onclick = movieNavigation;
             rightRntBtn.onclick = movieNavigation;
 
-            document.getElementById('aDiv').appendChild(leftAvlBtn);
+            console.log(this.AdisplayStart, this.RdisplayStart, this.AdisplayEnd, this.RdisplayEnd);
+            
 
-            while (!aFinished) {
+            if (moviesInA.length == 0) {
 
-                // console.log(aIndex);
+                let noAvailableMovies = createHeading({text: 'There Are No Movies Available For Rent', size: 1, class: 'noMoviesWarning'});
+
+                document.getElementById('aDiv').appendChild(noAvailableMovies);
                 
+            } else {
 
-                let AmovieDiv = moviesInA[aIndex] != undefined ? createMovieDiv(moviesInA[aIndex]) : undefined;
+                document.getElementById('aDiv').appendChild(leftAvlBtn);
 
-                if (AmovieDiv != undefined) {
+                while (!aFinished) {
+                    console.log(`AIndex${aIndex}, ACount ${aCount}`);
+                    aCount++
 
-                    document.getElementById('aDiv').appendChild(AmovieDiv);
+                    let AmovieDiv = moviesInA[aIndex] != undefined ? createMovieDiv(moviesInA[aIndex]) : undefined;
 
-                }
+                    if (AmovieDiv != undefined) {
 
+                        document.getElementById('aDiv').appendChild(AmovieDiv);
 
-                if (aIndex == moviesInA.length) {
-                    aIndex = 0
-                } else if (aIndex < moviesInA.length) {
-                    aIndex++
-                } else {
+                    } else {
 
-                }
+                        console.log('Attempted to create a non-existing movie at index', aIndex);
+                        
+                    }
 
-                if (aIndex == this.AdisplayEnd) {
-                    aFinished = true
-                }
-                
-                
-            }
-
-            document.getElementById('aDiv').appendChild(rightAvlBtn);
-
-            document.getElementById('rDiv').appendChild(leftRntBtn);
+                    if (aIndex == this.AdisplayEnd || aCount == moviesInA.length) {
+                        aFinished = true
+                    }
 
 
-            while (!rFinished) {
-
-                // console.log(rIndex);
-                
-
-                let rmovieDiv = moviesInR[rIndex] != undefined ? createMovieDiv(moviesInR[rIndex]) : undefined;
-
-                if (rmovieDiv != undefined) {
-
-                    document.getElementById('rDiv').appendChild(rmovieDiv);
-
-                } else {
-
-                    console.log(rIndex);
+                    if (aIndex == moviesInA.length-1) {
+                        aIndex = 0
+                    } else if (aIndex < moviesInA.length-1) {
+                        aIndex++
+                    }
                     
                 }
 
+                document.getElementById('aDiv').appendChild(rightAvlBtn);
 
-                if (rIndex == moviesInR.length) {
-                    rIndex = 0
-                } else if (rIndex < moviesInR.length) {
-                    rIndex++
-                }
-
-                if (rIndex == this.RdisplayEnd) {
-                    rFinished = true
-                }
-                
-                
             }
 
-            document.getElementById('rDiv').appendChild(rightRntBtn);
+            if (moviesInR.length == 0) {
+
+                let noAvailableMovies = createHeading({text: 'All The Movies We Have Available Are In Stock', size: 1, class: 'noMoviesWarning'});
+
+                document.getElementById('rDiv').appendChild(noAvailableMovies);
+
+            } else {
+
+                document.getElementById('rDiv').appendChild(leftRntBtn);
 
 
-           
+                while (!rFinished) {
 
+                    console.log(`RIndex${rIndex}, RCount ${rCount}`);
+                    rCount++
+
+                    let rmovieDiv = moviesInR[rIndex] != undefined ? createMovieDiv(moviesInR[rIndex]) : undefined;
+
+                    if (rmovieDiv != undefined) {
+
+                        document.getElementById('rDiv').appendChild(rmovieDiv);
+
+                    } else {
+                        console.log('Attempted to create a non-existing movie at index', rIndex);
+                        
+                    }
+
+                    if (rIndex == this.RdisplayEnd || rCount == moviesInR.length) {
+                        rFinished = true
+                    }
+                
+
+                    if (rIndex == moviesInR.length - 1) {
+                        rIndex = 0
+                    } else if (rIndex < moviesInR.length - 1) {
+                        rIndex++
+                    }
+                    
+                }
+
+                document.getElementById('rDiv').appendChild(rightRntBtn);
+            }
     },
 
     createMovieSelects() {
+
+        //first clear the sidebar of the previous(outdated) infomation
+
+        let sideBar = document.getElementById('sideBar');
+
+        sideBar.innerHTML = '';
 
         //create two empt arrays
         //the elements will be used to set the innerText and value of each option of the select elements
@@ -204,12 +172,12 @@ let movieRental = {
         rentedSelect.onchange = movieRental.transferMovie;
 
         //add the available elements to the sidebar
-        document.getElementById('sideBar').appendChild(aSelectHeading);
-        document.getElementById('sideBar').appendChild(avaialbleSelect);
+        sideBar.appendChild(aSelectHeading);
+        sideBar.appendChild(avaialbleSelect);
 
         //then the rented
-        document.getElementById('sideBar').appendChild(rSelectHeading);
-        document.getElementById('sideBar').appendChild(rentedSelect);
+        sideBar.appendChild(rSelectHeading);
+        sideBar.appendChild(rentedSelect);
 
     },
 
@@ -221,53 +189,20 @@ let movieRental = {
 
             choosenMovie = eventObject.value != undefined ? eventObject.value : eventObject.alt.replace(/ Image/, '');
 
-        console.log(choosenMovie);
+        // console.log(choosenMovie);
 
         //itterate through my array of objects,
 
         movieRental.allMovies.forEach( movieObject => {
 
-                // console.log(movieObject.title, choosenMovie);
-
-                // if (movieObject.title === choosenMovie && movieObject.available) {
-
-                //         movieObject.available = false
-                    
-                // } else if (movieObject.title === choosenMovie && !movieObject.available) {
-
-                //         movieObject.available = true
-                // }
-
-                // if (movieObject.title === choosenMovie) {
-
-                //     movieObject.available = movieObject.available ? false : true;
-                    
-                // }
 
                 if (movieObject.title === choosenMovie) {
 
                     movieObject.available = !movieObject.available;
                     
                 }
-
-                // movieObject.available = movieObject.title === choosenMovie ? !movieObject.available : movieObject.available;
-
                 
         })
-        // find the object that match the name of 'chooseMovie'
-        //access the available property and switch its value from true to false or visa versa
-
-        // console.log(movieRental.allMovies);
-        
-        //before moving on to the frontend, console log movieRental.allMovies
-
-        //update the frontend
-            //update (delete and refresh with new data) the movieDivs
-            //update the selectElements
-
-        document.getElementById('sideBar').innerHTML = '';
-        document.getElementById('aDiv').innerHTML = '';
-        document.getElementById('rDiv').innerHTML = '';
 
         movieRental.displayAllMovies()
         movieRental.createMovieSelects()
@@ -414,13 +349,6 @@ function createInitalDivs() {
     
 }
 
-// document.createElement('select'); //parent
-
-// document.createElement('option'); //child
-
-
-
-
 function createSelectElement(selectObject) {
     // console.log(selectObject);
 
@@ -519,5 +447,54 @@ function createMovieDiv(singleMovie) {
         movieImgDiv.appendChild(clickMeText);
 
         return singleMovieDiv
+    
+}
+
+function movieNavigation() {
+
+    switch (this.id) {
+
+        case 'availableLeft':
+
+            movieRental.AdisplayStart = movieRental.AdisplayStart > 0 ? --movieRental.AdisplayStart : movieRental.allMovies.filter( movie => {return movie.available == true}).length-1;
+
+            movieRental.AdisplayEnd = movieRental.AdisplayEnd > 0 ? --movieRental.AdisplayEnd : movieRental.allMovies.filter( movie => {return movie.available  == true}).length-1;
+
+            movieRental.displayAllMovies()
+
+            break;
+
+        case 'availableRight':
+
+            movieRental.AdisplayStart = movieRental.AdisplayStart < movieRental.allMovies.filter( movie => {return movie.available == true}).length-1 ? ++movieRental.AdisplayStart : 0;
+
+            movieRental.AdisplayEnd = movieRental.AdisplayEnd < movieRental.allMovies.filter( movie => {return movie.available == true}).length-1 ? ++movieRental.AdisplayEnd : 0;
+
+            movieRental.displayAllMovies()
+
+            break;
+
+        case 'rentedLeft':
+
+             movieRental.RdisplayStart = movieRental.RdisplayStart > 0 ? --movieRental.RdisplayStart : movieRental.allMovies.filter( movie => {return movie.available == false}).length-1;
+
+            movieRental.RdisplayEnd = movieRental.RdisplayEnd > 0 ? --movieRental.RdisplayEnd : movieRental.allMovies.filter( movie => {return !movie.available == false}).length-1;
+
+            movieRental.displayAllMovies()
+
+
+            break;
+
+        case 'rentedRight':
+
+             movieRental.RdisplayStart = movieRental.RdisplayStart < movieRental.allMovies.filter( movie => {return movie.available == false}).length-1 ? ++movieRental.RdisplayStart : 0;
+
+            movieRental.RdisplayEnd = movieRental.RdisplayEnd < movieRental.allMovies.filter( movie => {return movie.available == false}).length-1 ? ++movieRental.RdisplayEnd : 0;
+
+            movieRental.displayAllMovies()
+            
+            break;
+  
+    }
     
 }
