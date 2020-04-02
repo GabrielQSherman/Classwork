@@ -16,12 +16,8 @@ let movieRental = {
 
     AdisplayStart: 0,
 
-    AdisplayEnd: 3,
-
     RdisplayStart: 0,
 
-    RdisplayEnd: 3,
- 
     displayAllMovies() {
 
         document.getElementById('aDiv').innerHTML = '';
@@ -29,9 +25,26 @@ let movieRental = {
 
         let moviesInA = this.allMovies.filter( movie => {return movie.available}).sort( (a,b) => {return a.release > b.release }),
 
-            moviesInR = this.allMovies.filter( movie => {return !movie.available}).sort( (a,b) => {return a.release > b.release }),
+            moviesInR = this.allMovies.filter( movie => {return !movie.available}).sort( (a,b) => {return a.release > b.release });
 
-            aFinished = false, rFinished = false, aCount = 0, rCount = 0, aIndex = this.AdisplayStart, rIndex = this.RdisplayStart,
+            while (moviesInA[this.AdisplayStart] == undefined && moviesInA.length != 0) {
+
+                this.AdisplayStart--
+                
+            }
+
+            while (moviesInR[this.RdisplayStart] == undefined && moviesInR.length != 0) {
+
+                this.RdisplayStart--
+                
+            }
+
+            console.log('test');
+            
+
+            let aFinished = false, rFinished = false, 
+                aCount = 0, rCount = 0, 
+                aIndex = this.AdisplayStart, rIndex = this.RdisplayStart,
 
             leftAvlBtn  = createImg({src: 'left-arrow.png', alt: '',  class: 'larrows', id: 'availableLeft'}), 
             rightAvlBtn = createImg({src: 'right-arrow.png', alt: '', class: 'rarrows', id: 'availableRight'}),
@@ -43,7 +56,7 @@ let movieRental = {
             leftRntBtn.onclick = movieNavigation;
             rightRntBtn.onclick = movieNavigation;
 
-            console.log(this.AdisplayStart, this.RdisplayStart, this.AdisplayEnd, this.RdisplayEnd);
+            console.log(this.AdisplayStart, this.RdisplayStart);
             
 
             if (moviesInA.length == 0) {
@@ -72,7 +85,7 @@ let movieRental = {
                         
                     }
 
-                    if (aIndex == this.AdisplayEnd || aCount == moviesInA.length) {
+                    if ( aCount == 4 || aCount == moviesInA.length) {
                         aFinished = true
                     }
 
@@ -116,7 +129,7 @@ let movieRental = {
                         
                     }
 
-                    if (rIndex == this.RdisplayEnd || rCount == moviesInR.length) {
+                    if (rCount == 4 || rCount == moviesInR.length) {
                         rFinished = true
                     }
                 
@@ -458,19 +471,11 @@ function movieNavigation() {
 
             movieRental.AdisplayStart = movieRental.AdisplayStart > 0 ? --movieRental.AdisplayStart : movieRental.allMovies.filter( movie => {return movie.available == true}).length-1;
 
-            movieRental.AdisplayEnd = movieRental.AdisplayEnd > 0 ? --movieRental.AdisplayEnd : movieRental.allMovies.filter( movie => {return movie.available  == true}).length-1;
-
-            movieRental.displayAllMovies()
-
             break;
 
         case 'availableRight':
 
             movieRental.AdisplayStart = movieRental.AdisplayStart < movieRental.allMovies.filter( movie => {return movie.available == true}).length-1 ? ++movieRental.AdisplayStart : 0;
-
-            movieRental.AdisplayEnd = movieRental.AdisplayEnd < movieRental.allMovies.filter( movie => {return movie.available == true}).length-1 ? ++movieRental.AdisplayEnd : 0;
-
-            movieRental.displayAllMovies()
 
             break;
 
@@ -478,23 +483,16 @@ function movieNavigation() {
 
              movieRental.RdisplayStart = movieRental.RdisplayStart > 0 ? --movieRental.RdisplayStart : movieRental.allMovies.filter( movie => {return movie.available == false}).length-1;
 
-            movieRental.RdisplayEnd = movieRental.RdisplayEnd > 0 ? --movieRental.RdisplayEnd : movieRental.allMovies.filter( movie => {return !movie.available == false}).length-1;
-
-            movieRental.displayAllMovies()
-
-
             break;
 
         case 'rentedRight':
 
              movieRental.RdisplayStart = movieRental.RdisplayStart < movieRental.allMovies.filter( movie => {return movie.available == false}).length-1 ? ++movieRental.RdisplayStart : 0;
 
-            movieRental.RdisplayEnd = movieRental.RdisplayEnd < movieRental.allMovies.filter( movie => {return movie.available == false}).length-1 ? ++movieRental.RdisplayEnd : 0;
-
-            movieRental.displayAllMovies()
-            
             break;
   
     }
+
+    movieRental.displayAllMovies()
     
 }
