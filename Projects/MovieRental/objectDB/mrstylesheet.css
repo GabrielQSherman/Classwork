@@ -8,11 +8,14 @@ body {
 
 #movieDisplays {
     flex: 1;
+
+    /* width: 1000px; */
+
 }
 
 
 #sideBar {
-    flex: .2;
+    flex: .5;
     text-align: center;
     transition: all ease-out 1s;
 
@@ -71,16 +74,22 @@ body {
 
 .movieDivs {
 
+    width: 1200px;
+
     margin: 3%;
 
     border-radius: 40px;
 
     display: flex;
 
-    flex-wrap: wrap;
+    overflow: hidden;
 
-    justify-content: center;
+}
 
+.movieDivs:horizontal {
+    overflow-x: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.61) rgba(255, 255, 255, 0.322);
 }
 
 .movies {
@@ -134,6 +143,9 @@ body {
     color: white;
 
     padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+
     margin-left: 20%;
     margin-right: 20%;
 
@@ -159,6 +171,9 @@ body {
     height: 300px;
 
     padding: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+
     border-radius: 17px;
 
 }
