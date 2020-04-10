@@ -13,3 +13,7 @@ The first goal is to create buttons(controls the date being displayed) and a hea
 [*] create a function that will set up the user interface with one function call
 
 [*] create the onclick function that will be called by each button, using the 'this' keyword the program can acess the element that called the function, then using the id property, the currentDate object will change accordingly 
+
+4/9/2020
+
+create v2 of calendar 
