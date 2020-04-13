@@ -1,7 +1,15 @@
 //render a digital and digitally anolog display of the current time
 
-window.onload = () => {
+//vars for canvas
 
+let canvas = document.getElementById('canvas'),
+    context = canvas.getContext('2d'),
+
+    width = canvas.width = 200,
+    height = canvas.height = 200;
+
+//this function will be called when the page loads, it will then enter a loop until the condition inside the 'loop' function is met, ending the loop
+window.onload = () => {
 
     //variables for date and loop
     let frames = 0;
@@ -10,14 +18,6 @@ window.onload = () => {
     let timeString = document.createElement('h1');
 
         timeString.id = 'timeString';
-
-    //vars for canvas
-
-    let canvas = document.getElementById('canvas'),
-        context = canvas.getContext('2d'),
-
-        width = canvas.width = 200,
-        height = canvas.height = 200;
 
     //append the H1 to the DOM
     document.body.appendChild(timeString);
@@ -29,7 +29,7 @@ window.onload = () => {
         
         frames++
 
-        console.log(frames);
+        // console.log(frames); //shows number of loop cycles in console
 
         let time = getCurrentTime() // returns an object with all the relevent info of the current time
 
@@ -38,7 +38,7 @@ window.onload = () => {
         updateDigitalDisplay(time) // update string display
                 
         //this conditional will cause the loop to end, otherwise it would go on until the browser window is closed
-        if (frames < 100) { 
+        if (frames < 10000) { 
             setTimeout(window.requestAnimationFrame, 100, loop)
         }
     }
@@ -90,12 +90,24 @@ function getCurrentTime() {
 //creates a clock display on a canvas element
 function updateAnalogDisplay(time) {
 
+    //clear the canvas of the last clock display
+    context.save();
+    context.setTransform(1, 0, 0, 1, 0, 0);
+    context.clearRect(0, 0, width, height);
+    context.restore();
+
+    //create the clock circle
+    context.beginPath()
+    context.arc(width/2, height/2, width/2, 0, Math.PI*2)
+    context.stroke()
+
+ 
 }
 
 //updates the text to display the time/date in string format
 function updateDigitalDisplay(time) {
     
-    let hour, minutes;
+    let hour, minutes, date;
 
      if (time.min == 0 ) {
         
@@ -141,7 +153,16 @@ function updateDigitalDisplay(time) {
         hour = time.hr - 12 + ' PM'
     }
 
+    if (time.date == 1 || time.date.toString().substring(1,2) == '1' && time.date > 11) {
+        date = time.date + 'st'
+    } else if (time.date == 2 || time.date.toString().substring(1,2) == '2' && time.date > 12) {
+        date = time.date + 'nd'
+    } else if (time.date == 3 || time.date.toString().substring(1,2) == '3' && time.date > 13) {
+        date = time.date + 'rd'
+    } else {
+        date = time.date + 'th'
+    }
 
-    document.getElementById('timeString').innerText = `It is now ${minutes} ${hour}`
+    document.getElementById('timeString').innerText = `It is now ${minutes} ${hour} on the ${date} of ${time.monthStr} in the year ${time.year}`
 
 }
