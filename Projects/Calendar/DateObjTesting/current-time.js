@@ -35,11 +35,11 @@ window.onload = () => {
 
         updateAnalogDisplay(time) // updates clock display
 
-        updateDigitalDisplay(time) // update string display
+        updateStringDisplay(time) // update string display
                 
         //this conditional will cause the loop to end, otherwise it would go on until the browser window is closed
         if (frames < 10000) { 
-            setTimeout(window.requestAnimationFrame, 100, loop)
+            setTimeout(window.requestAnimationFrame, 30, loop)
         }
     }
     
@@ -96,16 +96,83 @@ function updateAnalogDisplay(time) {
     context.clearRect(0, 0, width, height);
     context.restore();
 
+    //set the stroke color to black
+    context.strokeStyle = 'black';
+
     //create the clock circle
     context.beginPath()
     context.arc(width/2, height/2, width/2, 0, Math.PI*2)
     context.stroke()
 
- 
+    //create the hour marks
+
+    context.save()
+    context.translate(width/2, height/2)
+    for (let i = 0; i < 12; i++) {
+        
+        context.beginPath()
+        context.moveTo(0, width/2 - width/10)
+        context.lineTo(0, width/2)
+        context.stroke()
+        context.rotate(Math.PI/6)
+    }
+    context.restore()
+
+    //create line that indicates hour hand
+
+    let hour = time.hr > 12 ? time.hr -12: time.hr
+
+    context.save();
+
+    context.translate(width/2, height/2)
+    context.beginPath()
+    context.moveTo(0, 0)
+
+    context.rotate(Math.PI/6 * (hour-1 + (time.min/30)))
+    
+    context.lineTo(0, -width/3)
+    context.stroke()
+
+    context.restore();
+
+    //create line that indicates min hand
+
+    context.save();
+
+    context.translate(width/2, height/2)
+    context.beginPath()
+    context.moveTo(0, 0)
+
+    context.rotate(Math.PI/30 * ((time.min) + time.sec/60))
+    
+    context.lineTo(0, -width/2 + width/10)
+    context.stroke()
+
+    context.restore();
+
+    //create line that indicates sec hand
+    //set the stroke color to a diffrent color to distiguish second and min hand
+    context.strokeStyle = 'pink';
+
+    context.save();
+
+    context.translate(width/2, height/2)
+    context.beginPath()
+    context.moveTo(0, 0)
+
+    context.rotate(Math.PI/30 * (time.sec + time.ms/1000))
+    
+    context.lineTo(0, -width/2 + width/20)
+    context.stroke()
+
+    context.restore();
 }
 
 //updates the text to display the time/date in string format
-function updateDigitalDisplay(time) {
+function updateStringDisplay(time) {
+
+    console.log(time.hr);
+    
     
     let hour, minutes, date;
 
@@ -133,6 +200,8 @@ function updateDigitalDisplay(time) {
 
         time.hr++
 
+        time.date = time.hr == 24 ? time.date+1 : time.date
+
     } else if (time.min > 30) {
 
         secondStr = time.sec == 59 ? 'second' : 'seconds';
@@ -141,9 +210,10 @@ function updateDigitalDisplay(time) {
 
         time.hr++
 
+        time.date = time.hr == 24 ? time.date + 1 : time.date
     }
 
-    if (time.hr == 0 ) {
+    if (time.hr == 24 ) {
         hour = '12 AM'
     } else if (time.hr < 12) {
         hour = time.hr + ' AM'
