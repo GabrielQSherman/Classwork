@@ -17,3 +17,24 @@ The first goal is to create buttons(controls the date being displayed) and a hea
 4/9/2020
 
 create v2 of calendar 
+
+In this version a client can select a date via select elements. 
+The user must first click the button that reads 'select a date' 
+this will trigger a sequence of select elements. the user will pick a date by choose first the year, then month, then a day can be selected from the available days in that month, for example 29 will not be an option in feb in the year 2019 but if the year selected is a leap year than it will be an option. 
+the fist two select elements are created once the button is pressed, and their display is set to none.
+the once a select element needs to be used its display is set to in-line, then back to none when a selection is made.
+the day select element is not created until the month is selected, this is the only element that will not be used again because its elements are dependent on the month selected
+when the day selection has been made the date choosen will appear as a heading element above the select elements/button.
+the button to start the cycle will reappear and the cycle can be continued as many times as desired
+
+This project shows an easy way and space saving way to get a date selection from a client efficiently
+
+4/13/2020
+
+create v3 of calendar
+
+This version will be a built out traditional calendar display. when the page loads the current month year and date are displayed up top. below is a display of the traditional calendar display. The dates are days appropriately placed on the day of the week they occur. The last days of the previous month and a small portion of the next month are displayed too but can not be interacted with
+
+The next month and previous month buttons are implemented and working. I will create a way to navigate the years next. The plan to navigate day selection is by clicking on the box for that day, a plan/event form will appear when a box is selected and this will allow notes, events, etc to be stored on particular dates
+
+I would like to implement a marking system so one can so marks on a given day to indicate things like bdays, holidays, ect
