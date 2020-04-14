@@ -10,6 +10,7 @@ body {
 }
 
 #prvMnt, #nxtMnt, #prvYear, #nxtYear {
+    text-shadow: rgba(253, 255, 158, 0.582) 2px 1px;
     cursor: pointer;
     flex: 1;
     border: none;
@@ -69,7 +70,6 @@ body {
     margin-right: 12%;
     background-color: black;
     display: grid;
-
     grid-template-columns: auto auto auto auto auto auto auto;
 
 }
@@ -113,5 +113,27 @@ body {
 
     text-align: center;
     opacity: 70%;
+}
+
+#footerDiv {
+    background-color: rgb(195, 255, 160);
+
+    margin-top: 5%;
+    margin-left: 37%;
+    margin-right: 37%;
+    height: 100%;
+
+    border: solid 20px rgb(240, 240, 240);
+}
+
+#footerMsg {
+    user-select: none;
+    color: white;
+    margin-left: 3%;
+    margin-right: 3%;
+    background-color: #222;
+    padding: 20px;
+    border-radius: 20px;
+    
 }
 

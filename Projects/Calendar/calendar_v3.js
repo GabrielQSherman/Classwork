@@ -12,67 +12,10 @@ let dateInfo = {
     
     months: ["January","February","March","April","May","June","July","August","September","October","November","December"],
     
-    daysOfWeek: ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    daysOfWeek: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
 
+    events: []
 };
-
-//when the browser loads i want to create a div that will store the calendar grid display
-
-window.onload = () => {
-
-    let headDiv = document.createElement('div'),
-    
-    mainCalDiv = document.createElement('div'),
-
-    calStr = document.createElement('h1'),
-
-    prvMonth = document.createElement('button'), 
-    nxtMonth = document.createElement('button'); 
-
-    prvMonth.innerHTML = '<b>Previous Month';
-    nxtMonth.innerHTML = '<b>Next Month';
-
-
-    prvMonth.onclick = previousMonth;
-    nxtMonth.onclick = nextMonth;
-
-    prvMonth.id = 'prvMnt';
-    nxtMonth.id = 'nxtMnt';
-
-    prvYear = document.createElement('button'), 
-    nxtYear = document.createElement('button'); 
-
-    prvYear.innerHTML = '<b>Previous Year';
-    nxtYear.innerHTML = '<b>Next Year';
-
-
-    prvYear.onclick = previousYear;
-    nxtYear.onclick = nextYear;
-
-    prvYear.id = 'prvYear';
-    nxtYear.id = 'nxtYear';
-
-    mainCalDiv.id = 'mainCalDiv';
-
-    headDiv.id = 'headingDiv';
-
-    calStr.id = 'calendarStr';
-
-    document.body.appendChild(headDiv);
-
-    document.body.appendChild(mainCalDiv);
-
-    headDiv.appendChild(prvMonth)
-    headDiv.appendChild(prvYear)
-    headDiv.appendChild(calStr)
-    headDiv.appendChild(nxtYear)
-    headDiv.appendChild(nxtMonth)
-
-
-    updateDateString()
-
-    updateCalDisplay()
-}
 
 function updateDateString() {
 
@@ -84,7 +27,7 @@ function updateDateString() {
 
     } else {
 
-         if (dateInfo.day == 1 || dateInfo.day.toString().substring(1,2) == '1' && dateInfo.day > 11) {
+        if (dateInfo.day == 1 || dateInfo.day.toString().substring(1,2) == '1' && dateInfo.day > 11) {
             date = dateInfo.day + 'st'
         } else if (dateInfo.day == 2 || dateInfo.day.toString().substring(1,2) == '2' && dateInfo.day > 12) {
             date = dateInfo.day + 'nd'
@@ -205,6 +148,59 @@ function updateCalDisplay() {
 
 }
 
+function updateFooter() {
+
+    let footer = document.getElementById('footerDiv');
+
+    footer.innerHTML = '';
+
+    let allEventsToday = dateInfo.events.filter( event => {
+
+        if (event.year == dateInfo.year && event.month == dateInfo.month && event.date == dateInfo.day) {
+            return true
+        } else {
+            return false
+        }
+    });
+
+    if (allEventsToday.length == 0) {
+    
+        let message = document.createElement('h3');
+        message.innerText = 'There are no events planned for today, why not make one?'
+        message.id = 'footerMsg'
+        footer.appendChild(message)
+
+    } else {
+
+        let eventsList = document.createElement('ul');
+
+        eventsList.id = 'eventList';
+        
+        allEventsToday.forEach( eventInfo => {
+
+            let message = document.createElement('h4');
+            message.innerText = eventInfo.msg
+            message.className = 'eventMsg'
+            eventsList.appendChild(message)
+            
+            console.log(eventInfo.msg);
+            
+        });
+
+        footer.appendChild(eventsList);
+        
+    }
+
+    let eventBtn = document.createElement('button');
+
+    eventBtn.innerText = 'Plan An Event For Today';
+
+    eventBtn.onclick = planEvent;
+
+    footer.appendChild(eventBtn);
+
+}
+
 function previousMonth() {
 
     if ( dateInfo.month > 0) {
@@ -287,4 +283,113 @@ function checkLeapYear(year) {
     
     }
     
+}
+
+//plan an event function 
+
+function planEvent() {
+
+    let date;
+    if (dateInfo.day == 1 || dateInfo.day.toString().substring(1,2) == '1' && dateInfo.day > 11) {
+        date = dateInfo.day + 'st'
+    } else if (dateInfo.day == 2 || dateInfo.day.toString().substring(1,2) == '2' && dateInfo.day > 12) {
+        date = dateInfo.day + 'nd'
+    } else if (dateInfo.day == 3 || dateInfo.day.toString().substring(1,2) == '3' && dateInfo.day > 13) {
+        date = dateInfo.day + 'rd'
+    } else {
+        date = dateInfo.day + 'th'
+    }
+    
+    // console.log(dateInfo);
+    let dayOfTheWeek = new Date(`${dateInfo.month+1} ${dateInfo.day}, ${dateInfo.year}`).getDay(),
+    plannedDate = `${dateInfo.daysOfWeek[dayOfTheWeek]}, ${dateInfo.months[dateInfo.month]} ${date} ${dateInfo.year}`,
+
+
+    eventInfo = prompt(`What will you be doing on ${plannedDate}?`);
+
+    if (eventInfo == null) {
+        alert('No Event Has Been Made')
+    } else {
+        let event = {
+            date: dateInfo.day,
+            month: dateInfo.month,
+            year: dateInfo.year,
+            msg: eventInfo
+        }
+
+        dateInfo.events.push(event);
+
+        updateFooter()
+    }
+    
+}
+
+//when the browser loads i want to create a div that will store the calendar grid display
+
+window.onload = () => {
+
+    //create divs
+    let headDiv = document.createElement('div'),
+    
+    mainCalDiv = document.createElement('div'),
+
+    footDiv = document.createElement('div'),
+
+    //create string that will display the date in the header
+    calStr = document.createElement('h1'),
+
+    //buttons for month navigation
+    prvMonth = document.createElement('button'), 
+    nxtMonth = document.createElement('button'); 
+
+    prvMonth.innerHTML = '<b>Previous Month';
+    nxtMonth.innerHTML = '<b>Next Month';
+
+    prvMonth.onclick = previousMonth;
+    nxtMonth.onclick = nextMonth;
+
+    prvMonth.id = 'prvMnt';
+    nxtMonth.id = 'nxtMnt';
+
+    prvYear = document.createElement('button'), 
+    nxtYear = document.createElement('button'); 
+
+    //buttons for year navigation
+    prvYear.innerHTML = '<b>Previous Year';
+    nxtYear.innerHTML = '<b>Next Year';
+
+    prvYear.onclick = previousYear;
+    nxtYear.onclick = nextYear;
+
+    //set ids for all elements
+    prvYear.id = 'prvYear';
+    nxtYear.id = 'nxtYear';
+
+    mainCalDiv.id = 'mainCalDiv';
+
+    headDiv.id = 'headingDiv';
+
+    footDiv.id = 'footerDiv';
+
+    calStr.id = 'calendarStr';
+
+    //append elements where they need to be
+    document.body.appendChild(headDiv);
+
+    document.body.appendChild(mainCalDiv);
+
+    document.body.appendChild(footDiv);
+
+    headDiv.appendChild(prvMonth)
+    headDiv.appendChild(prvYear)
+    headDiv.appendChild(calStr)
+    headDiv.appendChild(nxtYear)
+    headDiv.appendChild(nxtMonth)
+
+    //load in information into blank elements
+    updateDateString()
+
+    updateCalDisplay()
+
+    updateFooter()
 }
