@@ -78,23 +78,31 @@ function updateDateString() {
 
     let heading = document.getElementById('calendarStr'), date;
 
-   if (dateInfo.day == 1 || dateInfo.day.toString().substring(1,2) == '1' && dateInfo.day > 11) {
-        date = dateInfo.day + 'st'
-    } else if (dateInfo.day == 2 || dateInfo.day.toString().substring(1,2) == '2' && dateInfo.day > 12) {
-        date = dateInfo.day + 'nd'
-    } else if (dateInfo.day == 3 || dateInfo.day.toString().substring(1,2) == '3' && dateInfo.day > 13) {
-        date = dateInfo.day + 'rd'
+    if (dateRightNow.getDate() == dateInfo.day && dateRightNow.getMonth() == dateInfo.month && dateRightNow.getFullYear() == dateInfo.year) {
+        
+        heading.innerText = 'Today';
+
     } else {
-        date = dateInfo.day + 'th'
+
+         if (dateInfo.day == 1 || dateInfo.day.toString().substring(1,2) == '1' && dateInfo.day > 11) {
+            date = dateInfo.day + 'st'
+        } else if (dateInfo.day == 2 || dateInfo.day.toString().substring(1,2) == '2' && dateInfo.day > 12) {
+            date = dateInfo.day + 'nd'
+        } else if (dateInfo.day == 3 || dateInfo.day.toString().substring(1,2) == '3' && dateInfo.day > 13) {
+            date = dateInfo.day + 'rd'
+        } else {
+            date = dateInfo.day + 'th'
+        }
+
+        heading.innerText = `${dateInfo.months[dateInfo.month]} ${date} ${dateInfo.year}`
+
     }
-
-    heading.innerText = `${dateInfo.months[dateInfo.month]} ${date} ${dateInfo.year}`
-
+  
 }
 
 
 function updateCalDisplay() {
-    
+
     let calDiv = document.getElementById('mainCalDiv');
 
     calDiv.innerHTML = '';
@@ -126,6 +134,7 @@ function updateCalDisplay() {
 
             // console.log(prvMonthVar);
 
+        //creates date elements for the previous month
         for (let i = 0; i < monthStartDay; i++) {
 
             count++
@@ -145,7 +154,7 @@ function updateCalDisplay() {
         }
     }
     
-
+    //creates date elements for the current month
     for (let i = 1; i < dateInfo.daysInMonths[dateInfo.month] + 1; i++) {
 
         count++
@@ -160,11 +169,21 @@ function updateCalDisplay() {
 
         text.innerText = i;
 
+        if (dateRightNow.getDate() == i && dateRightNow.getMonth() == dateInfo.month && dateRightNow.getFullYear() == dateInfo.year && i == dateInfo.day) {
+            dateDiv.id = 'selectedDay';
+            dateDiv.className += ' todaysDiv'
+        } else if (dateRightNow.getDate() == i && dateRightNow.getMonth() == dateInfo.month && dateRightNow.getFullYear() == dateInfo.year) {
+            dateDiv.className += ' todaysDiv'
+        } else if (i == dateInfo.day) {
+            dateDiv.id = 'selectedDay';
+        }
+
         dateDiv.appendChild(text);
 
         calDiv.appendChild(dateDiv);
     }
-
+        
+    //creates date elements for the next month
     for (let i = 1; count < 42; i++) {
 
         count++

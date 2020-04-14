@@ -10,6 +10,7 @@ body {
 }
 
 #prvMnt, #nxtMnt, #prvYear, #nxtYear {
+    cursor: pointer;
     flex: 1;
     border: none;
     border-radius: 200px;
@@ -50,6 +51,7 @@ body {
 }
 
 #calendarStr {
+    cursor: default;
     flex: 2.9;
     background-color: antiquewhite;
     border:solid 10px rgb(202, 244, 255);
@@ -63,8 +65,8 @@ body {
 }
 
 #mainCalDiv {
-    margin-left: 15%;
-    margin-right: 15%;
+    margin-left: 12%;
+    margin-right: 12%;
     background-color: black;
     display: grid;
 
@@ -75,11 +77,13 @@ body {
 .daysOfWeek {
     border: solid black;
     background-color: antiquewhite;
+    width: 200px;
 
     text-align: center;
 }
 
 .datesDivs {
+    user-select: none;
     border: solid black;
     background-color: rgb(202, 244, 255);
 
@@ -90,6 +94,16 @@ body {
 .datesDivs:hover {
     cursor: pointer;
     background-color: rgb(109, 226, 255);
+}
+
+#selectedDay {
+
+    border: solid rgb(255, 255, 182);
+    transform: scale(.97,.93);
+}
+
+.todaysDiv {
+    background-color: rgb(255, 226, 231);
 }
 
 .outOfMonth {
