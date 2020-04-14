@@ -124,7 +124,7 @@ function updateCalDisplay() {
 
        const prvMonthVar = dateInfo.month-1 != -1 ? dateInfo.month-1 : 11;
 
-            console.log(prvMonthVar);
+            // console.log(prvMonthVar);
 
         for (let i = 0; i < monthStartDay; i++) {
 
@@ -153,6 +153,8 @@ function updateCalDisplay() {
         let dateDiv = document.createElement('div');
 
         dateDiv.className = 'datesDivs'
+
+        dateDiv.onclick = ()=>selectDate(i);
 
         let text = document.createElement('h3');
 
@@ -240,6 +242,17 @@ function previousYear() {
 
     updateDateString()
 
+}
+
+function selectDate(date) {
+
+    // console.log(date);
+    
+    dateInfo.day = date;
+
+    updateCalDisplay()
+
+    updateDateString()
 }
 
 
