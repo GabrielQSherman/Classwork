@@ -38,3 +38,9 @@ This version will be a built out traditional calendar display. when the page loa
 The next month and previous month buttons are implemented and working. I will create a way to navigate the years next. The plan to navigate day selection is by clicking on the box for that day, a plan/event form will appear when a box is selected and this will allow notes, events, etc to be stored on particular dates
 
 I would like to implement a marking system so one can so marks on a given day to indicate things like bdays, holidays, ect
+
+4/14/2020
+
+add a special css styling for todays date. also instead of displaying the date up top when today's date is selected, it simply reads 'Today'
+
+I added a footer div that allows the user to create events on any day that is selected. The button in this div will prompt the user to input the details of the event. If there is no event on the selected day a heading element will inform the client they should make an event for today. If there are events created on a selected date they should show in the footer div
