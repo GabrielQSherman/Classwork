@@ -1,0 +1,3 @@
+simpleXHRequest.html - access the JSONPlaceholder API to get an array of objects, each object containing a user's infomation. This infomation is then added to the DOM with heading and link elements.
+
+xhrdemo.html - accessing the github api to get a list of users and then create a list using their login names. A paragraph element is used to string the users information one after another with < br > tags to make each username appear on a new line 
