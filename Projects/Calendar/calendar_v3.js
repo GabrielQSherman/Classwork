@@ -39,20 +39,33 @@ window.onload = () => {
     prvMonth.id = 'prvMnt';
     nxtMonth.id = 'nxtMnt';
 
+    prvYear = document.createElement('button'), 
+    nxtYear = document.createElement('button'); 
+
+    prvYear.innerHTML = '<b>Previous Year';
+    nxtYear.innerHTML = '<b>Next Year';
+
+
+    prvYear.onclick = previousYear;
+    nxtYear.onclick = nextYear;
+
+    prvYear.id = 'prvYear';
+    nxtYear.id = 'nxtYear';
+
     mainCalDiv.id = 'mainCalDiv';
 
     headDiv.id = 'headingDiv';
 
     calStr.id = 'calendarStr';
 
-    
-
     document.body.appendChild(headDiv);
 
     document.body.appendChild(mainCalDiv);
 
     headDiv.appendChild(prvMonth)
+    headDiv.appendChild(prvYear)
     headDiv.appendChild(calStr)
+    headDiv.appendChild(nxtYear)
     headDiv.appendChild(nxtMonth)
 
 
@@ -192,7 +205,7 @@ function previousMonth() {
 
 function nextMonth() {
     
-        if ( dateInfo.month < 11) {
+    if ( dateInfo.month < 11) {
 
         dateInfo.month++
    
@@ -207,4 +220,39 @@ function nextMonth() {
 
     updateDateString()
 
+}
+
+function nextYear() {
+
+    dateInfo.year++
+
+    updateCalDisplay()
+
+    updateDateString()
+    
+}
+
+function previousYear() {
+    
+    dateInfo.year--
+
+    updateCalDisplay()
+
+    updateDateString()
+
+}
+
+
+function checkLeapYear(year) {
+
+    if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0 )) {
+
+        dateInfo.daysInMonths[1] = 29
+        
+    } else {
+
+        dateInfo.daysInMonths[1] = 28
+    
+    }
+    
 }

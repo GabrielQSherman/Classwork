@@ -9,7 +9,7 @@ body {
     width: 100%
 }
 
-#prvMnt, #nxtMnt {
+#prvMnt, #nxtMnt, #prvYear, #nxtYear {
     flex: 1;
     border: none;
     border-radius: 200px;
@@ -23,9 +23,12 @@ body {
     transition: all ease-in-out .5s;
 }
 
-#prvMnt:hover, #nxtMnt:hover {
+#prvMnt:hover, #nxtMnt:hover, #prvYear:hover, #nxtYear:hover {
     opacity: 77%;
     transform: scale(.98,.98);
+    border-radius: 30px;
+
+    transition-duration: .5s;
 } 
 
 #prvMnt {
@@ -33,18 +36,28 @@ body {
     background-color: rgb(255, 187, 232);
 }
 #nxtMnt {
-    background-color: rgb(214, 255, 241);
+    background-color: rgb(255, 115, 255);
     margin-right: 23%;
 }
 
+#prvYear {
+    margin-left: 2%;
+    background-color: rgb(115, 239, 255);
+}
+#nxtYear {
+    background-color: rgb(16, 255, 175);
+    margin-right: 2%;
+}
+
 #calendarStr {
+    flex: 2.9;
     background-color: antiquewhite;
     border:solid 10px rgb(202, 244, 255);
     border-radius: 10px;
 
     margin: 2%;
-    margin-left: 7%;
-    margin-right: 7%;
+    margin-left: 3%;
+    margin-right: 3%;
 
     padding: 20px;
 }
