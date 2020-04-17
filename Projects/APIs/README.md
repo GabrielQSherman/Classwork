@@ -6,6 +6,16 @@ Git Users API
 JSON-PlaceHolder and Dog.ceo APIs
 an api calling program that calls two apis and creates a frontend display using data received from both Api responses. the jsonplaceholder website is used to get fake user info, and dog.ceo's api is used to get random pictures of dogs to display with the fake user information. The front end uses CSS grid to shows a neat display of the infromation received from the API requests 
 
+twoAPIsProj 
+a program that displays a White Pages style information page with dog pictures as the peoples images. Fake person information comes from the api:
+https://jsonplaceholder.typicode.com/users
+and the api for the dog images is:
+https://dog.ceo/api/breed/rottweiler/images/random
+
+once all the pictures have been requested from dog.ceo the request for the fake person info is made
+
+this project was made to demo async code and how http request rely on async opertaions to deliver infomation to the client-side with long wait times.
+
 
 SINGLE FILE PROJECTS
     simpleXHRequest.html - access the JSONPlaceholder API to get an array of objects, each object containing a user's infomation. This infomation is then added to the DOM with heading and link elements.
