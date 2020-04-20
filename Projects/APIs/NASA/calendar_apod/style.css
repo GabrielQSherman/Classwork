@@ -73,14 +73,19 @@ body {
 
 #calBody {
     flex: .5;
-
-    /* width: 750px; */
+    text-align: center;
+    /* margin: auto; */
+    height: 677px;
     margin-left: 3%;
     margin-right: 3%;
     background-color: black;
     display: grid;
     grid-template-columns: auto auto auto auto auto auto auto;
 
+}
+
+#calBody h3 {
+    margin-top: 50%;
 }
 
 .daysOfWeek {
@@ -131,14 +136,31 @@ body {
     flex-direction: column;
 }
 
-#imgDiv img {
-    margin: auto;
-    width: 500px;
+#imgCon {
+    width: 700px;
     height: auto;
 }
 
-#imgDiv h3 {
+#imgCon img {
+    width: 100%;
+}
+
+#imgCon h3 {
+    position: relative;
+    text-align: center;
     background-color: rgb(255, 255, 187);
-    padding: 20px;
-    border-radius: 20px;
+    left: 50%;
+    right: 50%;
+    bottom: 50%;
+    top: 50%;
+    transform: translate(-50%, -110%);
+    width: 500px;
+    opacity: 0%;
+    transition: ease-in-out 1s;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#imgCon:hover h3 {
+    opacity: 100%;
 }

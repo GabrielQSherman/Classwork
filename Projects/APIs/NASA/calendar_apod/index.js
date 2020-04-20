@@ -282,17 +282,21 @@ function makeNasaReq() {
 function updateImgDiv(data) {
     
     let mainDiv = document.getElementById('imgDiv'),
+        imgCon = document.getElementById('imgCon'),
         img = document.createElement('img'),
         info = document.createElement('h3');
 
         mainDiv.innerHTML = '';
+        imgCon.innerHTML = '';
 
         img.src = data.hdurl;
 
         info.innerText = data.explanation;
 
-        mainDiv.appendChild(img)
-        mainDiv.appendChild(info)
+        mainDiv.appendChild(imgCon)
+
+        imgCon.appendChild(img)
+        imgCon.appendChild(info)
 
 }
 
@@ -308,6 +312,8 @@ window.onload = () => {
     pageDiv = document.createElement('div'),
 
     imgDiv = document.createElement('div'),
+    imgCon = document.createElement('div'),
+
     
     //create string that will display the date in the header
     calStr = document.createElement('h1'),
@@ -342,6 +348,8 @@ window.onload = () => {
     calBody.id = 'calBody';
 
     imgDiv.id = 'imgDiv';
+    imgCon.id = 'imgCon';
+
 
     pageDiv.id = 'pageDiv';
 
@@ -357,11 +365,13 @@ window.onload = () => {
     pageDiv.appendChild(calBody);
     pageDiv.appendChild(imgDiv);
 
-    headerDiv.appendChild(prvMonth)
-    headerDiv.appendChild(prvYear)
-    headerDiv.appendChild(calStr)
-    headerDiv.appendChild(nxtYear)
-    headerDiv.appendChild(nxtMonth)
+    imgDiv.appendChild(imgCon);
+
+    headerDiv.appendChild(prvMonth);
+    headerDiv.appendChild(prvYear);
+    headerDiv.appendChild(calStr);
+    headerDiv.appendChild(nxtYear);
+    headerDiv.appendChild(nxtMonth);
 
     //load in information into blank elements
     updateDateString()
