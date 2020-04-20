@@ -33,6 +33,8 @@ function updateDateString() {
             date = dateInfo.day + 'nd'
         } else if (dateInfo.day == 3 || dateInfo.day.toString().substring(1,2) == '3' && dateInfo.day > 13) {
             date = dateInfo.day + 'rd'
+        } else if (dateInfo.day == 0) {
+            date = '?'
         } else {
             date = dateInfo.day + 'th'
         }
@@ -150,6 +152,8 @@ function updateCalDisplay() {
 
 function previousMonth() {
 
+    dateInfo.day = 0;
+
     if ( dateInfo.month > 0) {
 
     dateInfo.month--
@@ -157,7 +161,7 @@ function previousMonth() {
     } else if ( dateInfo.month == 0) {
 
         dateInfo.month = 11;
-        dateInfo.year--
+        dateInfo.year = dateInfo.year > 1996 ? dateInfo.year -1: dateRightNow.getFullYear();
 
     } 
 
@@ -168,6 +172,8 @@ function previousMonth() {
 }
 
 function nextMonth() {
+
+    dateInfo.day = 0;
     
     if ( dateInfo.month < 11) {
 
@@ -176,7 +182,7 @@ function nextMonth() {
     } else if ( dateInfo.month == 11) {
 
         dateInfo.month = 0;
-        dateInfo.year++
+        dateInfo.year = dateInfo.year+1 < dateRightNow.getFullYear() ? dateInfo.year +1: 1996;
 
     } 
 
@@ -188,7 +194,9 @@ function nextMonth() {
 
 function nextYear() {
 
-    dateInfo.year++
+    dateInfo.day = 0;
+
+    dateInfo.year = dateInfo.year+1 < dateRightNow.getFullYear() ? dateInfo.year +1: 1996;
 
     updateCalDisplay()
 
@@ -197,8 +205,10 @@ function nextYear() {
 }
 
 function previousYear() {
+
+    dateInfo.day = 0;
     
-    dateInfo.year--
+    dateInfo.year = dateInfo.year > 1996 ? dateInfo.year -1: dateRightNow.getFullYear();
 
     updateCalDisplay()
 
@@ -208,13 +218,13 @@ function previousYear() {
 
 function selectDate(date) {
 
-    // console.log(date);
-    
     dateInfo.day = date;
 
     updateCalDisplay()
 
     updateDateString()
+
+    makeNasaReq()
 }
 
 
@@ -239,7 +249,7 @@ function makeNasaReq() {
     let xhr = new XMLHttpRequest() , 
     endpoint = `https://api.nasa.gov/planetary/apod`, 
     myKey = `2Y4dgeGYMnhG3XrzoYfrUSeOBkcEfhCBK936CLfJ`,
-    today = `${dateInfo.year}-${dateInfo.month}-${dateInfo.day}`;
+    today = `${dateInfo.year}-${dateInfo.month+1}-${dateInfo.day}`;
 
     endpoint += `?api_key=${myKey}&date=${today}&hd=true`;
 
@@ -274,6 +284,8 @@ function updateImgDiv(data) {
     let mainDiv = document.getElementById('imgDiv'),
         img = document.createElement('img'),
         info = document.createElement('h3');
+
+        mainDiv.innerHTML = '';
 
         img.src = data.hdurl;
 
