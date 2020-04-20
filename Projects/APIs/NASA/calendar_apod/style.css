@@ -6,7 +6,7 @@ body {
 
 #pageDiv {
     display: flex;
-
+    /* width: auto; */
 }
 
 
@@ -72,9 +72,9 @@ body {
 }
 
 #calBody {
-    flex: .3;
+    flex: .5;
 
-    width: 750px;
+    /* width: 750px; */
     margin-left: 3%;
     margin-right: 3%;
     background-color: black;
@@ -131,3 +131,14 @@ body {
     flex-direction: column;
 }
 
+#imgDiv img {
+    margin: auto;
+    width: 500px;
+    height: auto;
+}
+
+#imgDiv h3 {
+    background-color: rgb(255, 255, 187);
+    padding: 20px;
+    border-radius: 20px;
+}

@@ -232,12 +232,56 @@ function checkLeapYear(year) {
     
 }
 
-function updateImgDiv() {
-    let mainDiv = document.getElementById('imgDiv');
+function makeNasaReq() {
 
     //make a request to the NASA api for a photo/info
 
+    let xhr = new XMLHttpRequest() , 
+    endpoint = `https://api.nasa.gov/planetary/apod`, 
+    myKey = `2Y4dgeGYMnhG3XrzoYfrUSeOBkcEfhCBK936CLfJ`,
+    today = `${dateInfo.year}-${dateInfo.month}-${dateInfo.day}`;
+
+    endpoint += `?api_key=${myKey}&date=${today}&hd=true`;
+
+    xhr.open('GET', endpoint, true);
+    xhr.send()
+
+    xhr.onload = () => {
+
+        const nasaData = JSON.parse(xhr.responseText);
+        console.log(nasaData);
+
+        if (nasaData.msg != undefined && nasaData.msg.includes('format')) {
+            
+            console.log('date was in the incorrect format');
+            
+        } else if (nasaData.msg != undefined && nasaData.msg.includes('Date')) {
+          
+          console.log('request was made to an invalid date');
+          
+        } else {
+            console.log('test');
+            
+            updateImgDiv(nasaData)
+        }
+
+    }
     
+}
+
+function updateImgDiv(data) {
+    
+    let mainDiv = document.getElementById('imgDiv'),
+        img = document.createElement('img'),
+        info = document.createElement('h3');
+
+        img.src = data.hdurl;
+
+        info.innerText = data.explanation;
+
+        mainDiv.appendChild(img)
+        mainDiv.appendChild(info)
+
 }
 
 //when the browser loads i want to create a div that will store the calendar grid display
@@ -312,6 +356,6 @@ window.onload = () => {
 
     updateCalDisplay()
 
-    updateImgDiv()
+    makeNasaReq()
 
 }
