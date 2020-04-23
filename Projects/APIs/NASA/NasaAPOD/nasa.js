@@ -1,3 +1,4 @@
+const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
 
 let dateInfo = {
 
@@ -45,6 +46,14 @@ window.onload = () => {
 
     nasaDiv.id = 'NasaPOTD';
 
+    let randomBtn = document.createElement('button');
+
+    randomBtn.id = 'ranBtn';
+
+    randomBtn.onclick = reqRanImg;
+
+    randomBtn.innerText = 'Im Feelin Lucky';
+
     let startSelection = document.createElement('button');
 
     startSelection.id = 'startBtn';
@@ -58,6 +67,8 @@ window.onload = () => {
     document.body.appendChild(nasaDiv);
 
     mainDiv.appendChild(heading);
+
+    mainDiv.appendChild(randomBtn);
 
     mainDiv.appendChild(startSelection);
 
@@ -180,6 +191,17 @@ function displayApod(data) {
 
     }
 
+}
+
+function reqRanImg() {
+      
+      
+        dateInfo.year = 1995 + Math.floor(Math.random() * (dateInfo.year - 1995));
+        
+        dateInfo.month = Math.floor(Math.random() * (12));
+
+        dateInfo.day = Math.ceil(Math.random() * (daysInMonth[dateInfo.month])); 
+        requestApod()
 }
 
 
