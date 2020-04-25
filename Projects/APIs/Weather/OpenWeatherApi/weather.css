@@ -1,0 +1,18 @@
+body {
+    text-align: center;
+    background-color: black;
+}
+
+#uidiv {
+    background-color: antiquewhite;
+    color: lightblue;
+
+    padding: 100px;
+
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+#infodiv {
+    background-color: aquamarine;
+}
