@@ -12,9 +12,20 @@ window.onload = () => {
 
     cityNameInput.id = 'cityIn';
 
-    document.body.appendChild(cityNameInput);
+    let UI = document.createElement('div'),
 
-    document.body.appendChild(button);
+        info = document.createElement('div');
+
+    UI.id = 'uidiv';
+    info.id = 'infodiv';
+
+    document.body.appendChild(UI);
+
+    document.body.appendChild(info);
+
+    UI.appendChild(cityNameInput)
+    UI.appendChild(button)
+
 }
 
 function requestApi() {
@@ -72,7 +83,16 @@ function requestApi() {
 
             const weatherData = JSON.parse(xhr.responseText);
 
-            console.log(weatherData);
+            if (weatherData.weather == undefined) {
+
+                document.getElementById('cityIn').value = '';
+                document.getElementById('cityIn').placeholder = weatherData.message;
+                return;
+
+            }
+            // console.log(weatherData);
+
+            updateDisplay(weatherData)
             
         }
 
@@ -81,3 +101,21 @@ function requestApi() {
     
 }
 
+function updateDisplay(data) {
+
+    
+    let general = document.createElement('h2'),
+
+        infoDiv = document.getElementById('infodiv');
+
+    //add data into html elements
+
+    general.innerText = 'The weather is ' + data.weather[0].main;
+
+    //clear the info div and add elements that were just created
+    infoDiv.innerHTML = '';
+
+    infoDiv.appendChild(general)
+
+    
+}
