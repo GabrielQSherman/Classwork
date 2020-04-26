@@ -1,6 +1,8 @@
 body {
     text-align: center;
     background-color: black;
+
+    background-size: cover;
 }
 
 #uidiv {
@@ -46,6 +48,7 @@ body {
 }
 
 #reqBtn {
+    font-size: large;
     cursor: pointer;
     padding: 3%;
     border-radius: 10px;
@@ -81,4 +84,31 @@ body {
 
 #infodiv h1 {
     text-shadow: aliceblue 2px 2px;
+}
+
+#nasaDiv {
+
+    background-color: rgb(255, 182, 249);
+
+    border-radius: 35px;
+
+    border: solid rgb(241, 255, 194) 5px;
+    margin-left: 40%;
+    margin-right: 40%;
+    margin-bottom: 2%;
+    padding: 1%;
+    transition: all ease-in-out 1.5s;
+
+    justify-content: center;
+
+}
+
+#nasaDiv button {
+    cursor: pointer;
+    font-size: large;
+    padding: 3%;
+    border-radius: 10px;
+    color: rgb(105, 238, 255);
+    background-color: black;
+    transition: all ease-in-out .5s;
 }
