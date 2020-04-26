@@ -1,36 +1,57 @@
+ let nasaKey = '2Y4dgeGYMnhG3XrzoYfrUSeOBkcEfhCBK936CLfJ', //your key here
+
+
+     OWapiKey = `1d9310268663c451264a0a75aef60939`,
+
+     uiHidden = false;
+
+
 window.onload = () => {
 
-    let button = document.createElement('button');
+    let reqWeatherBtn = document.createElement('button'),
+        reqNasaImg = document.createElement('button'),
+        uiHideBtn = document.createElement('button'),
 
-    button.id = 'reqBtn';
+        cityNameInput = document.createElement('input'),
+        nasaInfo = document.createElement('p');
 
-    button.onclick = requestApi;
-
-    button.innerText = 'Get the current weather';
-
-    let cityNameInput = document.createElement('input');
-
+    reqWeatherBtn.id = 'reqBtn';
+    uiHideBtn.id = 'uiHideBtn';
+    nasaInfo.id = 'nasaInfo';
+    cityNameInput.id = 'cityIn';
+    
+    reqWeatherBtn.onclick = requestApi;
+    uiHideBtn.onclick = hideUI;
+    reqNasaImg.onclick = reqRanImg;
+    
+    reqWeatherBtn.innerText = 'Get the current weather';
+    reqNasaImg.innerText = 'Change NASA Image';
+    uiHideBtn.innerText = 'Hide UI';
     cityNameInput.placeholder = 'Enter A City Name OR Zipcode';
 
-    cityNameInput.id = 'cityIn';
 
     let UI = document.createElement('div'),
-
-        info = document.createElement('div');
+        info = document.createElement('div'),
+        nasa = document.createElement('div');
 
     UI.id = 'uidiv';
     info.id = 'infodiv';
+    nasa.id = 'nasaDiv';
 
     document.body.appendChild(UI);
 
     document.body.appendChild(info);
 
+    document.body.appendChild(nasa);
+
+    nasa.appendChild(nasaInfo)
+    nasa.appendChild(reqNasaImg)
+    nasa.appendChild(uiHideBtn)
+    
     UI.appendChild(cityNameInput)
-    UI.appendChild(button)
+    UI.appendChild(reqWeatherBtn)
 
-    cityNameInput.value = '02916';
-
-    requestApi()
+    reqRanImg()
 
 }
 
@@ -44,9 +65,6 @@ function requestApi() {
 
     let num = /[0-9]/g,
         alpha = /[A-z]/;
-
-    //api.openweathermap.org/data/2.5/weather?zip={zip code},{country code}&appid={your api key}
-    //api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
 
     let query;
 
@@ -73,10 +91,7 @@ function requestApi() {
     }
     //check for vaild zipcode format only 5numbers
 
-    const myKey = `1d9310268663c451264a0a75aef60939`, 
-
-    endPoint = `https://api.openweathermap.org/data/2.5/weather?${query}&APPID=${myKey}&units=imperial`,
-
+    let endPoint = `https://api.openweathermap.org/data/2.5/weather?${query}&APPID=${OWapiKey}&units=imperial`,
 
     //create instance of xhr object
         xhr = new XMLHttpRequest();
@@ -120,7 +135,7 @@ function updateDisplay(data) {
 
     //add data into html elements
 
-    general.innerHTML = `<h1>Currently in ${data.name} it is...</h1><br><h3>On average it is ${data.main.temp}°F.  With a high of ${data.main.temp_max}°F and a low of ${data.main.temp_min}°F.</h3><br><h3>The humidity is ${data.main.humidity}%, and the pressure is ${data.main.pressure}hPa.</h3><br><h3>Winds are coming from the ${windDirection} with speeds of ${data.wind.speed}mph.</h3><br>`
+    general.innerHTML = `<h1>Currently in ${data.name} it is...</h1><br><h3>On average ${data.main.temp}°F.  With a high of ${data.main.temp_max}°F and a low of ${data.main.temp_min}°F.</h3><br><h3>The humidity is ${data.main.humidity}%, and the pressure is ${data.main.pressure}hPa.</h3><br><h3>Winds are coming from the ${windDirection} with speeds of ${data.wind.speed}mph.</h3><br>`
 
     iconImg.src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
     //clear the info div and add elements that were just created
@@ -154,4 +169,98 @@ function getWindDirect(deg) {
         return 'North West'
     }
 
+}
+
+//variables to make NASA api work
+
+const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
+
+let dateInfo = {
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() +1,
+    day: new Date().getDate(),
+}, currentDate = {
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() +1,
+    day: new Date().getDate(),
+};
+
+//XHR Function for nasa api
+
+function requestApod () {
+
+   const day = dateInfo.day < 10 ? '0' + dateInfo.day : dateInfo.day,
+         month = dateInfo.month < 10 ? '0' + dateInfo.month : dateInfo.month;
+         date = `${dateInfo.year}-${month}-${day}`;
+
+    let xhr = new XMLHttpRequest(),
+    method = 'GET',
+    endpoint = `https://api.nasa.gov/planetary/apod?api_key=${nasaKey}&date=${date}&hd=true`;
+
+    //open send and onload
+
+    xhr.open(method, endpoint, true);
+
+    xhr.onload = () => {
+
+        let response = JSON.parse(xhr.responseText);
+
+        //only set the background image if an image is returned, others try another image
+        if (response.media_type == 'image') {
+
+            let crOwner = response.copyright == undefined ? 'Public Domain' : response.copyright;
+
+            document.getElementById('nasaInfo').innerHTML = `Copyright ${crOwner}<br>NASA APOD ${date}<br>Title: '${response.title}'`
+
+            document.body.style.backgroundImage = `url(${response.hdurl})`
+        } else {
+            reqRanImg()
+        }
+
+
+    }
+
+    xhr.send()
+}
+
+
+function reqRanImg() {
+      
+    dateInfo.year = 1995 + Math.floor(Math.random() * (currentDate.year - 1995));
+    
+    dateInfo.month = Math.floor(Math.random() * (12));
+
+    dateInfo.day = Math.ceil(Math.random() * (daysInMonth[dateInfo.month])); 
+
+    requestApod()
+}
+
+function hideUI() {
+
+    let UiDiv = document.getElementById('uidiv'),
+        weatherDiv = document.getElementById('infodiv'),
+        nasaDiv = document.getElementById('nasaDiv'),
+        uiHideBtn = document.getElementById('uiHideBtn');
+
+    if (!uiHidden) {
+
+        uiHideBtn.innerText = 'Show UI'
+
+        UiDiv.style.opacity = '0%';
+        weatherDiv.style.opacity = '0%';
+        nasaDiv.style.opacity = '10%';
+
+        uiHidden = true;
+        
+    } else {
+
+        uiHideBtn.innerText = 'Hide UI'
+
+        UiDiv.style.opacity = '100%';
+        weatherDiv.style.opacity = '100%';
+        nasaDiv.style.opacity = '100%';
+
+        uiHidden = false;
+
+    }  
 }
