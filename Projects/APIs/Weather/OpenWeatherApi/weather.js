@@ -2,6 +2,8 @@ window.onload = () => {
 
     let button = document.createElement('button');
 
+    button.id = 'reqBtn';
+
     button.onclick = requestApi;
 
     button.innerText = 'Get the current weather';
@@ -25,6 +27,10 @@ window.onload = () => {
 
     UI.appendChild(cityNameInput)
     UI.appendChild(button)
+
+    cityNameInput.value = '02916';
+
+    requestApi()
 
 }
 
@@ -103,19 +109,49 @@ function requestApi() {
 
 function updateDisplay(data) {
 
-    
-    let general = document.createElement('h2'),
+    const windDirection = getWindDirect(data.wind.deg);
 
-        infoDiv = document.getElementById('infodiv');
+    
+    let general = document.createElement('div'),
+
+        infoDiv = document.getElementById('infodiv'),
+
+        iconImg = document.createElement('img');
 
     //add data into html elements
 
-    general.innerText = 'The weather is ' + data.weather[0].main;
+    general.innerHTML = `<h1>Currently in ${data.name} it is...</h1><br><h3>On average it is ${data.main.temp}°F.  With a high of ${data.main.temp_max}°F and a low of ${data.main.temp_min}°F.</h3><br><h3>The humidity is ${data.main.humidity}%, and the pressure is ${data.main.pressure}hPa.</h3><br><h3>Winds are coming from the ${windDirection} with speeds of ${data.wind.speed}mph.</h3><br>`
 
+    iconImg.src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
     //clear the info div and add elements that were just created
     infoDiv.innerHTML = '';
 
+
+    infoDiv.appendChild(iconImg)
     infoDiv.appendChild(general)
 
+
     
+}
+
+function getWindDirect(deg) {
+
+    if (deg >= 0 && deg < 11.25 || deg >= 326.25 && deg <= 348.75) {
+        return 'North'
+    } else if (deg >= 11.25 && deg < 56.25) {
+        return 'North East'
+    } else if (deg >= 56.25 && deg < 101.25) {
+        return 'East'
+    } else if (deg >= 101.25 && deg < 146.25) {
+        return 'South East'
+    } else if (deg >= 146.25 && deg < 191.25) {
+        return 'South'
+    } else if (deg >= 191.25 && deg < 236.25) {
+        return 'South West'
+    } else if (deg >= 236.25 && deg < 281.25) {
+        return 'West'
+    } else if (deg >= 281.25 && deg < 326.25) {
+        return 'North West'
+    }
+
 }
