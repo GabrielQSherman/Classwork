@@ -86,7 +86,7 @@ function searchStationReq() {
 
         let parsedData = JSON.parse(xhr.responseText);
 
-        console.log(parsedData); //returns and object with an array of objects, each object represents a stations that this api has historical weather information from
+        // console.log(parsedData); //returns and object with an array of objects, each object represents a stations that this api has historical weather information from
 
 
         if (parsedData.data.length == 0) {
@@ -95,8 +95,11 @@ function searchStationReq() {
             
         } else if (parsedData.data.length == 1) {
             //request historical info for the one station found
+            let stationObj = parsedData.data[0];
 
-            reqHisData(parsedData.data[0])
+                stationObj.name = `${stationObj.name}, ${stationObj.country}`;
+
+            reqHisData(stationObj)
 
 
         } else {
@@ -130,7 +133,8 @@ function searchStationReq() {
 
                 let stationSelect = document.getElementById('stationSelect');
                 let stationObject = {
-                    id: stationSelect.value
+                    id: stationSelect.value,
+                    name: stationSelect.options[stationSelect.selectedIndex].text
                 }
 
                 reqHisData(stationObject)
@@ -149,14 +153,6 @@ function searchStationReq() {
 
             alert('Select a station to complete your submition')
 
-
-            //make select element
-
-            //create onchange function
-
-            //req historical info
-
-            //provide hitsorical info for the selected station
         }
 
     }
@@ -186,7 +182,7 @@ function reqHisData(stationObj) {
 
         xhr = new XMLHttpRequest();
 
-        console.log(endpoint);
+        // console.log(endpoint);
  
         xhr.open('GET', endpoint, true)
 
@@ -194,14 +190,14 @@ function reqHisData(stationObj) {
 
                 let parsedData = JSON.parse(xhr.responseText);
 
-                console.log(parsedData); //returns and object with an array of objects, each object represents a stations that this api has historical weather information from
+                // console.log(parsedData); //returns and object with an array of objects, each object represents a stations that this api has historical weather information from
 
                 //if parsedData.data is an empty array, the date provided is outside the limits of the given station
                 let weatherInfo = parsedData.data[0];
 
                 if (weatherInfo != undefined) {
 
-                    //display info to the frontend
+                    displayWeatherData(weatherInfo, stationObj)
 
                     
                 } else {
@@ -214,4 +210,109 @@ function reqHisData(stationObj) {
 
         xhr.send()
     
+}
+
+function displayWeatherData(weather, station) { //weather contains the object that has important weather info, station is the weather station object that was used in the request
+
+    // console.log(station);
+
+    let stationDiv = createDivElement({}),
+        weatherDiv = document.getElementById('weatherDiv'),
+
+        stationNameHead = createHeading({size: 2, text: station.name});
+
+        stationDiv.appendChild(stationNameHead);
+
+    for (const k in weather) {
+    
+        if (weather[k] != null) {
+            
+            let infoType = k.substring(0,1).toUpperCase() + k.substring(1,k.length),
+
+                convertedData = convertData(k, weather[k]),
+
+                weatherInfoHead = createHeading({size: 4, text: `${infoType}: ${convertedData}`});
+
+            //append to the stationDiv
+            stationDiv.appendChild(weatherInfoHead);
+            
+        }
+        
+    }
+
+    let deleteButton = document.createElement('button');
+
+    deleteButton.innerText = 'X';
+
+    deleteButton.onclick = deleteADiv;
+
+    stationDiv.appendChild(deleteButton);
+
+    //append the stationDiv To weatherDiv
+    weatherDiv.appendChild(stationDiv);
+
+}
+
+function deleteADiv() {
+
+    this.parentElement.remove()
+
+}
+
+function convertData(key, value) {
+
+    switch (key) {
+
+        case 'peakgust':
+        case 'windspeed':
+
+            return (Math.round((value / 1.609344)*10))/10 + 'mph'
+            
+        case 'precipitation':
+
+            return (Math.round((value / 25.4)*100))/100 + 'in.'
+
+        case 'pressure': 
+            return value + 'hPa'
+
+        case 'snowdepth':
+        case 'snowfall':
+            
+            return (Math.round((value/2.54)*100))/100 + 'in.'
+        case 'temperature':
+        case 'temperature_min':
+        case 'temperature_max':
+
+            return (Math.round(((value*9/5)+32)*10))/10 + '°F'
+        case 'winddirection':
+
+            return getWindDirect(value)
+        case 'date':
+
+            return value
+    
+    }
+
+}
+
+function getWindDirect(deg) {
+
+    if (deg >= 0 && deg < 11.25 || deg >= 326.25 && deg <= 348.75) {
+        return 'North'
+    } else if (deg >= 11.25 && deg < 56.25) {
+        return 'North East'
+    } else if (deg >= 56.25 && deg < 101.25) {
+        return 'East'
+    } else if (deg >= 101.25 && deg < 146.25) {
+        return 'South East'
+    } else if (deg >= 146.25 && deg < 191.25) {
+        return 'South'
+    } else if (deg >= 191.25 && deg < 236.25) {
+        return 'South West'
+    } else if (deg >= 236.25 && deg < 281.25) {
+        return 'West'
+    } else if (deg >= 281.25 && deg < 326.25) {
+        return 'North West'
+    }
+
 }
