@@ -14,6 +14,10 @@ window.onload = () => {
 
     initHisFrontEnd()
 
+    cityIn.value = '02906';
+
+    requestCurApi()
+
 }
 
 function initHisFrontEnd() {
@@ -99,28 +103,58 @@ function initCurFrontEnd() {
 
 function displayCurData(data) {
 
-    const windDirection = getWindDirect(data.wind.deg);
-
+    let windDirection = getWindDirect(data.wind.deg),
     
-    let general = document.createElement('div'),
+        currentWeatherDiv = document.getElementById('infodiv'),
 
-        infoDiv = document.getElementById('infodiv'),
+        infoDiv = document.createElement('div'),
 
-        iconImg = document.createElement('img');
+        iconImg = document.createElement('img'),
 
-    //add data into html elements
+        cityName = createHeading({size: 2, text: data.name});
 
-    general.innerHTML = `<h1>Currently in ${data.name} it is...</h1><br><h3>On average ${data.main.temp}°F.  With a high of ${data.main.temp_max}°F and a low of ${data.main.temp_min}°F.</h3><br><h3>The humidity is ${data.main.humidity}%, and the pressure is ${data.main.pressure}hPa.</h3><br><h3>Winds are coming from the ${windDirection} with speeds of ${data.wind.speed}mph.</h3><br>`
+        iconImg.src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
 
-    iconImg.src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-    //clear the info div and add elements that were just created
-    infoDiv.innerHTML = '';
+        currentWeatherDiv.appendChild(infoDiv)
+
+        infoDiv.appendChild(cityName)
+
+        infoDiv.appendChild(iconImg)
+
+    for (const key in data) {
+       
+       if (key == 'main' ) {
 
 
-    infoDiv.appendChild(iconImg)
-    infoDiv.appendChild(general)
+           for (const k in data[key]) {
+               let dataType = k.substring(0,1).toUpperCase() + k.substring(1,k.length).replace(/_/, ' ');
 
+               for (let i = 0; i < dataType.length; i++) {
+                   
+                   if (dataType[i] == ' ') {
 
+                       console.log(dataType[i],dataType[i+1].toUpperCase());
+                       
+                       dataType = dataType.substring(0,i+1) + dataType.substring(i+1,i+2).toUpperCase() + dataType.substring(i+2,dataType.length);
+                   }
+ 
+               }
+
+                let infoHeading = createHeading({size: 4, text: `${dataType} - ${data[key][k]}`})
+
+                infoDiv.appendChild(infoHeading)
+           }
+           
+       }
+    }
+
+     let deleteButton = document.createElement('button');
+
+    deleteButton.innerText = 'X';
+
+    deleteButton.onclick = deleteADiv;
+
+    infoDiv.appendChild(deleteButton);
     
 }
 
