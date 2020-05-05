@@ -172,3 +172,63 @@ body {
     color: aqua;
     font-size: larger;
 }
+
+#hisWeatherDiv div, #infodiv div {
+
+    /* background-color: #222; */
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+
+
+    border: solid #777;
+
+    border-radius: 25px;
+
+}
+
+#hisWeatherDiv div button, #infodiv div button {
+    background-color: rgb(161, 77, 77);
+    border: none;
+    border-radius: 10px;
+    font-size: large;
+    padding: 13px;
+    padding-left: 25px;
+    padding-right: 25px;
+
+    margin-bottom: 3%;
+
+    transition: all ease-in-out .7s;
+
+}
+
+#hisWeatherDiv div button:hover, #infodiv div button:hover {
+
+    background-color: rgb(241, 91, 91);
+
+
+    transform: scale(.9, .9);
+}
+
+#hisWeatherDiv div h4, #infodiv div h4 {
+    transition: ease-in .4s;
+    transition: ease-out 1.5s;
+    cursor: default;
+
+    margin-left: 37%;
+    margin-right: 37%;
+    padding: 3px;
+
+    border-radius: 20px;
+
+
+}
+
+#hisWeatherDiv div h4:hover, #infodiv div h4:hover {
+
+    background-color: rgb(241, 91, 179);
+
+
+    transform: scale(.9, .9);
+}
