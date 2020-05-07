@@ -55,8 +55,25 @@
 
     function createPostDisplay(post){
 
+        console.log(post);
         
-        
+
+        let div = document.createElement('div'),
+            title = document.createElement('h3'),
+            body = document.createElement('h4'),
+            userId = document.createElement('h5');
+
+        title.innerText = post.title;
+        body.innerText = post.body;
+        userId.innerText = 'User #' + post.userId;
+
+        div.appendChild(title)
+        div.appendChild(body)
+        div.appendChild(userId)
+
+        postsDiv.appendChild(div)
+
+
     }
     
     function compileFormData() {
