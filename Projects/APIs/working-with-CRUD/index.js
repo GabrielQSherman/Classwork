@@ -23,7 +23,7 @@
             selectPostNum.appendChild(defOpt)
 
         //create options for select element
-            for (let i = 10; i < 100; i+=10) {
+            for (let i = 10; i <= 100; i+=10) {
 
                 let optionElm = document.createElement('option');
 
@@ -44,6 +44,14 @@
 
     function displayPost() {
 
+        postsDiv.innerHTML = '';
+
+        let postHeading = document.createElement('h1');
+
+        postHeading.innerText = `Showing ${this.value} Posts`;
+
+        postsDiv.appendChild(postHeading);
+
         for (let i = 0; i < this.value; i++) {
             
             createPostDisplay(allPosts[i])
@@ -55,8 +63,7 @@
 
     function createPostDisplay(post){
 
-        console.log(post);
-        
+        // console.log(post);
 
         let div = document.createElement('div'),
             title = document.createElement('h3'),
@@ -67,12 +74,11 @@
         body.innerText = post.body;
         userId.innerText = 'User #' + post.userId;
 
+        div.appendChild(userId)
         div.appendChild(title)
         div.appendChild(body)
-        div.appendChild(userId)
 
         postsDiv.appendChild(div)
-
 
     }
     
