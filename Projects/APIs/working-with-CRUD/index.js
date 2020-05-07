@@ -1,11 +1,10 @@
- 
+ let allPost; //will become an array with 100 'post' objects when the requestAllPost function is called
 
     window.onload = () => {
 
-        //request all post -> array of 100 post object
+        requestAllPost()
 
-        //itterate through the first 10-20 elements of the array,
-        // create a display with each object's info (store each object info in div)
+
     }
     
     function compileFormData() {
@@ -46,6 +45,25 @@
 
         }
 
+    }
+
+    function requestAllPost() {
+
+        let xhr = new XMLHttpRequest();
+
+        let endpoint = 'https://jsonplaceholder.typicode.com/posts';
+
+        xhr.open('GET', endpoint, true);
+
+        xhr.onload = () => {
+
+            allPost = JSON.parse(xhr.responseText);
+            
+
+        };
+
+        xhr.send()
+        
     }
 
 
