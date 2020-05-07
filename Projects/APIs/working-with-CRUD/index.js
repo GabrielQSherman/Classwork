@@ -1,10 +1,62 @@
- let allPost; //will become an array with 100 'post' objects when the requestAllPost function is called
+ let allPosts; //will become an array with 100 'post' objects when the requestAllPost function is called
 
-    window.onload = () => {
+    window.onload = () => { 
 
         requestAllPost()
 
 
+    //create elements for webpage
+        let selectPostNum = document.createElement('select'),
+            defOpt = document.createElement('option'),
+
+            postsDiv = document.createElement('div'),
+            uiDiv = document.createElement('div');
+
+            postsDiv.id = 'postsDiv';
+            uiDiv.id = 'uiDiv';
+
+        //create default option
+            defOpt.innerText = 'How many post would you like to view';
+            defOpt.value = '';
+            selectPostNum.onchange = displayPost;
+
+            selectPostNum.appendChild(defOpt)
+
+        //create options for select element
+            for (let i = 10; i < 100; i+=10) {
+
+                let optionElm = document.createElement('option');
+
+                optionElm.innerText = i + ' Posts';
+                optionElm.value = i;
+
+                selectPostNum.appendChild(optionElm)
+            }
+
+    //append element to DOM
+
+        document.body.appendChild(uiDiv)
+        document.body.appendChild(postsDiv)
+
+        uiDiv.appendChild(selectPostNum)
+
+    }
+
+    function displayPost() {
+
+        for (let i = 0; i < this.value; i++) {
+            
+            createPostDisplay(allPosts[i])
+            
+        }
+
+        this.value = '';
+    }
+
+    function createPostDisplay(post){
+
+        
+        
     }
     
     function compileFormData() {
@@ -57,7 +109,7 @@
 
         xhr.onload = () => {
 
-            allPost = JSON.parse(xhr.responseText);
+            allPosts = JSON.parse(xhr.responseText);
             
 
         };
