@@ -1,5 +1,7 @@
 let allPost;
 
+let deletedList = [];
+
 let viewingUser = 1;
 
 window.onload = () => {
@@ -91,8 +93,11 @@ function displayPost() {
     for (let i = 0; i < allPost.length; i++) {
         
         // console.log(allPost[i].userId);
+
+        console.log(deletedList, allPost[i].id);
         
-        if (allPost[i].userId === viewingUser ) {
+        
+        if (allPost[i].userId === viewingUser && !deletedList.includes(allPost[i].id.toString())) {
 
             //display that user's info in a div
 
@@ -138,6 +143,8 @@ function deletePost() {
 
         endpoint = `https://jsonplaceholder.typicode.com/posts/${postId}`;
 
+    deletedList.push(postId); 
+
     let xhr = new XMLHttpRequest();
 
     xhr.open('DELETE', endpoint, true);
@@ -153,5 +160,6 @@ function deletePost() {
     xhr.send()
 
     postsDiv.removeChild(this.parentElement);
+
 
 }
