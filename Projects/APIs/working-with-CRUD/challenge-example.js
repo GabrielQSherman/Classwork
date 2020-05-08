@@ -1,6 +1,10 @@
 let allPost;
 
-let deletedList = [];
+const lS = localStorage;
+
+let deletedList = lS.getItem('deleteList') != null ? lS.getItem('deleteList').split(',') : [] ;
+
+console.log(deletedList);
 
 let viewingUser = 1;
 
@@ -90,13 +94,15 @@ function displayPost() {
 
     postsDiv.appendChild(userNameHeading);
 
+     let resetDeleteBtn = document.createElement('button');
+        resetDeleteBtn.innerText = 'Recover All Deleted Post'
+        resetDeleteBtn.onclick = resetDeleteList;
+        postsDiv.appendChild(resetDeleteBtn);
+
     for (let i = 0; i < allPost.length; i++) {
         
         // console.log(allPost[i].userId);
 
-        console.log(deletedList, allPost[i].id);
-        
-        
         if (allPost[i].userId === viewingUser && !deletedList.includes(allPost[i].id.toString())) {
 
             //display that user's info in a div
@@ -130,7 +136,6 @@ function displayPost() {
             
         }
     }
-    
 }
 
 function editPost() {
@@ -144,6 +149,8 @@ function deletePost() {
         endpoint = `https://jsonplaceholder.typicode.com/posts/${postId}`;
 
     deletedList.push(postId); 
+
+    lS.setItem('deleteList', `${lS.getItem('deleteList')},${postId}`)
 
     let xhr = new XMLHttpRequest();
 
@@ -161,5 +168,15 @@ function deletePost() {
 
     postsDiv.removeChild(this.parentElement);
 
+
+}
+
+function resetDeleteList() {
+
+    lS.removeItem('deleteList');
+
+    deletedList = [];
+
+    displayPost()
 
 }
