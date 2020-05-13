@@ -45,15 +45,15 @@ function deleteUserRequest(userId) {
 } 
 
 
-function updateUserRequest(userId) {
+function updateUserRequest(userId, body) {
 
-    let firstname = prompt('First name', 'example first');
-    let lastname = prompt('Last name', 'example last');
+    // let firstname = prompt('First name', 'example first');
+    // let lastname = prompt('Last name', 'example last');
 
-    const body = JSON.stringify({
-        first_name: firstname,
-        last_name: lastname
-    });
+    // const body = JSON.stringify({
+    //     first_name: firstname,
+    //     last_name: lastname
+    // });
 
     let xhr = new XMLHttpRequest(),
 
