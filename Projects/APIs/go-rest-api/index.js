@@ -22,6 +22,8 @@ window.onload = () => {
     document.body.appendChild(uiDiv);
     document.body.appendChild(usersDiv);
 
+    createPostForm()
+
     requestUsers(currentPage);
 
 }
@@ -235,4 +237,78 @@ function confirmEdit() {
     displayDiv.style.display = 'inline';
     editDiv.style.display = 'none';
     
+}
+
+function createPostForm() {
+
+    let div = document.createElement('div');
+
+    let input1 = document.createElement('input');
+
+        input1.placeholder = 'Enter First Name'; 
+        input1.name = 'first_name';
+        
+    let input2 = document.createElement('input');
+    
+        input2.placeholder = 'Enter Last Name';
+        input2.name = 'last_name';
+
+    let input3 = document.createElement('input');
+        
+        input3.placeholder = 'Enter Email';
+        input3.name = 'email';
+
+    let input4 = document.createElement('input');
+        
+        input4.placeholder = 'Gender (male/female)'
+        input4.name = 'email';
+
+    let button = document.createElement('button');
+
+    uiDiv.appendChild(div);
+
+    div.appendChild(input1);
+    div.innerHTML += '<br>';
+    div.appendChild(input2);
+    div.innerHTML += '<br>';
+    div.appendChild(input3);
+    div.innerHTML += '<br>';
+    div.appendChild(input4);
+    div.innerHTML += '<br>';
+    div.appendChild(button);
+
+    button.innerText = 'Make a New User';
+    button.onclick = () => {
+
+            let divChildren = this.parentElement.children,
+
+            requestBody = {};
+
+        //itterate through all the elements in 'editDiv', extract input values into a JS object
+        for (const htmlElm of divChildren) {
+
+            if (htmlElm.localName == 'input' && htmlElm.value.trim() != '') { //or .type == 'text'
+                
+                requestBody[htmlElm.name] = htmlElm.value.trim();
+                
+            }
+            
+        }
+
+        if ( Object(requestBody).length === 4 ) {
+            // console.log('no inputs filled');
+            alert('Not enough inputs filled. No User Created')
+            return
+            
+        } 
+
+        //stringify the object created from the input elements so it can be used in a XHR
+        requestBody = JSON.stringify(requestBody);
+
+        updateUserRequest(requestBody); //call the PATCH request
+
+
+    }
+
+
 }
