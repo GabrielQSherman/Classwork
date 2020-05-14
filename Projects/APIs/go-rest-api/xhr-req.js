@@ -76,7 +76,22 @@ function updateUserRequest(userId, body) {
 
 function newUserReq(body) {
 
-    console.log(body);
-    
+    let xhr = new XMLHttpRequest(),
+
+        endpoint = `https://gorest.co.in/public-api/users?access-token=${goRestKey}`;
+
+    xhr.open('POST', endpoint, true);
+
+    xhr.onload = () => {
+
+        let response = JSON.parse(xhr.responseText);
+
+        console.log(response);
+    };
+
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.send(body);
+
     
 }
