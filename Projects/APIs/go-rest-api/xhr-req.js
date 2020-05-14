@@ -73,3 +73,10 @@ function updateUserRequest(userId, body) {
     xhr.send(body);
 
 }
+
+function newUserReq(body) {
+
+    console.log(body);
+    
+    
+}

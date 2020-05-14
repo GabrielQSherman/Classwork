@@ -278,7 +278,13 @@ function createPostForm() {
     div.appendChild(button);
 
     button.innerText = 'Make a New User';
-    button.onclick = () => {
+    button.onclick = complieNewData;
+
+
+}
+
+function complieNewData () {
+
 
             let divChildren = this.parentElement.children,
 
@@ -305,10 +311,7 @@ function createPostForm() {
         //stringify the object created from the input elements so it can be used in a XHR
         requestBody = JSON.stringify(requestBody);
 
-        updateUserRequest(requestBody); //call the PATCH request
+        newUserReq(requestBody); //call the PATCH request
 
 
     }
-
-
-}
