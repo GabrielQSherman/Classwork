@@ -6,7 +6,7 @@ function requestUsers(pageNum) {
     
     let xhr = new XMLHttpRequest(),
 
-        endpoint = `https://gorest.co.in/public-api/users?access-token=${goRestKey}&page=${pageNum}`;
+        endpoint = `https://gorest.co.in/public-api/users?page=${pageNum}`;
 
     xhr.open('GET', endpoint, true);
 
@@ -14,11 +14,17 @@ function requestUsers(pageNum) {
 
         let response = JSON.parse(xhr.responseText);
 
+        console.log(response._meta.pageCount);
+        
+        maxPages = response._meta.pageCount;
+
         let allUsers = response.result;
 
         displayUserPage(allUsers)
         
     };
+
+    xhr.setRequestHeader('Authorization', `Bearer ${goRestKey}`);
 
     xhr.send();
 
@@ -28,7 +34,7 @@ function deleteUserRequest(userId) {
 
     let xhr = new XMLHttpRequest(),
 
-    endpoint = `https://gorest.co.in/public-api/users/${userId}?access-token=${goRestKey}`;
+    endpoint = `https://gorest.co.in/public-api/users/${userId}`;
 
     xhr.open('DELETE', endpoint, true);
 
@@ -40,24 +46,17 @@ function deleteUserRequest(userId) {
         
     };
 
+    xhr.setRequestHeader('Authorization', `Bearer ${goRestKey}`);
+
     xhr.send();
     
 } 
 
-
 function updateUserRequest(userId, body) {
-
-    // let firstname = prompt('First name', 'example first');
-    // let lastname = prompt('Last name', 'example last');
-
-    // const body = JSON.stringify({
-    //     first_name: firstname,
-    //     last_name: lastname
-    // });
 
     let xhr = new XMLHttpRequest(),
 
-        endpoint = `https://gorest.co.in/public-api/users/${userId}?access-token=${goRestKey}`;
+        endpoint = `https://gorest.co.in/public-api/users/${userId}`;
 
     xhr.open('PATCH', endpoint, true);
 
@@ -69,6 +68,7 @@ function updateUserRequest(userId, body) {
     };
 
     xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', `Bearer ${goRestKey}`);
 
     xhr.send(body);
 
@@ -78,7 +78,7 @@ function newUserReq(body) {
 
     let xhr = new XMLHttpRequest(),
 
-        endpoint = `https://gorest.co.in/public-api/users?access-token=${goRestKey}`;
+        endpoint = `https://gorest.co.in/public-api/users`;
 
     xhr.open('POST', endpoint, true);
 
@@ -90,8 +90,8 @@ function newUserReq(body) {
     };
 
     xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', `Bearer ${goRestKey}`);
 
     xhr.send(body);
-
     
 }
