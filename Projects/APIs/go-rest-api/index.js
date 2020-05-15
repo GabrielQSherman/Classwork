@@ -1,4 +1,6 @@
-let currentPage = 1;
+let currentPage = 1,
+
+    maxPages;
 
 window.onload = () => {
 
@@ -30,7 +32,7 @@ window.onload = () => {
 
 function prevPageReq() {
 
-    currentPage = currentPage == 1 ? 100 : currentPage-1;
+    currentPage = currentPage == 1 ? maxPages : currentPage-1;
 
     requestUsers(currentPage);
     
@@ -38,7 +40,7 @@ function prevPageReq() {
 
 function nextPageReq() {
 
-    currentPage = currentPage == 100 ? 1 : currentPage+1;
+    currentPage = currentPage == maxPages ? 1 : currentPage+1;
 
     requestUsers(currentPage);
 
@@ -261,26 +263,27 @@ function createPostForm() {
     let input4 = document.createElement('input');
         
         input4.placeholder = 'Gender (male/female)'
-        input4.name = 'email';
+        input4.name = 'gender';
 
     let button = document.createElement('button');
 
     uiDiv.appendChild(div);
 
     div.appendChild(input1);
-    div.innerHTML += '<br>';
     div.appendChild(input2);
-    div.innerHTML += '<br>';
     div.appendChild(input3);
-    div.innerHTML += '<br>';
     div.appendChild(input4);
-    div.innerHTML += '<br>';
     div.appendChild(button);
 
     button.innerText = 'Make a New User';
     button.onclick = complieNewData;
 
 
+    //adding default for testing purposes
+    // input1.value = 'dadf'
+    // input2.value = 'asdf'
+    // input3.value = 'email@email.com'
+    // input4.value = 'gender'
 }
 
 function complieNewData () {
@@ -294,7 +297,7 @@ function complieNewData () {
         for (const htmlElm of divChildren) {
 
             if (htmlElm.localName == 'input' && htmlElm.value.trim() != '') { //or .type == 'text'
-                
+
                 requestBody[htmlElm.name] = htmlElm.value.trim();
                 
             }
@@ -308,10 +311,35 @@ function complieNewData () {
             
         } 
 
+        // console.log(requestBody.email);
+
+        const e = requestBody.email,
+
+              atRegEx = /@/g,
+
+              dotRegEx = /\.\./,
+
+              numOfAts = e.match(atRegEx).length;
+        
+        
+        //must check there is only one @ symbol, and at least one dot after the @ symbol
+        if ( e[0] == '.' || e[e.length-1] == '.' || numOfAts != 1 || dotRegEx.test(e)) {
+
+            //alert them they email is in an incorect format
+            alert('Your email input in not a vaild email');
+
+            //return nothing to stop the request
+
+            return
+            
+        }
+
         //stringify the object created from the input elements so it can be used in a XHR
         requestBody = JSON.stringify(requestBody);
 
-        newUserReq(requestBody); //call the PATCH request
+        console.log('Make Req');
+        
+        // newUserReq(requestBody); //call the POST request
 
 
 }
