@@ -6,7 +6,7 @@ window.onload = () => {
 
     let uiDiv = createDivElement({id: 'uiDiv'});
 
-    let usersDiv = createDivElement({id: 'usersDiv'});
+    let mainDiv = createDivElement({id: 'mainDiv'});
 
     const prevPage = document.createElement('button');
     prevPage.id = 'prevPage';
@@ -22,7 +22,7 @@ window.onload = () => {
     uiDiv.appendChild(nextPage);
 
     document.body.appendChild(uiDiv);
-    document.body.appendChild(usersDiv);
+    document.body.appendChild(mainDiv);
 
     createPostForm()
 
@@ -48,11 +48,15 @@ function nextPageReq() {
 
 function displayUserPage(usersData) {
 
-    usersDiv.innerHTML = '';
+    mainDiv.innerHTML = '';
 
     let pageHeading = createHeading({size: 1, text: `Viewing Page #${currentPage}`});
 
-    usersDiv.appendChild(pageHeading);
+    mainDiv.appendChild(pageHeading);
+
+    let usersDiv = createDivElement({id: 'usersDiv'});
+    
+    mainDiv.appendChild(usersDiv);
 
     // console.log(usersData);
     for (let i = 0; i < usersData.length; i++) {
