@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XMLHR first try</title>
+</head>
+<body>
+
+    <div id="names"></div>
+    
+    <script>
+
+        let xhr = new XMLHttpRequest(); //1) create the xhr object
+
+        // xhr.onabort = error => {
+
+        //     console.log('The request has been aborted', error, error.message);
+            
+        // }
+
+        let apiURL = 'https://jsonplaceholder.typicode.com/users', //https://api.github.com/users
+            reqMethod = 'GET',
+            asyncBool = true;
+
+        xhr.open( reqMethod, apiURL, asyncBool) //2)open the channel for the request 
+
+        xhr.onload = () => { //3) a function runs when the response has been recieved from the the server
+
+            let rawResponseData = xhr.response;
+
+            let parsedData = JSON.parse(rawResponseData);
+
+            // console.log(parsedData);
+
+            for (let i = 0; i < 10; i++) {
+                let userInfo = parsedData[i];
+
+                displayAUser(userInfo)
+            }
+            
+
+        }  
+        xhr.send() //params optional //4) finalizes the 'open' method and sends data along with the request when needed
+
+        function displayAUser (userInfo) {
+
+            let div = document.createElement('div');
+            
+            //get users info an store it inside document elements
+
+            let h2 = document.createElement('h2');
+
+            h2.innerText = userInfo.name + ' says...';
+
+            let h3 = document.createElement('h3');
+
+            h3.innerText = userInfo.company.catchPhrase;
+
+            
+
+            div.appendChild(h2)
+            div.appendChild(h3)
+            document.body.appendChild(div);
+        }
+
+
+    </script>
+
+
+</body>
+</html>

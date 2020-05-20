@@ -1,0 +1,29 @@
+body {
+    background-color: rgb(0, 0, 0);
+    color: white;
+    text-align: center;
+    margin: 0px;
+}
+
+#postsDiv {
+
+    background-color: #333;
+    border-radius: 50px;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 2%;
+
+
+    padding: 37px;
+}
+
+#postsDiv div {
+    border: solid #777;
+    border-radius: 20px;
+
+    margin: 3%;
+
+    margin-left: 35%;
+    margin-right: 35%;
+
+}

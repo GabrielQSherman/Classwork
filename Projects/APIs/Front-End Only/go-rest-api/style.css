@@ -1,0 +1,117 @@
+body {
+    text-align: center;
+    background-color: black;
+    color: white;
+}
+
+#uiDiv div {
+    display: flex;
+    flex-direction: column;
+
+    margin: 2%;
+    margin-left: 42%;
+    margin-right: 42%;
+
+}
+
+#uiDiv div input {
+    margin: 3%;
+    font-size: large;
+    background-color: #333;
+    border: none;
+    color: white;
+
+    text-align: center;
+
+    transition: all ease-in-out 1.4s;
+
+    border-radius: 7px;
+
+
+}
+
+#uiDiv div input:hover {
+    background-color: black;
+} 
+
+#uiDiv button {
+    margin-top: 3%;
+
+    cursor: pointer;
+    background-color: black;
+    color: white;
+
+    border-radius: 20px;
+    font-size: larger;
+    padding: 20px;
+
+    transition: all ease-in-out .4s;
+}
+
+#uiDiv button:hover {
+
+    transform: scale(.95,.95);
+}
+
+#mainDiv {
+    background-color: #111;
+    border-radius: 100px;
+}
+
+#mainDiv h1 {
+    padding-top: 69px;
+    padding: 33px;
+
+    margin-left: 37%;
+    margin-right: 37%;
+
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+
+    background-color: #333;
+
+}
+
+#usersDiv {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+}
+
+#usersDiv div {
+
+    flex: 1;
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+    margin: 4%;
+
+    background-color: #222;
+
+    padding: 10px;
+    border-radius: 10px;
+}
+
+
+#usersDiv button {
+    margin-top: 3%;
+
+    cursor: pointer;
+    background-color: black;
+    color: white;
+
+    border-radius: 10px;
+    font-size: smaller;
+    padding: 10px;
+
+    transition: all ease-in-out .4s;
+}
+
+#usersDiv button:hover {
+
+    transform: scale(.95,.95);
+}
