@@ -1,0 +1,26 @@
+{
+  "name": "second_rest",
+  "description": "This repo contains my first work with the backend of REST APIs.",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "devStart": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GabrielQSherman/Intro-to-REST-APIs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GabrielQSherman/Intro-to-REST-APIs/issues"
+  },
+  "homepage": "https://github.com/GabrielQSherman/Intro-to-REST-APIs#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
+  }
+}
