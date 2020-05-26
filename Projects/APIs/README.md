@@ -28,6 +28,26 @@ this project was made to demo async code and how http request rely on async oper
 
  ![](twoapis.gif)
 
+
+# Weather APIs
+
+## Open Weather API
+
+    Devs can only get free access to current weather reports
+
+### Example Open Weather API:
+
+![](openweather.gif)
+
+## MeteoStat API
+
+    Gives deveoplers access to weathers stations all around the world with historical weather data
+
+### Example MeteoStat API:
+
+![](meteostat.gif)
+
+
 SINGLE FILE PROJECTS
     simpleXHRequest.html - access the JSONPlaceholder API to get an array of objects, each object containing a user's infomation. This infomation is then added to the DOM with heading and link elements.
 
