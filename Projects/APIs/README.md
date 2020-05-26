@@ -2,9 +2,17 @@
 Git Users API
  this is the most fleshed out api project to date, it will do a very similar funcition to the rest but the display in the browser look better than rest. Using css grid users are displayed on a full page where each user has its own div of elements. When the button in a div is pressed a more detailed list of information the user appears in thier div
 
+ # Example of Git Users API:
+
+ ![](gitusers.gif)
+
 
 JSON-PlaceHolder and Dog.ceo APIs
 an api calling program that calls two apis and creates a frontend display using data received from both Api responses. the jsonplaceholder website is used to get fake user info, and dog.ceo's api is used to get random pictures of dogs to display with the fake user information. The front end uses CSS grid to shows a neat display of the infromation received from the API requests 
+
+ # Example of JSON-PlaceHolder and Dog.ceo APIs:
+
+ ![](jpdc.gif)
 
 twoAPIsProj 
 a program that displays a White Pages style information page with dog pictures as the peoples images. Fake person information comes from the api:
@@ -16,6 +24,9 @@ once all the pictures have been requested from dog.ceo the request for the fake 
 
 this project was made to demo async code and how http request rely on async opertaions to deliver infomation to the client-side with long wait times.
 
+ # Example of JSON-PlaceHolder and Dog.ceo APIs:
+
+ ![](twoapis.gif)
 
 SINGLE FILE PROJECTS
     simpleXHRequest.html - access the JSONPlaceholder API to get an array of objects, each object containing a user's infomation. This infomation is then added to the DOM with heading and link elements.
