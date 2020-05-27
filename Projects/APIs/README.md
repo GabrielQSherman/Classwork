@@ -1,4 +1,16 @@
 
+# NASA APOD API
+
+    This API allows request with a 'date' query parameter from Jun 16th 1995 to the current date. Two versions of frontend implementations of this API can be viewed below. The distinct diffrent between the two is how the user selects a date. Version two date selection is more complex.
+
+### NASA - Version One
+
+ ![](nasa-v1.gif)
+
+### NASA - Version Two
+
+ ![](nasa-v2.gif)
+
 # Git Users API
     this is the most fleshed out api project to date, it will do a very similar funcition to the rest but the display in the browser look better than rest. Using css grid users are displayed on a full page where each user has its own div of elements. When the button in a div is pressed a more detailed list of information the user appears in thier div
 
