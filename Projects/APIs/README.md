@@ -56,7 +56,9 @@
 
     Gives deveoplers access to weathers stations all around the world with historical weather data
 
-### Example MeteoStat API:
+### Example MeteoStat And OpenWeather API:
+
+#### MeteoStat right, OpenWeather left
 
 ![](meteostat.gif)
 
