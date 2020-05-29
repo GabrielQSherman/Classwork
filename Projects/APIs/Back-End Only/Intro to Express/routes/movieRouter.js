@@ -71,6 +71,7 @@ router.post('/', dbRead, validNewMov, (req, res) => {
     newDataBaseData = JSON.stringify(newDataBaseData);
 
     fs.writeFileSync(textFile, newDataBaseData);
+    
     // respond with status 200 and the new movie object
 
     res.status(200).json({
@@ -82,6 +83,32 @@ router.post('/', dbRead, validNewMov, (req, res) => {
 })
 
 //update movie
+
+router.patch('/:id', dbRead, validDB, (req, res) => {
+
+    let updatedData = req.found,
+
+        mId = req.params.id-1,
+
+        DB = req.dbData;
+
+    for (const k in updatedData) {
+        
+        if (req.body[k] != undefined) {
+            updatedData[k] = req.body[k] 
+        }
+    }
+
+    DB.movies.splice(mId, 1,updatedData)
+
+    // convert DB to string and writeFile
+
+    DB = JSON.stringify(DB);
+
+    fs.writeFileSync(textFile, DB);
+
+    res.send('testing PATCH')
+} )
 
 //delete a movie
 
