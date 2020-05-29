@@ -13,27 +13,40 @@ console.log(__dirname + '/static/home.html');
 
 const app = express();
 
+//Middleware
+
+//middleware that will be executed on all routes with all request methods
 app.use(express.static(__dirname +'/static'));
 app.use(morgan('dev'));
 app.use(express.json());
 
-const homeRouter = require('./routes/homeRouter');
 
-app.use('/', homeRouter);
+// client req -> express.static() -> morgan() -> express.json() -> specific route handling -> final middleware 
 
-const userRouter = require('./routes/usersRouter');
+//middleware that will be executed on specific routes
+    
+//homepage
+    const homeRouter = require('./routes/homeRouter');
 
-app.use('/users', userRouter);
+    app.use('/', homeRouter);
 
-const movieRouter = require('./routes/movieRouter')//file name
+//userpage
+    const userRouter = require('./routes/usersRouter');
 
-app.use('/movie', movieRouter)
+    app.use('/users', userRouter);
+
+//movies page
+    const movieRouter = require('./routes/movieRouter')//file name
+
+    app.use('/movie', movieRouter)
 
 
 // app.get('/about', (req, res) => {
 //     res.send('Learn more about me!')
 // })
 
+//example of simple request parameter route handler
+//the 
 // app.get('/query', (req, res) => {
 
 //     const q = req.query;
@@ -55,27 +68,3 @@ app.listen(port, () => {
     console.log(`Listening on port:${port}`);
     
 })
-
-
-// updating database with read/write file
-//NOT BEING USED, only used once to transfer database obj to txt document
-
-        // const fs = require('fs');
-
-        // let textFile = process.cwd() + '/database/database.txt';
-
-        // let parsedData = fs.readFileSync(textFile, 'utf8');
-
-        // if (parsedData[0] != '{' || parsedData[parsedData.length-1] != '}') {
-        //     parsedData = '{}'
-        // }
-
-        // parsedData = JSON.parse(parsedData);
-
-        // parsedData.movies = database.movies;
-
-        // console.log(parsedData);
-
-        // parsedData = JSON.stringify(parsedData);
-
-        // fs.writeFileSync(textFile, parsedData)    
