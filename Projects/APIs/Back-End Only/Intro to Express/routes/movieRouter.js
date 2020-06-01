@@ -62,22 +62,23 @@ router.post('/', dbRead, validNewMov, (req, res) => {
 
     // update the DB in JSON
 
-    newDataBaseData = req.dbData;
+    DBData = req.dbData,
+    newMovie = req.body;
 
-    newDataBaseData.movies.push(req.body)
+    DBData.movies.push(newMovie)
 
     // convert DB to string and writeFile
 
-    newDataBaseData = JSON.stringify(newDataBaseData);
+    DBData = JSON.stringify(DBData);
 
-    fs.writeFileSync(textFile, newDataBaseData);
+    fs.writeFileSync(textFile, DBData);
     
     // respond with status 200 and the new movie object
 
     res.status(200).json({
         status: 200,
         message: 'posted successfully',
-        new_movie: 'movieObj'
+        new_movie: newMovie
     })
     
 })
@@ -134,7 +135,7 @@ router.delete('/:id', dbRead, validDB, (req, res) => {
 function validNewMov (req, res, next) {
     //get the new movie in an JS object
 
-    console.log(req.body);
+    // console.log(req.body);
 
     //check for title, release, available, imdbLink, img
 

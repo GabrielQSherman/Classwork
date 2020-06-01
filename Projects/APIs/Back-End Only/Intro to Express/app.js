@@ -40,29 +40,6 @@ app.use(express.json());
 
     app.use('/movie', movieRouter)
 
-
-// app.get('/about', (req, res) => {
-//     res.send('Learn more about me!')
-// })
-
-//example of simple request parameter route handler
-//the 
-// app.get('/query', (req, res) => {
-
-//     const q = req.query;
-
-//     const name = q.name;
-//     const saying = q.say;
-//     const color = q.color;
-
-//     console.log(req.query);
-//     res.json({
-//         status: 200,
-//         message: `A person named ${name}'s favorite color is ${color}, they have a catchphrase '${saying}'.`
-//     })
-// })
-
-
 app.listen(port, () => {
 
     console.log(`Listening on port:${port}`);
