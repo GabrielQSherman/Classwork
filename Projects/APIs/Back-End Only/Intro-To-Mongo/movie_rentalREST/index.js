@@ -12,8 +12,17 @@ const express = require('express'),
 
       deprecatedObj = { useUnifiedTopology: true, useNewUrlParser: true},
 
-      connectionURI = process.env.MONGO;
+      connectionURI = process.env.MONGO,
 
+      homeRouter = require('./routes/homeRouter');
+
+
+//some middleware needs to go before others
+server.use(morgan('dev'));
+server.use(express.json());
+
+//express.json and morgan must be called before in expressInstance.use()
+server.use('/', homeRouter);
 
 mongoose.connect(connectionURI, deprecatedObj, () => {
     
