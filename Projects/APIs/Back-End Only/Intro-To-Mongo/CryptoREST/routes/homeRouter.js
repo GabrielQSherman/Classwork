@@ -2,10 +2,11 @@ const express = require('express');
 
       router = express();
 
-      let homePgFile = process.cwd() + '/public/homepage.html';
-
 router.get('/', (req, res) => {
-    res.sendFile(homePgFile)
+    res.json({
+        crypto: 'http://localhost:7777/crypto',
+        user: 'http://localhost:7777/user'
+    })
 })
 
 module.exports = router;
