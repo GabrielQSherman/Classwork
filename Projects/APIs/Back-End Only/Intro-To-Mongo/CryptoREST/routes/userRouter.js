@@ -6,6 +6,22 @@ const express = require('express'),
 
       router = express();
 
+router.get('/', (req, res) => {
+    res.json({
+        all_users: 'http://localhost:7777/user/all',
+        one_user: 'http://localhost:7777/user/<db_id>',
+    })
+})
+
+router.get('/all', async (req, res) => {
+
+    let allUsers = await userSchema.find();
+    res.json({
+        all_users: allUsers
+    })
+})
+
+
 router.post('/', async (req, res) => {
 
     try {
@@ -31,22 +47,30 @@ router.post('/', async (req, res) => {
 
 router.get('/:id', findUser, async (req, res) => {
 
-    if (req.foundUser) {
-
         res.status(200).json({
             message: 'User Found',
             user: req.foundUser
         })
 
-    
-
-
 })
 
-router.get('/:id', findUser, async (req, res) => {
+router.delete('/:id', findUser, async (req, res) => {
+
+    try {
+        
+    } catch (err) {
+
+        res.status(500).json({
+            message: `Error Occured: ${err.message}`,
+            full_error_report: err
+        })
+        
+    }
+    let user = req.foundUser;
+
+    await user.remove();
 
     
-
     
 
 
