@@ -1,4 +1,16 @@
+//This line is required before PORT is defined
 require('dotenv').config();
+
+//exporting the port number so it can be used in anyfile
+//doing it before other code so it will be accessable in all Router scripts
+
+const PORT = process.env.PORT || 3000,
+
+      exported = {
+          port: PORT
+      };
+
+module.exports = exported; //this line needs to be before the router middleware
 
 const express = require('express'),
       morgan = require('morgan'),
@@ -6,9 +18,7 @@ const express = require('express'),
 
       app = express(),
 
-      dbURI = process.env.MONGO,
-
-      PORT = process.env.PORT;
+      dbURI = process.env.MONGO;      
 
 app.use(morgan('dev'));
 
@@ -23,7 +33,7 @@ const userRouter = require('./routes/userRouter')
 app.use('/user', userRouter);
 
 const cryptoRouter = require('./routes/cryptoRouter')
-app.use('/', cryptoRouter)
+app.use('/crypto', cryptoRouter)
 
 
 //Connecting to the Mongo Database
@@ -59,4 +69,5 @@ app.listen(PORT, () => {
     console.log(`Listening on ${PORT}`);
     
 })
+
 
