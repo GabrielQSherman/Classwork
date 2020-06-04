@@ -1,11 +1,14 @@
 const express = require('express');
 
-      router = express();
+      router = express(),
+
+      serverPort = require('../app').port; 
 
 router.get('/', (req, res) => {
+
     res.json({
-        crypto: 'http://localhost:7777/crypto',
-        user: 'http://localhost:7777/user'
+        crypto: `http://localhost:${serverPort}/crypto`,
+        user: `http://localhost:${serverPort}/user`
     })
 })
 
