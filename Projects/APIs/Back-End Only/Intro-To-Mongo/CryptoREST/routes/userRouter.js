@@ -4,12 +4,15 @@ const express = require('express'),
 
       userSchema = require('../models/User'),
 
-      router = express();
+      router = express(),
+
+      serverPort = require('../app').port;
 
 router.get('/', (req, res) => {
+
     res.json({
-        all_users: 'http://localhost:7777/user/all',
-        one_user: 'http://localhost:7777/user/<db_id>',
+        all_users: `http://localhost:${serverPort}/user/all`,
+        one_user: `http://localhost:${serverPort}/user/<db_id>`,
     })
 })
 
@@ -57,7 +60,16 @@ router.get('/:id', findUser, async (req, res) => {
 router.delete('/:id', findUser, async (req, res) => {
 
     try {
-        
+
+        let user = req.foundUser;
+
+        await userSchema.findByIdAndDelete({_id: req.params.id});
+
+        res.status(200).json({
+            message: 'User successfully deleted',
+            deleted_user: user
+        })
+
     } catch (err) {
 
         res.status(500).json({
@@ -66,12 +78,6 @@ router.delete('/:id', findUser, async (req, res) => {
         })
         
     }
-    let user = req.foundUser;
-
-    await user.remove();
-
-    
-    
 
 
 })
