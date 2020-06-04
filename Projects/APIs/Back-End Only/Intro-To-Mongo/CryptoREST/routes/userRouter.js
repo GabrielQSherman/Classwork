@@ -8,6 +8,8 @@ const express = require('express'),
 
       serverPort = require('../app').port;
 
+//GET REQUESTS
+
 router.get('/', (req, res) => {
 
     res.json({
@@ -24,7 +26,16 @@ router.get('/all', async (req, res) => {
     })
 })
 
+router.get('/:id', findUser, async (req, res) => {
 
+    res.status(200).json({
+        message: 'User Found',
+        user: req.foundUser
+    })
+
+})
+
+//POST A NEW USER
 router.post('/', async (req, res) => {
 
     try {
@@ -33,7 +44,10 @@ router.post('/', async (req, res) => {
         
         await newUser.save();
 
-        res.status(201).json({mes: newUser});
+        res.status(201).json({
+            message: 'New user created',
+            user: newUser
+        });
 
     } catch (err) {
 
@@ -42,21 +56,36 @@ router.post('/', async (req, res) => {
             error: err,
             status: 500
         })
-        
     }
-
-
 })
 
-router.get('/:id', findUser, async (req, res) => {
+//PATCH A USER
+router.patch('/:id', findUser, async (req, res) => {
 
-        res.status(200).json({
-            message: 'User Found',
-            user: req.foundUser
+    try {
+
+        const id = req.params.id;
+
+        await userSchema.update({_id: id}, req.body);
+
+        let updateUser = await userSchema.find({_id: id});
+
+        res.status(201).json({
+            message: 'User successfuly updated',
+            update_user: updateUser
+        });
+
+    } catch (err) {
+
+        res.json({
+            message: err.message,
+            error: err,
+            status: 500
         })
-
+    }
 })
 
+//DELETE A USER
 router.delete('/:id', findUser, async (req, res) => {
 
     try {
@@ -75,15 +104,11 @@ router.delete('/:id', findUser, async (req, res) => {
         res.status(500).json({
             message: `Error Occured: ${err.message}`,
             full_error_report: err
-        })
-        
+        })   
     }
-
-
 })
 
-module.exports = router;
-
+//MIDDLEWARE
 async function findUser(req, res, next) {
 
     try {
@@ -107,6 +132,7 @@ async function findUser(req, res, next) {
             message: `Error Occured: ${err.message}`,
             full_error_report: err
         })
-    }
-    
+    } 
 }
+
+module.exports = router;
