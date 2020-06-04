@@ -38,11 +38,14 @@ router.get('/:id', findUser, async (req, res) => {
             user: req.foundUser
         })
 
-    } else {
-        res.status(404).json({
-            message: 'No user found'
-        })
-    }
+    
+
+
+})
+
+router.get('/:id', findUser, async (req, res) => {
+
+    
 
     
 
@@ -53,9 +56,27 @@ module.exports = router;
 
 async function findUser(req, res, next) {
 
-    const id = req.params.id;
+    try {
 
-    req.foundUser = await userSchema.find({_id: id});
+        const id = req.params.id;
 
-    next()
+        req.foundUser = await userSchema.find({_id: id});
+
+        if (req.foundUser) {
+
+            next()
+
+        } else {
+            res.status(404).json({
+                message: 'No user found'
+            })
+        }
+        
+    } catch (err) {
+        res.status(500).json({
+            message: `Error Occured: ${err.message}`,
+            full_error_report: err
+        })
+    }
+    
 }

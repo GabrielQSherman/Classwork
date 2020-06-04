@@ -2,8 +2,10 @@ const express = require('express');
 
       router = express();
 
+//Show all crypto prices 
 router.get('/', (req, res) => {
-    res.send('crypto page')
+    
+
 })
 
 module.exports = router;
