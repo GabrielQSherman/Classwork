@@ -14,7 +14,6 @@ module.exports = exported; //this line needs to be before the router middleware
 
 const express = require('express'),
       morgan = require('morgan'),
-      mongoose = require('mongoose'),
 
       app = express(),
 
@@ -37,31 +36,12 @@ app.use('/crypto', cryptoRouter)
 
 
 //Connecting to the Mongo Database
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true } )
 
-mongoose.connection.on( 'open', () => {
-    
-    console.log(`Database Connected at:\n${dbURI}\n\n`);
-    
-})
+//get script from external src
+const connect_to_DB = require('./mongo/connect');
 
-mongoose.connection.on( 'error', (err) => {
-    
-    console.log(`\nERROR: ${err}\n`);
-    
-})
-
-mongoose.connection.on( 'connected', (err) => {
-    
-    console.log(`\nConnecting To Database\n`);
-    
-})
-
-mongoose.connection.on( 'disconnected', (err) => {
-    
-    console.log(`\nThe Application has been disconnected from the database;\n`);
-    
-})
+//run the function that connects the DB to the server
+connect_to_DB(dbURI)
 
 //specify port for server to listen on
 
