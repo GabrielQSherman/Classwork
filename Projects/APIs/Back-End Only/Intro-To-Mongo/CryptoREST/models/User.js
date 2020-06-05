@@ -1,12 +1,15 @@
 const mongoose = require('mongoose'),
       
-      validator = require('validator'),
+      validator = require('validator');
 
       UserSchema = mongoose.Schema({
           name: {
               type: String,
               required: true,
-              unique: true
+              unique: true,
+
+              minLength: 3,
+              maxLength: 52,
 
           },
 
@@ -19,6 +22,14 @@ const mongoose = require('mongoose'),
                     throw new Error('Email is not vaild')
                 }
               }
+          },
+
+          password: {
+              type: String,
+              required: true,
+              
+              minLength: 7,
+              maxLength: 1000
           }
       });
 
