@@ -6,6 +6,10 @@ const express = require('express'),
 
       router = express(),
 
+      bcrypt = require('bcryptjs'),
+
+      validNewUser = require('../middleware/registerUser') 
+
       serverPort = require('../app').port;
 
 //GET REQUESTS
@@ -36,12 +40,22 @@ router.get('/:id', findUser, async (req, res) => {
 })
 
 //POST A NEW USER
-router.post('/', async (req, res) => {
+router.post('/register', validNewUser,  async (req, res) => {
 
     try {
 
         const newUser = new userSchema(req.body);
-        
+
+        //hash users password for safe database storing
+              salt = await bcrypt.genSalt(7),
+
+              hashedPass = await bcrypt.hash(req.body.password, salt);
+
+        //before saving the a hashed version of the password (more secure)
+        // will replace the password the user will remember
+        newUser.password = hashedPass;
+
+
         await newUser.save();
 
         res.status(201).json({
