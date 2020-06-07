@@ -1,5 +1,5 @@
 {
-  "name": "Intro-To-Mongo",
+  "name": "intro-to-mongo",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -15,6 +15,7 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.16",
+    "pug": "^3.0.0",
     "validator": "^13.0.0"
   },
   "devDependencies": {

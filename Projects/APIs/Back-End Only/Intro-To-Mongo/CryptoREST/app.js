@@ -22,6 +22,8 @@ const express = require('express'),
 
       dbURI = process.env.MONGO;      
 
+app.set('view engine', 'pug');
+
 app.use(morgan('dev'));
 
 app.use(express.json())
