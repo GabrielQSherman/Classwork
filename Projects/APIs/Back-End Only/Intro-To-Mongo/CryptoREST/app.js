@@ -6,8 +6,11 @@ require('dotenv').config();
 
 const PORT = process.env.PORT || 3000,
 
+      KEY = process.env.KEY || 'jwtkey',
+
       exported = {
-          port: PORT
+          port: PORT,
+          jwtKey: KEY
       };
 
 module.exports = exported; //this line needs to be before the router middleware

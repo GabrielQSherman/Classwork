@@ -6,6 +6,10 @@ const express = require('express'),
 
       router = express(),
 
+      jwt = require('jsonwebtoken'),
+
+      jwtKey = require('../app').jwtKey,
+
       bcrypt = require('bcryptjs'),
 
       regUser = require('../middleware/registerUser'),
@@ -103,7 +107,17 @@ router.post('/login', loginUserVal, async (req, res) => {
         return
     }
 
-    res.send('login went through')
+    //create a JWT for this time the user logged in.
+    newToken = jwt.sign({
+        _id: loginUser.id, //when user needs to access db once the jwt is verified the id can be used
+        name: loginUser.name //front end can display the users name without requesting db again
+    }, jwtKey, {expiresIn: '1h'} ) //user can stay logged in for an hour
+
+    res.status(200).json({
+        token: newToken, //this will be stored either in a cookie or in session-storage on the client side
+        message: 'successful login'
+    })
+    
 })
 
 //PATCH A USER
