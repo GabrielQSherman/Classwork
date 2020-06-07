@@ -8,8 +8,10 @@ const express = require('express'),
 
       bcrypt = require('bcryptjs'),
 
-      validNewUser = require('../middleware/registerUser') 
+      regUser = require('../middleware/registerUser'),
 
+      loginUserVal = require('../middleware/loginValidate'), 
+      
       serverPort = require('../app').port;
 
 //GET REQUESTS
@@ -34,13 +36,13 @@ router.get('/:id', findUser, async (req, res) => {
 
     res.status(200).json({
         message: 'User Found',
-        user: req.foundUser
+        user: req.loginUser
     })
 
 })
 
-//POST A NEW USER
-router.post('/register', validNewUser,  async (req, res) => {
+//REGISTER/POST A NEW USER IN DB
+router.post('/register', regUser,  async (req, res) => {
 
     try {
 
@@ -71,6 +73,37 @@ router.post('/register', validNewUser,  async (req, res) => {
             status: 500
         })
     }
+})
+
+router.post('/login', loginUserVal, async (req, res) => {
+
+    //see if the email belongs to a registered user, stores the document in this var if it does exist
+    const loginUser = await userSchema.findOne({email: req.body.email});
+
+    // NOTE: for the message of the next two response.json() it is best to use vauge language to make it more difficult to hack users accounts, this project is purely educational
+    //if it doesnt exist a response is made
+    if (!loginUser) {
+        res.status(400).json({
+            status: 400,
+            message: 'That email is not registered, check spelling and try again.'
+        })
+
+        return
+    }
+
+    //bcrypt.compare takes the string (req.body.password), and makes a comparison to a hashed string, (document.password)
+    const passVal = await bcrypt.compare(req.body.password, loginUser.password)
+    //password was not vaild for the given user
+    if (!passVal) {
+        res.status(400).json({
+            status: 400,
+            message: 'The given password was incorrect'
+        })
+
+        return
+    }
+
+    res.send('login went through')
 })
 
 //PATCH A USER
@@ -104,7 +137,7 @@ router.delete('/:id', findUser, async (req, res) => {
 
     try {
 
-        let user = req.foundUser;
+        let user = req.loginUser;
 
         await userSchema.findByIdAndDelete({_id: req.params.id});
 
@@ -129,9 +162,9 @@ async function findUser(req, res, next) {
 
         const id = req.params.id;
 
-        req.foundUser = await userSchema.find({_id: id});
+        req.loginUser = await userSchema.find({_id: id});
 
-        if (req.foundUser) {
+        if (req.loginUser) {
 
             next()
 
