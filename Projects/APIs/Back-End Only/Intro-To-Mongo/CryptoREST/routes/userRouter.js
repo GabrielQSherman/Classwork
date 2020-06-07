@@ -1,22 +1,33 @@
-const express = require('express'),
+//IMPORTING...
 
-      mongoose = require('mongoose'),
+const
+     //PACKAGES
+      express = require('express'),
 
       userSchema = require('../models/User'),
 
-      router = express(),
-
       jwt = require('jsonwebtoken'),
-
+      
+      bcrypt = require('bcryptjs'),
+      
+      //INSTANCE OF EXPRESS ROUTER OBJ
+      router = express.Router(),
+      
+      //IMPORTED VARS
       jwtKey = require('../app').jwtKey,
 
-      bcrypt = require('bcryptjs'),
+      serverPort = require('../app').port;
+
+      //MIDDLEWARE FUNCTIONS
 
       regUser = require('../middleware/registerUser'),
 
-      loginUserVal = require('../middleware/loginValidate'), 
+      findUser = require('../middleware/findUser'),
+
+      loginUserVal = require('../middleware/loginValidate'),
+
+      verifyToken = require('../middleware/verifyToken'); 
       
-      serverPort = require('../app').port;
 
 //GET REQUESTS
 
@@ -24,23 +35,34 @@ router.get('/', (req, res) => {
 
     res.json({
         all_users: `http://localhost:${serverPort}/user/all`,
-        one_user: `http://localhost:${serverPort}/user/<db_id>`,
+        your_info: `http://localhost:${serverPort}/user/me`,
     })
 })
 
 router.get('/all', async (req, res) => {
 
     let allUsers = await userSchema.find();
+
+    allUsers.forEach( doc => {
+        delete doc._id
+    })
+
     res.json({
         all_users: allUsers
     })
 })
 
-router.get('/:id', findUser, async (req, res) => {
+//get a user's own info if logged in already
+router.get('/me', verifyToken, findUser, (req, res) => {
+
+    let user = req.userFound[0]
+    //removing properties a user does not need to know
+    delete user._id
+    delete user.__v
 
     res.status(200).json({
         message: 'User Found',
-        user: req.loginUser
+        user: user
     })
 
 })
@@ -79,6 +101,7 @@ router.post('/register', regUser,  async (req, res) => {
     }
 })
 
+//LOGGIN IN A USER (creates JWT)
 router.post('/login', loginUserVal, async (req, res) => {
 
     //see if the email belongs to a registered user, stores the document in this var if it does exist
@@ -120,12 +143,12 @@ router.post('/login', loginUserVal, async (req, res) => {
     
 })
 
-//PATCH A USER
-router.patch('/:id', findUser, async (req, res) => {
+//PATCH A USER'S INFO
+router.patch('/', verifyToken, async (req, res) => {
 
     try {
 
-        const id = req.params.id;
+        const id = req.user._id;
 
         await userSchema.update({_id: id}, req.body);
 
@@ -147,11 +170,11 @@ router.patch('/:id', findUser, async (req, res) => {
 })
 
 //DELETE A USER
-router.delete('/:id', findUser, async (req, res) => {
+router.delete('/', verifyToken, findUser, async (req, res) => {
 
     try {
 
-        let user = req.loginUser;
+        let user = req.userFound[0];
 
         await userSchema.findByIdAndDelete({_id: req.params.id});
 
@@ -168,32 +191,5 @@ router.delete('/:id', findUser, async (req, res) => {
         })   
     }
 })
-
-//MIDDLEWARE
-async function findUser(req, res, next) {
-
-    try {
-
-        const id = req.params.id;
-
-        req.loginUser = await userSchema.find({_id: id});
-
-        if (req.loginUser) {
-
-            next()
-
-        } else {
-            res.status(404).json({
-                message: 'No user found'
-            })
-        }
-        
-    } catch (err) {
-        res.status(500).json({
-            message: `Error Occured: ${err.message}`,
-            full_error_report: err
-        })
-    } 
-}
 
 module.exports = router;
