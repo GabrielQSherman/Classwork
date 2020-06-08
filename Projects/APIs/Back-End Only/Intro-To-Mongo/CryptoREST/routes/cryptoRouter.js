@@ -3,7 +3,7 @@ const
       //PACKAGES
       express = require('express');
 
-      router = express(),
+      router = express.Router(),
 
       //MIDDLEWARE
       verify = require('../middleware/verifyToken'),
@@ -16,10 +16,10 @@ router.get('/', verify, findUser, (req, res) => {
       const cryptos = req.userFound.cryptos;
       
       if (!cryptos) {
-           res.status(404).json({message:'you have not favorite cryptos'}) 
+           return res.status(404).json({message:'you have no favorite cryptocurrencies'}) 
       }
 
-      res.json({
+      res.status(200).json({
             message: 'You Favorite Cryptocurrencies',
 
             cryptos: {
