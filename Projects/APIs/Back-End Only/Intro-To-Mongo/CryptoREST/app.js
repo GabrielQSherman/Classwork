@@ -6,29 +6,40 @@ require('dotenv').config();
 
 const PORT = process.env.PORT || 3000,
 
-      KEY = process.env.KEY || 'jwtkey',
+      JWT_KEY = process.env.KEY || 'jwtkey',
+
+      CRYPTO_KEY = process.env.CRYPTO_KEY, //in order for the crypto api to be intergrated one must have their own Nomics API key
 
       exported = {
           port: PORT,
-          jwtKey: KEY
+          jwtKey: JWT_KEY,
+          cryptoKey: CRYPTO_KEY
       };
 
-module.exports = exported; //this line needs to be before the router middleware
+module.exports = exported; //this line needs to be before router middleware
 
+      //import required packages
 const express = require('express'),
       morgan = require('morgan'),
 
+      //instance of express is the core of this server
       app = express(),
 
+      //getting mongodb endpoint from enviorment file
       dbURI = process.env.MONGO;      
 
+//set templating/view engine for the response.render method 
 app.set('view engine', 'pug');
 
-app.use(morgan('dev'));
+//Middleware for all routes
 
-app.use(express.json())
+app.use(morgan('dev')); //makes a log in the server console for every request
 
-app.use(express.static(process.cwd()+'/public'));
+app.use(express.json()) //allow json data for request.body
+
+app.use(express.static(process.cwd()+'/public')); //set directory for static files
+
+//Routers are used for their specified routes
 
 const homeRouter = require('./routes/homeRouter')
 app.use('/', homeRouter);
@@ -54,5 +65,3 @@ app.listen(PORT, () => {
     console.log(`Listening on ${PORT}`);
     
 })
-
-
