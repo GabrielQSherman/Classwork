@@ -3,17 +3,29 @@ const jwt = require('jsonwebtoken'),
 
 async function logged(req) {
 
-    //get the token from the request
-    const clientToken = req.headers['auth-token'];
+    try {
 
-    if (clientToken && await jwt.verify(clientToken, key)) { //if it was included in the req it must be verified
+        //get the token from the request
+        const clientToken = req.headers['auth-token'];
+
+        const data = await jwt.verify(clientToken, key);
+
+        if (clientToken && data) { //if it was included in the req it must be verified
+            
+            return data
+
+        } else {
+            
+            return false
+        }
         
-        return true
+    } catch (err) {
 
-    } else {
+        console.log(`\n\nError in 'isLoggedIn': ${err.message}\n`);
         
         return false
     }
+    
     
 }
 
