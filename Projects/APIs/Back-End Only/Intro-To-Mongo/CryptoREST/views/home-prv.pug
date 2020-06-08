@@ -1,0 +1,19 @@
+doctype html 
+html
+    head
+        title CryptoBase
+
+        style
+             include ../public/home-prv.css
+
+        script
+             include ../public/home-prv.js
+
+    body
+        h1#welcome Welcome Back #{name}
+
+        - const cryptoLink = `http://localhost:${port}/crypto`
+
+        a(href=cryptoLink)#cryptoLink View Your Cryptocurrency Watch List
+
+        h1 You may also add cryptocurrencies to a watch list 
