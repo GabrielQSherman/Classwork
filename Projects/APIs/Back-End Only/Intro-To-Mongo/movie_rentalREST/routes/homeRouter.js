@@ -42,13 +42,68 @@ router.get('/all', async (req, res) => {
 
 //request for delete request
 
-router.delete()
+router.delete('/movie/delete/:movieId', findMovie, async (req, res) => {
+
+    try {
+
+        await Movie.findByIdAndDelete(req.params.movieId);
+        
+        res.status(200).json({
+            status: 200,
+            deleted_movie: req.foundMovie
+        })
+        
+    } catch (err) {
+
+        console.log('Error in HomeRouter: ' + err.message);
+
+        res.status(500).json({
+            status: 500,
+            message: err.message
+        })
+        
+    }
+
+})
 
 //Movie.findByIdAndDelete(<doc id>)
 
 //request patch
 
-router.patch()
+router.patch('/movie/patch/:movieId', findMovie, async (req, res) => {
+
+    const id = req.params.movieId;
+
+    const newVersion = req.foundMovie.__v + 1;
+
+    req.body.__v = newVersion;
+
+    try {
+
+        await Movie.update({_id: id}, req.body);
+
+        const updateDocument = await Movie.findById(id); 
+
+        res.status(200).json({
+            status: 200,
+
+            new_document: updateDocument,
+            old_document: req.foundMovie
+
+        })
+        
+    } catch (err) {
+
+        console.log('Error in HomeRouter: ' + err.message);
+
+        res.status(500).json({
+            status: 500,
+            message: err.message
+        })
+        
+    }
+
+})
 
 // Movie.update({_id: id}, req.body)
 
