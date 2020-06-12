@@ -14,15 +14,19 @@ const express = require('express'),
 
       connectionURI = process.env.MONGO,
 
-      homeRouter = require('./routes/homeRouter');
+      homeRouter = require('./routes/homeRouter'),
+
+      movieRouter = require('./routes/movieRouter')
 
 
 //some middleware needs to go before others
 server.use(morgan('dev'));
 server.use(express.json());
+server.use(express.static('./public'));
 
 //express.json and morgan must be called before in expressInstance.use()
 server.use('/', homeRouter);
+server.use('/movie', movieRouter);
 
 mongoose.connect(connectionURI, deprecatedObj, () => {
     
