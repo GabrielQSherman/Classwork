@@ -1,0 +1,57 @@
+doctype html 
+html
+    head
+        title CryptoBase
+
+        style
+             include ../public/home-pub.css
+
+        script
+             include ../public/home-pub.js
+
+    body
+
+        button#switch_form Click Here To Log In 
+
+        #sign_up_div
+            br
+            h1.message#headmessage Sign Up For An Account
+            form#signupform
+                
+                label.lables(for='name') Full Name - 
+                input#name.form-inputs(type='text', placeholder='Full Name' name='name')
+                br 
+                br
+                label.lables(for='username') User Name - 
+                input#username.form-inputs(type='text', placeholder='User Name' name='username')
+                br
+                br
+                label.lables(for='email') Email - 
+                input#email.form-inputs(type='text', placeholder='Account Email' name='email')
+                br 
+                br
+                label#passwordL.lables(for='password') Password - 
+                input#password.form-inputs(type='password', placeholder='Password' name='password')
+                br
+                br 
+                h5#passMatch(style='display: none;') Both Password Inputs Must Match 
+                br
+                h5#passReq(style='display: none;') Password Length Should Be At Least 7  
+                br
+                br  
+                label#passwordAL.lables(for='passwordAgain' style='display: none') Enter Password Again - 
+                input#passwordAgain.form-inputs(type='password', placeholder='Password' name='passwordAgain' style='display: none')
+            button#signuprequest Sign Up
+
+        #log_in_div
+            h1.message#headMsg Log Into Your Account
+            form#signinform
+                label.lables(for='email') Email - 
+                input#email.form-control(type='text', placeholder='Account Email' name='email')
+                br 
+                br
+                label.lables(for='password') Password - 
+                input#password.form-control(type='text', placeholder='Password' name='password')
+                br
+                br
+            button#signinrequest Sign In
