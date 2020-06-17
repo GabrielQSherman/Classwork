@@ -59,8 +59,8 @@ const Movie = new mongoose.Schema({
 
         default: {
 
-            available: {type: Number, default: 0},
-            rented: {type: Number, default: 0 }
+            available: 1,
+            rented: 0
         }
 
     }

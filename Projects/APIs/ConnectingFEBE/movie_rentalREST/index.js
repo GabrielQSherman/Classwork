@@ -17,7 +17,11 @@ server.use(express.json());
 
 // server.use(express.static('./public'));
 
-server.use('/', express.static('./public/homeStatic'))
+server.set('view engine', 'pug')
+
+server.use( express.static('./public'));
+// server.use( express.static('./node_modules'));
+
 
 //express.json and morgan must be called before in expressInstance.use()
 server.use('/', homeRouter);

@@ -9,7 +9,7 @@ function devStart() {
 
     const xhr = new XMLHttpRequest(),
     
-    endpoint = `${location}movie/all`;
+    endpoint = `https://localhost:4000/movie/all`;
       
     xhr.open('GET', endpoint, true);
 

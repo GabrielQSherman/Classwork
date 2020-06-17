@@ -1,0 +1,27 @@
+html
+    title Movie Rentals
+
+    style
+        include ../public/home-pug.css
+
+    script
+        include ../public/home-pug.js
+
+    body
+        h1= message
+
+        button#clickMe Click me
+
+        .allMovies
+            each movieData in all_movies
+                if movieData.inventory.available > 0
+                    .Movie(id=movieData._id)
+                        h1=movieData.title
+                        h3=movieData.release
+                        img(src=movieData.img, alt=`${movieData.title} Poster IMG`)
+                        a(href=movieData.imdb_link)=`${movieData.title} IMDB Page`
+                        button.deleteMovie Delete From Database
+                        button.getMovie Get More DB Info
+                        button.rentMovie Rent This Movie
+
+
