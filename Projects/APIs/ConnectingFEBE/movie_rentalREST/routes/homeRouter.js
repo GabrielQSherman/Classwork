@@ -5,7 +5,6 @@ const Movie = require('../models/Movie');
 router.get('/', (req, res) => {
 
     res.render('test', {message: "Test Message", titleVar: 'Title Here!'})
-
 })
 
 router.get('/mrental', async (req, res) => {
@@ -16,6 +15,11 @@ router.get('/mrental', async (req, res) => {
 
     res.render('home', {all_movies: allMovies, message: clientMsg})
     
+})
+
+router.get('/mrental/new', async (req, res) => {
+    
+    res.render('newMovie')
 })
 
 //needs work
