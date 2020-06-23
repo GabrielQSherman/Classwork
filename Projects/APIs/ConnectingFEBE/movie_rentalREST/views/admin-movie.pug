@@ -1,0 +1,30 @@
+html
+    head
+        title Admin Page
+
+        style
+            include ../public/admin-movie.css
+        script
+            include ../public/admin-movie.js
+
+    body
+        -const currentYear = new Date().getFullYear();
+
+        mixin movieInputs
+            input(placeholder='Enter Movie Title', name='title')
+            input(placeholder='Enter Movie Poster Img Link', name='img', type='url')
+            input(placeholder='Enter Movie IMDB Link', name='imdb_link', type='url')
+            input(placeholder='Enter Movie Release Year',  type='number', name='release', value=currentYear, min=currentYear-100, max=currentYear+2)
+            input(placeholder='Enter Movie Order Quantity',  type='number', min=0, name='available')
+
+        h1(style="margin-top:5%") Post A New Movie
+        form#newMovieForm
+            +movieInputs
+        button#submitNew Add Movie To DB
+
+        h1(style="margin-top:5%") Update A Movie Document
+        form#updateMovieForm
+            input(type="text", placeholder="Enter ID", name="id")#idInput
+            +movieInputs
+        button#submitUpdate Submit Your Movie Update
+        

@@ -1,10 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const Movie = require('../models/Movie');
+const adminAuth = require('../middleware/adminAuth');
 
 router.get('/', (req, res) => {
+    //expected query properties: 'msg' and 'title'
+    const { msg, title} = req.query;
 
-    res.render('test', {message: "Test Message", titleVar: 'Title Here!'})
+    res.render('test', 
+    {
+        message: msg || 'Default Message', 
+        titleVar: title || 'Default Title'
+    });
 })
 
 router.get('/mrental', async (req, res) => {
@@ -17,9 +24,8 @@ router.get('/mrental', async (req, res) => {
     
 })
 
-router.get('/mrental/new', async (req, res) => {
-    
-    res.render('newMovie')
+router.get('/mrental/admin/:key', adminAuth, (req, res) => {
+    res.render('admin-movie')
 })
 
 //needs work

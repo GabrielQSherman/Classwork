@@ -50,3 +50,29 @@ body {
     padding: 10px;
     margin-top: 5px;
 }
+
+.editMovie {
+    display: none;
+    flex-direction: column;
+    max-width: 200px;
+}
+
+.displayMovie {
+    display: flex;
+    flex-direction: column;
+}
+
+.adminBtns { 
+    display: flex;
+    flex-direction: column;
+}
+
+.adminBtns button {
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 1%;
+}
+
+.adminBtns button:hover {
+    opacity: 50%;
+}

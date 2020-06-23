@@ -16,12 +16,21 @@ html
             each movieData in all_movies
                 if movieData.inventory.available > 0
                     .Movie(id=movieData._id)
-                        h1=movieData.title
-                        h3=movieData.release
-                        img(src=movieData.img, alt=`${movieData.title} Poster IMG`)
-                        a(href=movieData.imdb_link)=`${movieData.title} IMDB Page`
-                        button.deleteMovie Delete From Database
-                        button.getMovie Get More DB Info
+                        .displayMovie
+                            h1=movieData.title
+                            h3=movieData.release
+                            img(src=movieData.img, alt=`${movieData.title} Poster IMG`)
+                            a(href=movieData.imdb_link)=`${movieData.title} IMDB Page`
                         button.rentMovie Rent This Movie
+                        button.getMovie Get More DB Info
+                        .editMovie
+                            input(type='text', placeholder='Title', name='title')
+                            input(type='number', placeholder='Release Year', name='release')
+                            input(type='url', placeholder='Movie Poster URL', name='img')
+                            input(type='url', placeholder='IMDB Link', name='imdb_link', pattern='imdb')
+                        .adminBtns
+                            button.deleteMovie Delete From Database
+                            button.editMovieBtn Edit Movie Data
+                        
 
 
