@@ -7,12 +7,12 @@ html
     script
         include ../public/home-pug.js
 
-    body
+    body    
         h1= message
 
         button#clickMe Click me
 
-        .allMovies
+        #allMovies
             each movieData in all_movies
                 if movieData.inventory.available > 0
                     .Movie(id=movieData._id)
@@ -24,10 +24,13 @@ html
                         button.rentMovie Rent This Movie
                         button.getMovie Get More DB Info
                         .editMovie
-                            input(type='text', placeholder='Title', name='title')
-                            input(type='number', placeholder='Release Year', name='release')
-                            input(type='url', placeholder='Movie Poster URL', name='img')
-                            input(type='url', placeholder='IMDB Link', name='imdb_link', pattern='imdb')
+                            - const currentYear = new Date().getFullYear();
+                            form(onSubmit='return false')
+                                input(type='text', placeholder='Title', name='title')
+                                input(type='number', placeholder='Release Year', name='release', min=currentYear-100, max=currentYear+2)
+                                input(type='url', placeholder='Movie Poster URL', name='img')
+                                input(type='url', placeholder='IMDB Link', name='imdb_link', pattern='imdb')
+                                button.submitEdit Submit Changes
                         .adminBtns
                             button.deleteMovie Delete From Database
                             button.editMovieBtn Edit Movie Data

@@ -3,14 +3,16 @@ body {
     background-color: #333;
     text-align: center;
 }
-.allMovies {
+#allMovies {
     
-    display: flex;
+    display: none;
     flex-wrap: wrap;
 
 }
 
 .Movie {
+
+    min-width: 230px;
     
     background-image: linear-gradient(rgba(236, 158, 255, 0.644), rgb(206, 71, 71), rgb(255, 255, 29));
 
@@ -39,6 +41,8 @@ body {
 .Movie img {
     width: 200px;
     height: auto;
+    margin: 0 auto;
+    border-radius: 10px;
 
 }
 
@@ -52,13 +56,20 @@ body {
 }
 
 .editMovie {
-    display: none;
     flex-direction: column;
     max-width: 200px;
+    margin: 2% auto;
+}
+
+.editMovie input {
+    margin-bottom: 5%;
+    background-color: #ffffff5d;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
 }
 
 .displayMovie {
-    display: flex;
     flex-direction: column;
 }
 
