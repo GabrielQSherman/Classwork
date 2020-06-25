@@ -41,21 +41,54 @@ function submitEditReq() {
     const movieId = this.parentElement.parentElement.parentElement.id;
     const form = this.parentElement;
 
+    let validationErr = [];
+
     let reqBody = {};
 
     for (const input of form) {
 
         let inputValue = input.value.trim();
-
-        console.log(inputValue);
         
-        if (inputValue != '') {
+        if (inputValue != '') reqBody[input.name] = inputValue;
 
-            reqBody[input.name] = inputValue;
-        
-        }
+        if (input.validationMessage != '') validationErr.push(`${input.name}: ${input.validationMessage}`);
 
     }
+
+    if ( !(new RegExp(/imdb/).test(form.imdb_link)) ) validationErr.push('IMDB Link Provided Did Not Include imdb');
+
+    if (validationErr.length > 0) {
+        const message = `Error/s Occured:\n\n${validationErr.join('\n')}`;
+         
+        return alert(message);
+    }
+
+    //make patch request via fetch api
+
+    const endpoint = `http://localhost:4000/movie/patch/${movieId}`, 
+          reqObj = {
+              method: "PATCH",
+              body: JSON.stringify(reqBody),
+              headers: {
+                  'Access-Control-Allow-Origin': '*',
+                  Accept: 'application/json',
+                  'content-type': 'application/json'
+              }
+          };
+
+    fetch(endpoint, reqObj)
+    .then( rs => {
+        return rs.json()
+    })
+    .then( res => {
+        console.log(res);
+
+        //check if success
+            //if success switch back to orig screen
+            
+        //alert user of error with message
+        
+    })
 
     console.log(reqBody);
     
