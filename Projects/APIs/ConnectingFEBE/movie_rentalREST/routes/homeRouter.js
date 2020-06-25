@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 
 router.get('/mrental', async (req, res) => {
     
-    const allMovies = await Movie.find({}),
+    const allMovies = await Movie.find({ 'inventory.available': {$gte: 1}}),
 
           clientMsg = 'Number of Movies: ' + allMovies.length;
 

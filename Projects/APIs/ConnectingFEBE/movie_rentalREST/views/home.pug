@@ -1,11 +1,11 @@
 html
     title Movie Rentals
 
-    style
-        include ../public/home-pug.css
-
     script
         include ../public/home-pug.js
+
+    style
+        include ../public/home-pug.css
 
     body    
         h1= message
@@ -29,7 +29,7 @@ html
                                 input(type='text', placeholder='Title', name='title')
                                 input(type='number', placeholder='Release Year', name='release', min=currentYear-100, max=currentYear+2)
                                 input(type='url', placeholder='Movie Poster URL', name='img')
-                                input(type='url', placeholder='IMDB Link', name='imdb_link', pattern='imdb')
+                                input(type='url', placeholder='IMDB Link', name='imdb_link')
                                 button.submitEdit Submit Changes
                         .adminBtns
                             button.deleteMovie Delete From Database
