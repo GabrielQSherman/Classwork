@@ -10,7 +10,8 @@ port = process.env.PORT || 3001,
 deprecatedObj = { useCreateIndex: true, useUnifiedTopology: true, useNewUrlParser: true},
 connectionURI = process.env.MONGO,
 homeRouter = require('./routes/homeRouter'),
-movieRouter = require('./routes/movieRouter');
+movieRouter = require('./routes/movieRouter'),
+userRouter = require('./routes/userRouter');
 //some middleware needs to go before others
 server.use(morgan('dev'));
 server.use(express.json());
@@ -26,6 +27,7 @@ server.use( express.static('./public'));
 //express.json and morgan must be called before in expressInstance.use()
 server.use('/', homeRouter);
 server.use('/movie', movieRouter);
+server.use('/user', userRouter);
 //connect to mongoose
 mongoose.connect(connectionURI, deprecatedObj, () => {
     console.log('The Server Is Connected To The Database');
