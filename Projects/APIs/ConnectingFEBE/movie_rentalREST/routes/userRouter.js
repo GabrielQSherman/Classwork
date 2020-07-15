@@ -6,7 +6,17 @@ const secret = process.env.JWT_SECRET;
 const jwt = require("jsonwebtoken");
 
 const validateUser = require('../middleware/validateUser');
-const authUser = require('../middleware/authUser')
+const loginUser = require('../middleware/loginUser');
+const userAuth = require('../middleware/userAuth');
+
+
+router.get(
+    '/testAuth',
+    userAuth,
+    (req, res) => {
+        res.send('success you are logged in')
+    } 
+)
 
 //POST route for Users
 //localhost:4000/user
@@ -53,12 +63,12 @@ router.post(
 //@access public
 router.put(
     "/", 
-    authUser,
+    loginUser,
     async (req, res) => {
         
-        const token = jwt.sign({id: req.id}, secret);
+        const token = jwt.sign({id: req.id}, secret, {expiresIn: 20});
 
-        res.json(token);
+        res.json({token});
        
     }
 )

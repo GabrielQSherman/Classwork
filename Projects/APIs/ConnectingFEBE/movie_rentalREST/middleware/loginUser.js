@@ -12,9 +12,9 @@ module.exports = async (req, res, next) => {
     try {
         const email = req.body.email,
               emailValid = 
-            (email === undefined || email.trim() === '')
-                ? false
-                : validator.isEmail(email);
+                (email === undefined || email.trim() === '')
+                    ? false
+                    : validator.isEmail(email);
 
         if (!emailValid) {
             console.error('\nLogin Failed: Email Not Valid');
@@ -29,9 +29,9 @@ module.exports = async (req, res, next) => {
         }
         const pass = req.body.password,
               passTest = 
-            (pass === undefined || pass.trim() === '') 
-                ? false 
-                : await bcrypt.compare(pass, user.password);
+                (pass === undefined || pass.trim() === '') 
+                    ? false 
+                    : await bcrypt.compare(pass, user.password);
 
         if (!passTest) {
             console.error('\nLogin Failed: Password Invalid');
