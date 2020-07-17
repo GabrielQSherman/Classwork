@@ -11,17 +11,27 @@ module.exports = async (req, res, next) => {
         
         const decodedData = jwt.verify(userToken, jwtKey);
         
-        if (decodedData.id === undefined) { 
-            throw new Error('Id was not defined in the payload')
+        if (decodedData.id === undefined) throw new Error('Id was not defined in the payload')
+        
+        const admin = await User.findOne(
+            {_id: decodedData.id}
+        );
+        
+        if (admin === null) throw new Error('User id is invalid')
+
+        const { _id, email: email, 'adminProps.isAdmin': isAdmin} = admin;
+
+        const info = {
+            id: _id,
+            email: email,
+            isAdmin: isAdmin,
         }
 
-        const admin = await User.findOne({_id: decodedData.id, idAdmin: true});
+        console.log(info);
 
-        if (admin === null) {
-            throw new Error('User is not an admin or id is invalid')
-        }
+        if(info.isAdmin === false) throw new Error('')
 
-        req.userId = decodedData.id;
+        req.admin = info;
 
         next()
 
@@ -29,10 +39,20 @@ module.exports = async (req, res, next) => {
 
         const errMsg = err.message || err;
         
-        console.error(`\nError In UserAuth: ${errMsg}\n`);
+        console.error(`\nError In AdminAuth: ${errMsg}\n`);
 
         return res.status(401).json({error: 'Not Authorized'})
 
     }
 
+}
+
+
+
+
+
+
+function project () {
+
+    User.findOne( {  } )
 }
