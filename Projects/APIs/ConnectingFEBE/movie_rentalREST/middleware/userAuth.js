@@ -14,7 +14,13 @@ module.exports = async (req, res, next) => {
             throw new Error('Id was not defined in the payload')
         }
 
-        req.userId = decodedData.id;
+        const user = await findOne({_id: decodedData.id});
+
+        if (user === null) {
+            throw new Error('user id in payload was invalid for mongo/mongoose')
+        }
+
+        req.user = user;
 
         next()
 
