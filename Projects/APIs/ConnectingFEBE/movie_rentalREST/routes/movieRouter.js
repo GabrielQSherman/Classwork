@@ -3,6 +3,26 @@ const router = express.Router();
 //MongoDB collection is accessible through this variable 
 const Movie = require('../models/Movie');
 const findMovie = require('../middleware/findMovie');
+const adminAuth = require('../middleware/adminAuth');
+
+
+router.get('/adminTest', adminAuth, async (req, res) => {
+    try {
+        
+        res.json({message: 'YOUR AND ADMIN.', admin_info: req.admin})
+
+    } catch (err) {
+        const errMsg = err.message || err;
+        
+        console.log(`Error In Movie Router Test,\n Error: ${errMsg}`);
+
+        res.status(500).json({error: errMsg })
+    }
+})
+
+
+
+
 //request all movies in collection/db
 router.get('/all', async (req, res) => {
     try {
@@ -28,7 +48,15 @@ router.get('/all', async (req, res) => {
     }
 })
 //request for delete request
-router.delete('/delete/:movieId', findMovie, async (req, res) => {
+router.delete(
+    
+    '/delete/:movieId', 
+    
+    findMovie,
+    adminAuth, 
+    
+    async (req, res) => {
+
     try {
         await Movie.findByIdAndDelete(req.params.movieId);
         res.status(200).json({
