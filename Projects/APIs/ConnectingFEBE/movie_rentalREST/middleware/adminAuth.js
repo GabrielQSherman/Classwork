@@ -29,7 +29,7 @@ module.exports = async (req, res, next) => {
 
         console.log(info);
 
-        if(info.isAdmin === false) throw new Error('')
+        if(info.isAdmin === false) throw new Error('Not an admin')
 
         req.admin = info;
 
@@ -45,14 +45,4 @@ module.exports = async (req, res, next) => {
 
     }
 
-}
-
-
-
-
-
-
-function project () {
-
-    User.findOne( {  } )
 }
