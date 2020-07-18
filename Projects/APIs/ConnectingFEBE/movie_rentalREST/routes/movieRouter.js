@@ -9,7 +9,7 @@ const adminAuth = require('../middleware/adminAuth');
 router.get('/adminTest', adminAuth, async (req, res) => {
     try {
         
-        res.json({message: 'YOUR AND ADMIN.', admin_info: req.admin})
+        res.json({message: 'YOURE AN ADMIN.', admin_info: req.admin})
 
     } catch (err) {
         const errMsg = err.message || err;
@@ -123,6 +123,18 @@ router.post('/post', async (req, res) => {
             status: 500
         })
     }
+})
+
+
+//patch movies
+router.patch('/patchmovies', async (req, res) => {
+    Movie.update(
+        {},
+        {$set: {inventory: {
+            available: 1,
+            rented: []
+        }}}
+    )
 })
 
 module.exports = router;
