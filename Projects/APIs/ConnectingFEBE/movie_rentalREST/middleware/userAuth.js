@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 
+const User = require('../models/User');
+
 module.exports = async (req, res, next) => {
     
     const { JWT_SECRET: jwtKey, HEAD_AUTH_KEY: headerKey} = process.env;
@@ -10,15 +12,20 @@ module.exports = async (req, res, next) => {
         
         const decodedData = jwt.verify(userToken, jwtKey);
         
-        if (decodedData.id === undefined) { 
-            throw new Error('Id was not defined in the payload')
+        if (decodedData.id === undefined && decodedData.id.length != 24 ) { 
+            throw new Error('Id was not defined in the payload OR the length was invalid')
         }
 
-        const user = await findOne({_id: decodedData.id});
+        const query = {_id: decodedData.id};
+        const projection = {password: 0, adminProp: 0, __v: 0}; 
+
+        const user = await User.findOne(query,projection);
 
         if (user === null) {
-            throw new Error('user id in payload was invalid for mongo/mongoose')
+            throw new Error('User no longer in database')
         }
+
+        console.log(user);
 
         req.user = user;
 
