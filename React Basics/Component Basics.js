@@ -16,3 +16,11 @@ const JSX =
     <li>It is a powerful free web development tool created and mantained by Facebook</li>
   </ul>
 </div>
+
+//How to comment
+
+const JSX = 
+<div>
+  <h1>Title Title</h1>
+    {/* this is a comment in JSX */}
+</div>
