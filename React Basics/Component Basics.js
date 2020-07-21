@@ -17,10 +17,28 @@ const JSX =
   </ul>
 </div>
 
-//How to comment
-
-const JSX = 
+//How to comment --> {/* comment here */}
+const commentComp = 
 <div>
-  <h1>Title Title</h1>
+  <h1>How to comment?</h1>
     {/* this is a comment in JSX */}
 </div>
+
+//You can render components to DOM elements by id
+const idComponet = (
+  <div>
+    <h1>Hello World</h1>
+    <p>Renders to element with id of 'node'</p>
+  </div>
+);
+const nodeElm = document.getElementById('node')
+ReactDOM.render( idComponet, nodeElm)
+
+//when setting an elements properties one must use cammel case
+//setting a class
+const noCasingComp = (
+  // no longer can use <p>class='classy'</p> in JSX 
+    <div className='myDiv'> 
+    <h1>this div has a class!</h1>
+  </div>
+);
