@@ -8,15 +8,8 @@ const jwt = require("jsonwebtoken");
 const validateUser = require('../middleware/validateUser');
 const loginUser = require('../middleware/loginUser');
 const userAuth = require('../middleware/userAuth');
+const adminAuth = require('../middleware/adminAuth');
 
-
-router.get(
-    '/testAuth',
-    userAuth,
-    (req, res) => {
-        res.send('success you are logged in')
-    } 
-)
 
 //POST route for Users
 //localhost:4000/user
@@ -72,5 +65,28 @@ router.put(
        
     }
 )
+
+
+//movie renting route
+
+//movie renting route
+
+
+//TESTING ROUTES
+// router.get(
+//     '/testAuth',
+//     userAuth,
+//     (req, res) => {
+//         res.send('success you are logged in')
+//     } 
+// )
+
+// router.get(
+//     '/testAdminAuth',
+//     adminAuth,
+//     (req,res )=> {
+//         res.send('admin passed test')
+//     }
+// )
 
 module.exports = router;

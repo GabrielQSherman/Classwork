@@ -93,7 +93,7 @@ router.patch('/patch/:movieId', findMovie, async (req, res) => {
     }
 })
 //request movie by DB id
-router.get('/:movieId', findMovie, (req, res) => {  
+router.get('/getmovie/:movieId', findMovie, (req, res) => {  
     res.status(200).json({
         status: 200,
         message: 'A movie was found',
@@ -126,15 +126,34 @@ router.post('/post', async (req, res) => {
 })
 
 
-//patch movies
-router.patch('/patchmovies', async (req, res) => {
-    Movie.update(
-        {},
-        {$set: {inventory: {
-            available: 1,
-            rented: []
-        }}}
-    )
-})
+//patch all movies to now have an inventory that matches the model
+router.patch(
+    '/moviepatch1',
+    adminAuth,
+    async (req, res) => {
+
+        try {
+
+            const report = await Movie.updateMany( 
+                {}, 
+                {
+                    inventory: {
+                        available: 1,
+                        rented: []
+                    }
+                }
+            
+            )
+            res.json({
+                allDoc: await Movie.find({}),
+                report: report,
+                message: 'successfull patch'})
+
+        } catch (err) {
+            res.status(500).json({error: err.message || err})
+        }
+
+    }
+)
 
 module.exports = router;
