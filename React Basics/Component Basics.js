@@ -42,3 +42,16 @@ const noCasingComp = (
     <h1>this div has a class!</h1>
   </div>
 );
+
+//for elements that do not have conntents such as hr and br as well as some input elements,
+//you can close the tag in the first tag, this saves some time and makes it so you dont have to make a closing tag unless it is needed
+
+const selfClosedComp = (
+  <div>
+    <h2>Using self closing tags!</h2> 
+    <br />
+    <input type='text' placeholder='Enter you favorite thing to do.' />
+    <p>This cant be self closed because it has innerText</p>
+    <hr />
+  </div>
+);
