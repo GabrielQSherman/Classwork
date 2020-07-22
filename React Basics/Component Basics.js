@@ -83,3 +83,84 @@ class StatefullComponent extends React.Component {
     )
   }
 };
+
+
+//components can be nested as much as desired/needed
+//this is a simple nested component
+const ChildComp = () => {
+  return (
+    <div>
+      <p>stateless child</p>
+    </div>
+  );
+};
+
+//child/parent components dont need to be stateful or statless, either will work
+class ParentComp extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <div>
+        <h1>statefull parent component</h1>
+        <ChildComponent />
+      </div>
+    );
+  }
+};
+
+
+//React is all about breaking down complex UI into small digestiable chunks, this is an example of a list of Cameras, it can be expanded by created more small components
+
+//two lists that are simple functional componets
+const CanonCameras = () => {
+  return (
+    <div>
+      <h2>Cannon Cameras:</h2>
+      <ul>
+        <li>EOS 5D Mark IV</li>
+        <li>EOS Rebel T7</li>
+        <li>EOS R5</li>
+      </ul>
+    </div>
+  );
+};
+
+const NikonCameras = () => {
+  return (
+    <div>
+      <h2>Nikon Cameras:</h2>
+      <ul>
+        <li>D850</li>
+        <li>Z50</li>
+        <li>D3500</li>
+      </ul>
+    </div>
+  );
+};
+
+//brings the seperate list of cameras brand to one component
+const Cameras = () => {
+  return (
+    <div>
+      <h1>Types of Cameras:</h1>
+      <CanonCameras />
+      <NikonCameras />
+    </div>
+  );
+};
+//a list of tech producst that can be expanded upon to include more teach feilds
+class TechLists extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div>
+        <Cameras />
+      </div>
+    );
+  }
+};
