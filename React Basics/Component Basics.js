@@ -111,13 +111,14 @@ class ParentComp extends React.Component {
 };
 
 
-//React is all about breaking down complex UI into small digestiable chunks, this is an example of a list of Cameras, it can be expanded by created more small components
+//React is all about breaking down complex UI into small digestiable chunks, 
+//this is an example of a list of Cameras, it can be expanded by creating more sub-components
 
 //two lists that are simple functional componets
 const CanonCameras = () => {
   return (
     <div>
-      <h2>Cannon Cameras:</h2>
+      <h3>Cannon Cameras:</h3>
       <ul>
         <li>EOS 5D Mark IV</li>
         <li>EOS Rebel T7</li>
@@ -130,7 +131,7 @@ const CanonCameras = () => {
 const NikonCameras = () => {
   return (
     <div>
-      <h2>Nikon Cameras:</h2>
+      <h3>Nikon Cameras:</h3>
       <ul>
         <li>D850</li>
         <li>Z50</li>
@@ -144,13 +145,13 @@ const NikonCameras = () => {
 const Cameras = () => {
   return (
     <div>
-      <h1>Types of Cameras:</h1>
+      <h2>Types of Cameras:</h2>
       <CanonCameras />
       <NikonCameras />
     </div>
   );
 };
-//a list of tech producst that can be expanded upon to include more teach feilds
+//a list of tech products that can be expanded upon to include more teach feilds
 class TechLists extends React.Component {
   constructor(props) {
     super(props);
@@ -159,8 +160,15 @@ class TechLists extends React.Component {
   render() {
     return (
       <div>
+        <h1>Teach Products</h1>
         <Cameras />
       </div>
     );
   }
 };
+
+//to use ReactDOM.render() with react components a diffrent syntax is need then when rendering a simple JSX var
+
+//rendering the Techlist Comp. to the root node would use
+const rootNode = document.getElementById('root');
+ReactDOM.render(<TechLists />, rootNode);
