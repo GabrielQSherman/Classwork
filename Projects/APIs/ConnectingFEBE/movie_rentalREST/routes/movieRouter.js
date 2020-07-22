@@ -4,24 +4,46 @@ const router = express.Router();
 const Movie = require('../models/Movie');
 const findMovie = require('../middleware/findMovie');
 const adminAuth = require('../middleware/adminAuth');
+const newError = require('../utils/newError');
 
+//Routes to make
 
-router.get('/adminTest', adminAuth, async (req, res) => {
-    try {
-        
-        res.json({message: 'YOURE AN ADMIN.', admin_info: req.admin})
+//add/delete movie inventory
+router.patch(
+    '/addinven',
+    adminAuth, 
+    async (req, res) => {
 
-    } catch (err) {
-        const errMsg = err.message || err;
-        
-        console.log(`Error In Movie Router Test,\n Error: ${errMsg}`);
+        try {
 
-        res.status(500).json({error: errMsg })
+            // if (req.admin.adminProp.adminLevel <= 1) throw newError('Not Authorized', 401);
+
+            //TODO
+            //validate 'movieId' (check length) and 'inc' (check admin priv.) in req.body, confirm their types.
+
+            const updatedMovie = await Movie.findByIdAndUpdate(
+                req.body.movieId, 
+                {$inc: {'inventory.available': req.body.inc}},
+                {new: 1}
+            ) 
+
+            res.json({movie: updatedMovie})
+            
+        } catch (err) {
+
+            const errMsg = err.message || err;
+            const errCode = err.code || 500;
+
+            res.status(errCode).json({
+                error: errMsg
+            })
+            
+        }
+
     }
-})
+)
 
-
-
+//TODO make movie routes admin/user only include adminAuth/user
 
 //request all movies in collection/db
 router.get('/all', async (req, res) => {
