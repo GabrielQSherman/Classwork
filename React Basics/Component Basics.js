@@ -58,10 +58,28 @@ const selfClosedComp = (
 
 //stateless componenets are the very commonly used, they do not have a state, but can have their own functions
 //a simple example of one
-const MyComponent = function() {
+const StatelessComponent = function() {
   return (
     <div>
       <p>Hello I'm A Statless Componenet</p>
     </div>
   )
 }
+
+//this is how you create a componenet with state, 
+//in this example it is a new class extended from the React.Component class that is provided with the react libray
+class StatefullComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      display: true //this state can be changed from within this component and detirmin diffrent things the component with do/behave like
+    }
+  }
+  render() {
+    return(
+      <div>
+        <h1>I can have a state</h1>
+      </div>
+    )
+  }
+};
