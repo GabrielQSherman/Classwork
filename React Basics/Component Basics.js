@@ -55,3 +55,13 @@ const selfClosedComp = (
     <hr />
   </div>
 );
+
+//stateless componenets are the very commonly used, they do not have a state, but can have their own functions
+//a simple example of one
+const MyComponent = function() {
+  return (
+    <div>
+      <p>Hello I'm A Statless Componenet</p>
+    </div>
+  )
+}
