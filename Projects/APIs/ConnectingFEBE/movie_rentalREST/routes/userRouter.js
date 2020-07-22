@@ -1,14 +1,83 @@
 const User = require("../models/User");
+const Movie = require("../models/Movie");
+
+const secret = process.env.JWT_SECRET;
+
 const router = require("express").Router();
 const validator = require("validator");
 const bcrypt = require("bcrypt");
-const secret = process.env.JWT_SECRET;
 const jwt = require("jsonwebtoken");
 
 const validateUser = require('../middleware/validateUser');
 const loginUser = require('../middleware/loginUser');
 const userAuth = require('../middleware/userAuth');
 const adminAuth = require('../middleware/adminAuth');
+
+const newError = require('../utils/newError'); 
+
+//movie renting 
+router.patch(
+    '/rent',
+    userAuth,
+    async (req, res) => {
+        
+        const movieId = req.body.movieId;
+
+        try {
+
+            const movie = await Movie.findOne({_id: movieId, 'inventory.available': { $gte: 1 } });
+
+            // console.log(`\nFound Movie: ${movie}\n`);
+
+            if (movie === null) {
+                console.log(`Movie Id caused error renting ${movieId}`);
+                throw newError('Movie Not Found or Movie Unavailable', 404);
+            }
+            
+            //check if the user is already renting
+            if (req.user.rentedMovies.indexOf(movieId) != -1) {
+                console.log(`User tried rented movie twice\n movieId: ${movieId}\nUserId: ${req.user._id}`);
+                throw newError('Movie Not Found or Movie Unavailable', 409);
+            }
+
+            //modify the user doc
+            const newUser = await User.updateOne(
+                {_id: req.user._id},
+                { $addToSet: { rentedMovies: movieId} }
+            )
+
+            //modifying the movie doc
+            const newMovie = await Movie.updateOne(
+                {_id: movieId},
+                {
+                    $addToSet: { 'inventory.rented': req.user._id },
+                    $inc: { 'inventory.available': -1 },
+                }
+            )
+
+            res.json({
+                message: "successs",
+                user: newUser,
+                movie: newMovie
+            })
+            
+        } catch (err) {
+
+            const errMsg = err.message || err;
+            const errCode = err.code || 500;
+
+            console.log(`Error in movie renting: ${errMsg}`);
+            
+            res.status(errCode).json({
+                error: errMsg
+            })
+            
+        }
+
+    }
+)
+
+//movie return route
 
 
 //POST route for Users
@@ -59,7 +128,7 @@ router.put(
     loginUser,
     async (req, res) => {
         
-        const token = jwt.sign({id: req.id}, secret, {expiresIn: 20});
+        const token = jwt.sign({id: req.id}, secret, {expiresIn: '3hr'});
 
         res.json({token});
        
@@ -67,9 +136,7 @@ router.put(
 )
 
 
-//movie renting route
 
-//movie renting route
 
 
 //TESTING ROUTES
@@ -81,12 +148,12 @@ router.put(
 //     } 
 // )
 
-// router.get(
-//     '/testAdminAuth',
-//     adminAuth,
-//     (req,res )=> {
-//         res.send('admin passed test')
-//     }
-// )
+router.get(
+    '/testAdminAuth',
+    adminAuth,
+    (req,res )=> {
+        res.send('admin passed test')
+    }
+)
 
 module.exports = router;
