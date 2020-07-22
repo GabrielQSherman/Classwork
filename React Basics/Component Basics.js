@@ -172,3 +172,26 @@ class TechLists extends React.Component {
 //rendering the Techlist Comp. to the root node would use
 const rootNode = document.getElementById('root');
 ReactDOM.render(<TechLists />, rootNode);
+
+//passing a simple values to a stateless component via 'props'
+const CurrentDate = (props) => {
+  return (
+    <div>
+      <p>The current date is: {props.date} </p>
+    </div>
+  );
+};
+
+class Calendar extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <div>
+        <h3>What date is it?</h3>
+        <CurrentDate date={Date()}/>
+      </div>
+    );
+  }
+};
