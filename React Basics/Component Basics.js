@@ -195,3 +195,33 @@ class Calendar extends React.Component {
     );
   }
 };
+
+//you can pass default props to a stateless component with the following
+CurrentDate.defaultProps = {date: 'Date not accessable'};
+
+//when rendering a component you can overide a default prop by setting it explicity
+//exampled here
+const CurrentDate = (props) => { //component with default props
+  return (
+    <div>
+      <p>The current date is: {props.date} </p>
+    </div>
+  );
+};
+//setting a default prop
+CurrentDate.defaultProps = {date: 'Date not accessable'};
+
+class Calendar extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <div>
+        <h3>What date is it?</h3>
+        {/* setting the prop explicity overides the default */}
+        <CurrentDate date={Date()}/>
+      </div>
+    );
+  }
+};
