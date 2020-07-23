@@ -13,7 +13,7 @@ const newError = require('../utils/newError');
 
 //Routes to make
 
-//add/delete movie inventory
+//add movie inventory
 router.patch(
     '/addinven',
     adminAuth, 
@@ -23,10 +23,7 @@ router.patch(
 
               adminLvl = req.admin.adminLevel;
         try {
-
-            // if (req.admin.adminProp.adminLevel <= 1) throw newError('Not Authorized', 401);
-            //TODO
-            //validate 'movieId' (check length) and 'inc' (check admin priv.) in req.body, confirm their types.
+            
             if (typeof movieId === 'string' && movieId.length != 24) throw newError('Movie Id is invalid', 404);
             
             if (typeof inc != 'number') throw newError('Invalid Input For Movie Stock Increase', 400) 
@@ -65,6 +62,54 @@ router.patch(
     }
 )
 
+//delete movie inventory
+router.patch(
+    '/addinven',
+    adminAuth, 
+    async (req, res) => {
+        
+        const {movieId , inc} = req.body,
+
+              adminLvl = req.admin.adminLevel;
+        try {
+
+            if (typeof movieId === 'string' && movieId.length != 24) throw newError('Movie Id is invalid', 404);
+            
+            if (typeof inc != 'number') throw newError('Invalid Input For Movie Stock Increase', 400) 
+            
+            if ( 
+                ( adminLvl === 1 && ( inc > 1   || inc < 0 ) )
+                ||
+                ( adminLvl === 2 && ( inc > 10  || inc < 0 ) )
+                ||
+                ( adminLvl === 3 && ( inc > 100 || inc < 0 ) )
+            ) {
+
+                throw newError( `Not Authorized To Increase By ${inc}`, 401 );
+                
+            } 
+
+            const updatedMovie = await Movie.findByIdAndUpdate(
+                movieId, 
+                {$inc: {'inventory.available': -inc}},
+                {new: 1}
+            ) 
+
+            res.json({movie: updatedMovie})
+            
+        } catch (err) {
+
+            const errMsg = err.message || err;
+            const errCode = err.code || 500;
+
+            res.status(errCode).json({
+                error: errMsg
+            })
+            
+        }
+
+    }
+)
 //TODO make movie routes admin/user only include adminAuth/user
 
 //request all movies in collection/db
