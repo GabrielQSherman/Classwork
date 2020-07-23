@@ -225,3 +225,11 @@ class Calendar extends React.Component {
     );
   }
 };
+
+//if you want know what type of data a prop is going to be it is best practice to require that prop be a certian type. 
+//it will not stop the application from running but give useful warnings in development that can help debuging greatly
+//the practice is used as follows
+ComponentName.propTypes = {
+  prop1: PropTypes.array.isRequired, //prop 1 must now be an array or a warning will appear
+  prop2: PropTypes.string.isRequired //prop 2 must be a string
+};
