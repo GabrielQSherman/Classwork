@@ -1,9 +1,14 @@
+//packages
 const express = require('express');
+//express router intance
 const router = express.Router();
-//MongoDB collection is accessible through this variable 
+//MongoDB collections is accessible through this variable 
 const Movie = require('../models/Movie');
+const User = require('../models/User');
+//middlewares
 const findMovie = require('../middleware/findMovie');
 const adminAuth = require('../middleware/adminAuth');
+//utilies
 const newError = require('../utils/newError');
 
 //Routes to make
@@ -13,17 +18,34 @@ router.patch(
     '/addinven',
     adminAuth, 
     async (req, res) => {
+        
+        const {movieId , inc} = req.body,
 
+              adminLvl = req.admin.adminLevel;
         try {
 
             // if (req.admin.adminProp.adminLevel <= 1) throw newError('Not Authorized', 401);
-
             //TODO
             //validate 'movieId' (check length) and 'inc' (check admin priv.) in req.body, confirm their types.
+            if (typeof movieId === 'string' && movieId.length != 24) throw newError('Movie Id is invalid', 404);
+            
+            if (typeof inc != 'number') throw newError('Invalid Input For Movie Stock Increase', 400) 
+            
+            if ( 
+                ( adminLvl === 1 && ( inc > 1   || inc < 0 ) )
+                ||
+                ( adminLvl === 2 && ( inc > 10  || inc < 0 ) )
+                ||
+                ( adminLvl === 3 && ( inc > 100 || inc < 0 ) )
+            ) {
+
+                throw newError( `Not Authorized To Increase By ${inc}`, 401 );
+                
+            } 
 
             const updatedMovie = await Movie.findByIdAndUpdate(
-                req.body.movieId, 
-                {$inc: {'inventory.available': req.body.inc}},
+                movieId, 
+                {$inc: {'inventory.available': inc}},
                 {new: 1}
             ) 
 
