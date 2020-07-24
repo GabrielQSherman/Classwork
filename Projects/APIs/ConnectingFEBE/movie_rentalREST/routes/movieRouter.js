@@ -12,98 +12,67 @@ const adminAuth = require('../middleware/adminAuth');
 const newError = require('../utils/newError');
 
 //Routes to make
-
-//add movie inventory
 router.patch(
-    '/addinven',
+    '/updateinv', 
     adminAuth, 
     async (req, res) => {
-        
-        const {movieId , inc} = req.body,
 
-              adminLvl = req.admin.adminLevel;
+        const { movieId, inc, isIncrease = true } = req.body;
+
+        const adminLevel = req.admin.adminProp.adminLevel;
+
         try {
-            
-            if (typeof movieId === 'string' && movieId.length != 24) throw newError('Movie Id is invalid', 404);
-            
-            if (typeof inc != 'number') throw newError('Invalid Input For Movie Stock Increase', 400) 
-            
-            if ( 
-                ( adminLvl === 1 && ( inc > 1   || inc < 0 ) )
-                ||
-                ( adminLvl === 2 && ( inc > 10  || inc < 0 ) )
-                ||
-                ( adminLvl === 3 && ( inc > 100 || inc < 0 ) )
-            ) {
 
-                throw newError( `Not Authorized To Increase By ${inc}`, 401 );
-                
+            //movieId validation
+            if ( typeof movieId !== 'string' || movieId.length !== 24 ) throw newError('The Movie\'s Id Is Invalid', 400);
+
+            if (typeof inc !== 'number' || inc <= 0) throw newError('Increment Value Invalid', 400);
+
+            let limit;
+
+            switch (adminLevel) {
+                case 1:
+                    limit=1
+                    break;
+                case 2:
+                    limit=10
+                    break;           
+                case 3:
+                    limit=100
+                    break;
+            }
+
+            if (inc > limit) {
+                throw newError( `Not Authorized To Increase By ${inc}, With Your Admin Level Of ${adminLevel}`, 401 );
             } 
 
-            const updatedMovie = await Movie.findByIdAndUpdate(
-                movieId, 
-                {$inc: {'inventory.available': inc}},
+            const increment = isIncrease ? inc : -inc;
+
+            const found = await Movie.findById(movieId);
+
+            if (found === null) throw newError('Movie with that id does not exist', 404);
+
+            if (found.inventory.available + increment < 0) throw newError('Negitive numbers are not allowed in movies inventory', 400);
+
+            const updatedMovie = await Movie.findOneAndUpdate( 
+                {_id: movieId }, 
+                {$inc: {'inventory.available': increment}}, 
                 {new: 1}
-            ) 
+            )
 
-            res.json({movie: updatedMovie})
-            
-        } catch (err) {
-
-            const errMsg = err.message || err;
-            const errCode = err.code || 500;
-
-            res.status(errCode).json({
-                error: errMsg
+            res.json({
+                message: "Successful Inventory Update",
+                movie: updatedMovie
             })
-            
-        }
 
-    }
-)
 
-//delete movie inventory
-router.patch(
-    '/addinven',
-    adminAuth, 
-    async (req, res) => {
-        
-        const {movieId , inc} = req.body,
-
-              adminLvl = req.admin.adminLevel;
-        try {
-
-            if (typeof movieId === 'string' && movieId.length != 24) throw newError('Movie Id is invalid', 404);
-            
-            if (typeof inc != 'number') throw newError('Invalid Input For Movie Stock Increase', 400) 
-            
-            if ( 
-                ( adminLvl === 1 && ( inc > 1   || inc < 0 ) )
-                ||
-                ( adminLvl === 2 && ( inc > 10  || inc < 0 ) )
-                ||
-                ( adminLvl === 3 && ( inc > 100 || inc < 0 ) )
-            ) {
-
-                throw newError( `Not Authorized To Increase By ${inc}`, 401 );
-                
-            } 
-
-            const updatedMovie = await Movie.findByIdAndUpdate(
-                movieId, 
-                {$inc: {'inventory.available': -inc}},
-                {new: 1}
-            ) 
-
-            res.json({movie: updatedMovie})
             
         } catch (err) {
 
-            const errMsg = err.message || err;
-            const errCode = err.code || 500;
+            const { message:msg = err, code = 500 } = err;
 
-            res.status(errCode).json({
-                error: errMsg
+            res.status(code).json({
+                error: msg
             })
             
         }
