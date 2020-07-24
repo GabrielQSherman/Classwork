@@ -140,6 +140,87 @@ router.patch(
     }
 )
 
+//movie renting 
+router.patch(
+    '/rent_or_return',
+    userAuth,
+    async (req, res) => {
+        
+        const {movieId, isRenting = true} = req.body.movieId;
+
+        try {
+
+            const movieQuery = 
+                    isRenting 
+                    ? { _id: movieId, 'inventory.available': { $gte: 1 }} 
+                    : { _id: movieId };
+
+            const userUpdate = 
+                    isRenting 
+                    ? { $addToSet: { rentedMovies: movieId} } 
+                    : { $pull: { rentedMovies: movieId} };
+
+            const movieUpdate = 
+                    isRenting 
+                    ? { $addToSet: { 'inventory.rented': req.user._id }, $inc: { 'inventory.available': -1 }} 
+                    : { $pull: { 'inventory.rented': req.user._id }, $inc: { 'inventory.available': 1 }};
+
+            const movie = await Movie.findOne(movieQuery);
+
+            if (movie === null) {
+                console.log(`Movie Id caused error renting ${movieId}`);
+                throw newError('Movie Not Found or Movie Unavailable', 404);
+            }
+            
+            //ToDo
+            //check if the user is renting Or returning and that they did not already do that particular operation 
+            const currentlyRenting = req.user.rentedMovies;
+
+            if (
+                currentlyRenting.include(movieId) && isRenting
+                ||
+                !currentlyRenting.include(movieId) && !isRenting
+            ) 
+            {
+                const operation = isRenting ? 'renting' : 'returning';
+                console.log(`User did something bad userId: ${req.user._id}`);
+                throw newError(`Can not preform the ${operation} operation twice`, 409);
+            }
+
+            //modify the user doc
+            const newUser = await User.findByIdAndUpdate(
+                req.user._id,
+                userUpdate,
+                {new: 1}
+            )
+
+            //modifying the movie doc
+            const newMovie = await Movie.findByIdAndUpdate(
+                movieId,
+                movieUpdate,
+                {new: 1}
+            )
+
+            res.json({
+                message: "successs",
+                user: newUser,
+                movie: newMovie
+            })
+            
+        } catch (err) {
+            const errMsg = err.message || err;
+            const errCode = err.code || 500;
+
+            console.log(`Error in movie renting: ${errMsg}`);
+            
+            res.status(errCode).json({
+                error: errMsg
+            })
+        }
+
+    }
+)
+
 
 //POST route for Users
 //localhost:4000/user
