@@ -3,18 +3,13 @@ const router = express.Router();
 const Movie = require('../models/Movie');
 const adminAuth = require('../middleware/adminAuth');
 
-router.get('/', (req, res) => {
-    //expected query properties: 'msg' and 'title'
-    const { msg, title} = req.query;
+router.get('/login', (req, res) => {
 
-    res.render('test', 
-    {
-        message: msg || 'Default Message', 
-        titleVar: title || 'Default Title'
-    });
+    res.render('login')
+
 })
 
-router.get('/mrental', async (req, res) => {
+router.get('/', async (req, res) => {
     
     const allMovies = await Movie.find({ 'inventory.available': {$gte: 1}}),
 

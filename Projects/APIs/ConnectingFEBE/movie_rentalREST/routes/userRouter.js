@@ -146,7 +146,7 @@ router.patch(
     userAuth,
     async (req, res) => {
         
-        const {movieId, isRenting = true} = req.body.movieId;
+        const {movieId, isRenting = true} = req.body;
 
         try {
 
@@ -177,9 +177,9 @@ router.patch(
             const currentlyRenting = req.user.rentedMovies;
 
             if (
-                currentlyRenting.include(movieId) && isRenting
+                currentlyRenting.includes(movieId) && isRenting
                 ||
-                !currentlyRenting.include(movieId) && !isRenting
+                !currentlyRenting.includes(movieId) && !isRenting
             ) 
             {
                 const operation = isRenting ? 'renting' : 'returning';
