@@ -33,7 +33,30 @@ function setEventListeners() {
     const editSubmitButtons = document.getElementsByClassName('submitEdit');
 
         for (const button of editSubmitButtons) { button.onclick = submitEditReq};
+
+    document.getElementById('loginBtn').onclick = loginUser;
+
+    document.getElementById('logoutBtn').onclick = logoutUser;
     
+}
+
+function loginUser() {
+
+    location = location.origin+'/login';
+}
+
+
+function logoutUser() {
+
+    const token = localStorage.getItem('loginToken');
+
+    if ( token !== null ) {
+        localStorage.removeItem('loginToken');
+        alert('Logged Out')
+    } else {
+        alert('You are not logged in.')
+    }
+ 
 }
 
 function submitEditReq() {
