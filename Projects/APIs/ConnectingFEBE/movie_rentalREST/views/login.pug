@@ -1,13 +1,16 @@
-html
     head
+        style
+            include ../publick/login.css
+
         script
             include ../public/login.js
 
         title Login
         body
-            h1 Login
-            label Email
-            input#email(minLength=5 type='email' placeholder='Enter Email')
-            label Password
-            input#password(minLength=7 type='password' placeholder='Enter Password')
-            button#submitLogin Submit
+            #container
+                h1 Login
+                label Email
+                input#email(minLength=5 type='email' placeholder='Enter Email')
+                label Password
+                input#password(minLength=7 type='password' placeholder='Enter Password')
+                button#submitLogin Submit
