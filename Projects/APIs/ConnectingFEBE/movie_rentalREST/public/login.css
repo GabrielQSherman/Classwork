@@ -1,0 +1,12 @@
+#password, #email {
+    background-color: rgb(202, 230, 255);
+    color: black;
+    font-weight: 240;
+
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(17, 102, 102);
+}
