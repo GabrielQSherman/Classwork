@@ -1,0 +1,17 @@
+{
+  "name": "firstnpm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "npm run devStart",
+    "devStart": "nodemon app.js",
+    "proStart": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
