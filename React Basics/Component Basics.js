@@ -233,3 +233,19 @@ ComponentName.propTypes = {
   prop1: PropTypes.array.isRequired, //prop 1 must now be an array or a warning will appear
   prop2: PropTypes.string.isRequired //prop 2 must be a string
 };
+
+//to use props in a class component you must use this.props, like this
+class useProps extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <div>
+        <h1>
+          {this.props.key} //use prop values like this
+        </h1>
+      </div>
+    );
+  }
+};
