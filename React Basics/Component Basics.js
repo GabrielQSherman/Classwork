@@ -249,3 +249,23 @@ class useProps extends React.Component {
     );
   }
 };
+
+//for a react component to be stateful it must have a 'state' property, which is defined in the contructor
+//basic example
+class Stateful extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      prop: "this is the default value of a component's state's property"
+    }
+  }
+  render() {
+    return (
+      <div>
+        <h1>
+          I have a state.
+        </h1>
+      </div>
+    );
+  }
+};
