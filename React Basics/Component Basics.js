@@ -275,10 +275,50 @@ class Stateful extends React.Component {
     return (
       <div>
         <h1>
-          I have a state!
+          {this.state.prop}
         </h1>
+        <p>
+          Name: {name}
+        </p>
+        <p>
+          Age: {age}
+        </p>
+        <p>
+          Are you an admin: {!admin ? 'No' : 'Yes'}
+        </p>
       </div>
     );
   }
 };
+
+//binding a event function to a component element
+
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: "Not yet clicked"
+    };
+  }
+  handleClick() {
+    this.setState({
+      text: "You clicked!"
+    });
+  }
+  render() {
+    return (
+      <div>
+        
+        <button 
+        onClick={this.handleClick.bind(this)}
+        >
+          Click Me
+        </button>
+        
+        <h1>{this.state.text}</h1>
+      </div>
+    );
+  }
+};
+
 
