@@ -256,16 +256,29 @@ class Stateful extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      prop: "this is the default value of a component's state's property"
+      prop: "this is the default value of a component's state's property",
+      name: 'John Doe',
+      age: 25,
+      admin: false
     }
   }
+  //one way to render the value of 'prop' is to access this.state, then access .prop. 
+  //this is exampled below
+
+  // a better way when dealing with many state props. is to use obj. destructuring.
+  // this can be done in the component render method, but not in the return code (which is JSX)
+  
   render() {
+  
+    const {name, age, admin} = this.state;
+  
     return (
       <div>
         <h1>
-          I have a state.
+          I have a state!
         </h1>
       </div>
     );
   }
 };
+
