@@ -8,8 +8,12 @@ html
         include ../public/home-pug.css
 
     body    
-        button#loginBtn Login
-        button#logoutBtn Logout
+        if isLoggedIn
+            button#loginBtn(style='display:none') Login
+            button#logoutBtn(style='display:inline') Logout
+        else
+            button#loginBtn(style='display:inline') Login
+            button#logoutBtn(style='display:none') Logout
 
         #allMovies
             each movieData in all_movies
