@@ -1,6 +1,9 @@
 
 window.onload = () => {
 
+    console.log(document.cookie);
+
+
     document.getElementById('submitLogin').onclick = () => {
         
         const email = document.getElementById('email').value;
@@ -25,7 +28,7 @@ window.onload = () => {
 
         fetch(endpoint, reqOptions)
         .then( rs => {
-            console.log(rs);
+            // console.log(rs);
             return rs.json()
         })
         .then( res => {
@@ -38,7 +41,9 @@ window.onload = () => {
                 
             } else {
 
-                localStorage.setItem('loginToken', token);
+                document.cookie = `token=${token}`;
+
+                // localStorage.setItem('loginToken', token);
 
                 location = location.origin;
 

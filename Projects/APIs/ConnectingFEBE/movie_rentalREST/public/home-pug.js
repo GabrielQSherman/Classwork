@@ -1,6 +1,8 @@
 
 window.onload = () => {
 
+    console.log(document.cookie);
+    
     setEventListeners()
 
     const editDivs = document.getElementsByClassName('editMovie');
@@ -48,10 +50,10 @@ function loginUser() {
 
 function logoutUser() {
 
-    const token = localStorage.getItem('loginToken');
+    const token = document.cookie.indexOf('token')
 
-    if ( token !== null ) {
-        localStorage.removeItem('loginToken');
+    if ( token !== -1 ) {
+        document.cookie = "token=; expires=`Thu, 01 Jan 1970 00:00:00 UTC`; path=/;";
         alert('Logged Out')
     } else {
         alert('You are not logged in.')
