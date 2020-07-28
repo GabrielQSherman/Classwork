@@ -12,6 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.26",
     "nodemon": "^2.0.4"
   }
 }

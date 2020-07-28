@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Movie = require('../models/Movie');
 const adminAuth = require('../middleware/adminAuth');
+const extractToken = require('../middleware/extractToken');
+const User = require('../models/User');
 
 router.get('/login', (req, res) => {
 
@@ -9,13 +11,17 @@ router.get('/login', (req, res) => {
 
 })
 
-router.get('/', async (req, res) => {
-    
-    const allMovies = await Movie.find({ 'inventory.available': {$gte: 1}}),
+router.get('/', 
+    extractToken,
+    async (req, res) => {
 
-          clientMsg = 'Number of Movies: ' + allMovies.length;
+        const loggedIn = req.authKey != undefined;
+        
+        const allMovies = await Movie.find({ 'inventory.available': {$gte: 1}}),
 
-    res.render('home', {all_movies: allMovies, message: clientMsg})
+            clientMsg = 'Number of Movies: ' + allMovies.length;
+
+        res.render('home', {all_movies: allMovies, message: clientMsg, isLoggedIn: loggedIn})
     
 })
 
