@@ -36,9 +36,33 @@ function setEventListeners() {
 
         for (const button of editSubmitButtons) { button.onclick = submitEditReq};
 
-    document.getElementById('loginBtn').onclick = loginUser;
+    const logoutBtn = document.getElementById('logoutBtn');
+    const loginBtn = document.getElementById('loginBtn');
+    const adminBtn = document.getElementById('adminPage');
 
-    document.getElementById('logoutBtn').onclick = logoutUser;
+    if (loginBtn) {
+        
+        loginBtn.onclick = loginUser;
+    } 
+
+    if (logoutBtn) {
+
+        logoutBtn.onclick = logoutUser;
+    } 
+
+    if (adminBtn) {
+
+        adminBtn.onclick = redirectAdmin;
+        
+    }
+
+
+    
+}
+
+function redirectAdmin() {
+
+    location = location.origin+'/admin'
     
 }
 
@@ -55,6 +79,7 @@ function logoutUser() {
     if ( token !== -1 ) {
         document.cookie = "token=; expires=`Thu, 01 Jan 1970 00:00:00 UTC`; path=/;";
         alert('Logged Out')
+        location.reload();
     } else {
         alert('You are not logged in.')
     }

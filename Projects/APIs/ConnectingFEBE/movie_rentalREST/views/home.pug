@@ -9,11 +9,13 @@ html
 
     body    
         if isLoggedIn
-            button#loginBtn(style='display:none') Login
-            button#logoutBtn(style='display:inline') Logout
+            button#logoutBtn Logout
         else
-            button#loginBtn(style='display:inline') Login
-            button#logoutBtn(style='display:none') Logout
+            button#loginBtn Login
+        
+        if isAdmin
+            button#adminPage Admin Page
+            
 
         #allMovies
             each movieData in all_movies
@@ -24,19 +26,20 @@ html
                             h3=movieData.release
                             img(src=movieData.img, alt=`${movieData.title} Poster IMG`)
                             a(href=movieData.imdb_link)=`${movieData.title} IMDB Page`
-                        button.rentMovie Rent This Movie
-                        button.getMovie Get More DB Info
-                        .editMovie
-                            - const currentYear = new Date().getFullYear();
-                            form(onSubmit='return false')
-                                input(type='text', placeholder='Title', name='title')
-                                input(type='number', placeholder='Release Year', name='release', min=currentYear-100, max=currentYear+2)
-                                input(type='url', placeholder='Movie Poster URL', name='img')
-                                input(type='url', placeholder='IMDB Link', name='imdb_link')
-                                button.submitEdit Submit Changes
-                        .adminBtns
-                            button.deleteMovie Delete From Database
-                            button.editMovieBtn Edit Movie Data
-                        
+                        if isAdmin
+                            .editMovie
+                                - const currentYear = new Date().getFullYear();
+                                form(onSubmit='return false')
+                                    input(type='text', placeholder='Title', name='title')
+                                    input(type='number', placeholder='Release Year', name='release', min=currentYear-100, max=currentYear+2)
+                                    input(type='url', placeholder='Movie Poster URL', name='img')
+                                    input(type='url', placeholder='IMDB Link', name='imdb_link')
+                                    button.submitEdit Submit Changes
+                            .adminBtns
+                                button.deleteMovie Delete From Database
+                                button.editMovieBtn Edit Movie Data
+                        else 
+                            button.rentMovie Rent This Movie
+                            button.getMovie Get More DB Info
 
 
