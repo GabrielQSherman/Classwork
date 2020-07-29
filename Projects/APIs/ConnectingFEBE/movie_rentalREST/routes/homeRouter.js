@@ -3,7 +3,8 @@ const router = express.Router();
 const Movie = require('../models/Movie');
 const adminAuth = require('../middleware/adminAuth');
 const extractToken = require('../middleware/extractToken');
-const User = require('../models/User');
+const isAdmin = require('../middleware/isAdmin');
+// const User = require('../models/User');
 
 router.get('/login', (req, res) => {
 
@@ -13,19 +14,30 @@ router.get('/login', (req, res) => {
 
 router.get('/', 
     extractToken,
+    isAdmin,
     async (req, res) => {
 
         const loggedIn = req.authKey != undefined;
         
-        const allMovies = await Movie.find({ 'inventory.available': {$gte: 1}}),
+        const allMovies = await Movie.find({ 'inventory.available': {$gte: 1}});
 
-            clientMsg = 'Number of Movies: ' + allMovies.length;
+        const isAdmin = req.isAdmin || false ;
 
-        res.render('home', {all_movies: allMovies, message: clientMsg, isLoggedIn: loggedIn})
+        const renderOption = {
+            all_movies: allMovies, 
+            isLoggedIn: loggedIn,
+            isAdmin: isAdmin 
+        }
+
+        res.render('home', renderOption )
     
 })
 
-router.get('/mrental/admin/:key', adminAuth, (req, res) => {
+router.get(
+    '/admin', 
+    extractToken,
+    adminAuth, 
+    (req, res) => {
     res.render('admin-movie')
 })
 

@@ -8,12 +8,14 @@ const User = require('../models/User');
 //middlewares
 const findMovie = require('../middleware/findMovie');
 const adminAuth = require('../middleware/adminAuth');
+const extractToken = require('../middleware/extractToken');
 //utilies
 const newError = require('../utils/newError');
 
 //Routes to make
 router.patch(
-    '/updateinv', 
+    '/updateinv',
+    extractToken,
     adminAuth, 
     async (req, res) => {
 
@@ -107,10 +109,9 @@ router.get('/all', async (req, res) => {
 })
 //request for delete request
 router.delete(
-    
     '/delete/:movieId', 
-    
     findMovie,
+    extractToken,
     adminAuth, 
     
     async (req, res) => {
@@ -130,7 +131,10 @@ router.delete(
     }
 })
 //request patch
-router.patch('/patch/:movieId', findMovie, async (req, res) => {
+router.patch(
+    '/patch/:movieId', 
+    findMovie, 
+    async (req, res) => {
     const id = req.params.movieId;
     const newVersion = req.foundMovie.__v + 1;
     req.body.__v = newVersion;
@@ -151,7 +155,10 @@ router.patch('/patch/:movieId', findMovie, async (req, res) => {
     }
 })
 //request movie by DB id
-router.get('/getmovie/:movieId', findMovie, (req, res) => {  
+router.get(
+    '/getmovie/:movieId', 
+    findMovie, 
+    (req, res) => {  
     res.status(200).json({
         status: 200,
         message: 'A movie was found',
@@ -159,7 +166,11 @@ router.get('/getmovie/:movieId', findMovie, (req, res) => {
     })
 })
 //create a new movie document in DB
-router.post('/post', async (req, res) => {
+router.post(
+    '/post', 
+    extractToken,
+    adminAuth,
+    async (req, res) => {
 
     try {
 
@@ -185,33 +196,33 @@ router.post('/post', async (req, res) => {
 
 
 //patch all movies to now have an inventory that matches the model
-router.patch(
-    '/moviepatch1',
-    adminAuth,
-    async (req, res) => {
+// router.patch(
+//     '/moviepatch1',
+//     adminAuth,
+//     async (req, res) => {
 
-        try {
+//         try {
 
-            const report = await Movie.updateMany( 
-                {}, 
-                {
-                    inventory: {
-                        available: 1,
-                        rented: []
-                    }
-                }
+//             const report = await Movie.updateMany( 
+//                 {}, 
+//                 {
+//                     inventory: {
+//                         available: 1,
+//                         rented: []
+//                     }
+//                 }
             
-            )
-            res.json({
-                allDoc: await Movie.find({}),
-                report: report,
-                message: 'successfull patch'})
+//             )
+//             res.json({
+//                 allDoc: await Movie.find({}),
+//                 report: report,
+//                 message: 'successfull patch'})
 
-        } catch (err) {
-            res.status(500).json({error: err.message || err})
-        }
+//         } catch (err) {
+//             res.status(500).json({error: err.message || err})
+//         }
 
-    }
-)
+//     }
+// )
 
 module.exports = router;
