@@ -16,11 +16,13 @@ module.exports = async (req, res, next) => {
 
         const decodedJWT = jwt.verify(token, JWT_SECRET);
         
-        console.log(decodedJWT);
+        // console.log(decodedJWT);
 
         const data = await User.findById(decodedJWT.id);
 
-        console.log(data);
+        // console.log(data);
+
+        shreddinspacemakinart
 
         req.isAdmin = data != null && data.adminProp.isAdmin === true;
 
