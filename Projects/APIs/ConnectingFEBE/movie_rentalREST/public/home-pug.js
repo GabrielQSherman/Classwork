@@ -105,7 +105,9 @@ function submitEditReq() {
 
     }
 
-    if ( !(new RegExp(/imdb/).test(form.imdb_link)) ) validationErr.push('IMDB Link Provided Did Not Include imdb');
+    // if ( !(imdbRegEx.test(form.imdb_link)) ) {
+    //      validationErr.push('IMDB Link Provided Did Not Include imdb');
+    // }
 
     if (validationErr.length > 0) {
         const message = `Error/s Occured:\n\n${validationErr.join('\n')}`;

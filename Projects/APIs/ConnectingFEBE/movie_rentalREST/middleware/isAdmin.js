@@ -19,11 +19,7 @@ module.exports = async (req, res, next) => {
         // console.log(decodedJWT);
 
         const data = await User.findById(decodedJWT.id);
-
-        // console.log(data);
-
-        shreddinspacemakinart
-
+        
         req.isAdmin = data != null && data.adminProp.isAdmin === true;
 
         next()
