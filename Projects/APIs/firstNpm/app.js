@@ -5,15 +5,23 @@ const mongoose = require('mongoose');
 const firstMid = require('./middleware/firstMiddleware');
 //ROUTERS
 const homeRouter = require('./routes/homeRouter');
-//CONTANTS
+const userRouters = require('./routes/userRouters');
+
+// CONTANTS
 const port = 3000;
 //MAIN APPLICATION VAR
 const app = express();
 
-//MIDDLEWARES/ROUTERS IN USE
+// MIDDLEWARES/ROUTERS IN USE
+
+// MIDDLEWARE THAT ALL ROUTES USE 
+// (regardless of request-path or method) '/' /username
+app.use(express.json())
 app.use(firstMid);
 
+//USING A ROUTER
 app.use('/', homeRouter);
+app.use('/user', userRouters);
 
 //START SERVER LISTENING
 app.listen(port, () => {
