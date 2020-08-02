@@ -396,3 +396,28 @@ class Counter extends React.Component {
   }
 };
 
+//example of a React controled input
+class ControlledInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      input: ''
+    };
+    this.handleChange = this.handleChange.bind(this)
+  }
+  handleChange(e) {
+    const newInput = e.target.value;
+    this.setState( state => ({
+      input: newInput
+    }))
+  }
+  render() {
+    return (
+      <div>
+        <input onChange={this.handleChange} />
+        <h4>Controlled Input:</h4>
+        <p>{this.state.input}</p>
+      </div>
+    );
+  }
+};
