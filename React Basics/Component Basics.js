@@ -321,4 +321,78 @@ class MyComponent extends React.Component {
   }
 };
 
+//how to bind functions properly when using setState()
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      visibility: false
+    };
+    //bind functions in the constructor
+    this.toggleVisibility = this.toggleVisibility.bind(this)
+  }
+
+  //simple toggle of the visibility state prop
+  toggleVisibility() {
+    this.setState( state => ({
+      visibility: !state.visibility
+    }))
+  }
+
+  render() {
+      const visibility = this.state.visibility===true;
+      return (
+        <div>
+          <button onClick={this.toggleVisibility}>
+            gives a diffrent text for the button depending on a state's property value
+            { 
+                visibility 
+                ? 'Click To Hide' 
+                : 'Click To Reveal'
+            }
+          </button>
+          {/* only shows when the visibility property is true */}
+          { visibility && <h1>You see me!?!?!</h1> }
+        </div>
+      );
+    }
+};
+
+//Simple Counter Example, shows binding in the constructor and how to use the setState method
+class Counter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0
+    };
+    this.increment = this.increment.bind(this);
+    this.decrement = this.decrement.bind(this);
+    this.reset = this.reset.bind(this);
+  }
+  increment() {
+    this.setState( state => ({
+      count: state.count + 1
+    }))
+  }
+  decrement() {
+    this.setState( state => ({
+      count: state.count - 1
+    }))
+  }
+  reset() {
+    this.setState( state => ({
+      count: 0
+    }))
+  }
+  render() {
+    return (
+      <div>
+        <button className='inc' onClick={this.increment}>Increment!</button>
+        <button className='dec' onClick={this.decrement}>Decrement!</button>
+        <button className='reset' onClick={this.reset}>Reset</button>
+        <h1>Current Count: {this.state.count}</h1>
+      </div>
+    );
+  }
+};
 
