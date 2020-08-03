@@ -565,10 +565,13 @@ COMPONENT LIFECYCLE METHODS
     This is also where you should call API request
 
   componentWillUnmount()
+
+
   shouldComponentUpdate() 
   componentDidUpdate() 
 */
 
+//use of will/did mount lifecycle methods
 class MyComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -591,6 +594,44 @@ class MyComponent extends React.Component {
     return (
       <div>
         <h1>Active Users: { this.state.activeUsers}</h1>
+      </div>
+    );
+  }
+};
+
+//USE of component unmount lifecycle function 
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      message: ''
+    };
+    this.handleEnter = this.handleEnter.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+  }
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyPress)
+  }
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyPress)
+  }
+
+  handleEnter() {
+    this.setState({
+      message: this.state.message + 'You pressed the enter key! '
+    });
+  }
+  handleKeyPress(event) {
+    console.log(event.keyCode)
+    if (event.keyCode === 13) {
+      this.handleEnter();
+    }
+  }
+  render() {
+    return (
+      <div>
+        <h1>{this.state.message}</h1>
       </div>
     );
   }
