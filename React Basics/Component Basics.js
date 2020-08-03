@@ -465,3 +465,35 @@ class MyForm extends React.Component {
     );
   }
 };
+
+//how to pass pass props to a JSX component from a state class component
+class MyApp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: 'Gabriel'
+    }
+  }
+  render() {
+    return (
+       <div>
+         {/* the passing of state to prop */}
+         <Navbar name={this.state.name}/>
+       </div>
+    );
+  }
+};
+
+class Navbar extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+    <div>
+      {/* use of prop that came from state */}
+      <h1>Hello, my name is: {this.props.name} </h1>
+    </div>
+    );
+  }
+};
