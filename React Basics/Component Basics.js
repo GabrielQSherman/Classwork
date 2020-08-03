@@ -552,3 +552,46 @@ class RenderInput extends React.Component {
     );
   }
 };
+
+/* 
+COMPONENT LIFECYCLE METHODS
+  componentWillMount() 
+
+    This method will fire before the render method
+
+  componentDidMount() 
+
+    This method fires only after the component mounts to the parent component
+    This is also where you should call API request
+
+  componentWillUnmount()
+  shouldComponentUpdate() 
+  componentDidUpdate() 
+*/
+
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeUsers: null
+    };
+  }
+  componentWillMount() {
+    console.log('This happens before the render function fires'); 
+  }
+  componentDidMount() {
+    console.log('This happens after the render function fires successfully'); 
+    setTimeout( () => {
+      this.setState({
+        activeUsers: 1273
+      });
+    }, 2500);
+  }
+  render() {
+    return (
+      <div>
+        <h1>Active Users: { this.state.activeUsers}</h1>
+      </div>
+    );
+  }
+};
