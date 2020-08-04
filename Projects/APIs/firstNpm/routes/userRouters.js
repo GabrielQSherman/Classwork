@@ -12,16 +12,16 @@ router.use('/post', userPost)
         the date can be changed using request parameters
 @access private
 */
-router.get('/now', (req, res) => {
-    
+router.get('/now/', (req, res) => {
+
     const { 
-        year: y=null,
-        day: d=null,
-        hour: h=null, 
-        month: m=null, 
-        seconds: sec=null,
-        minutes: min=null,
-        ms=null
+        year: y = 2020,
+        day: d = 10,
+        hour: h = null, 
+        month: m = null, 
+        seconds: sec = null,
+        minutes: min = null,
+        ms =null
     } = req.body;
 
     const date = new Date(y, m, d, h, sec, min, ms)
