@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const firstMid = require('./middleware/firstMiddleware');
 //ROUTERS
 const homeRouter = require('./routes/homeRouter');
-const userRouters = require('./routes/userRouters');
+const userRouter = require('./routes/userRouters');
 
 // CONTANTS
 const port = 3000;
@@ -16,12 +16,13 @@ const app = express();
 
 // MIDDLEWARE THAT ALL ROUTES USE 
 // (regardless of request-path or method) '/' /username
-app.use(express.json())
+app.use(express.json());
 app.use(firstMid);
+app.use(express.static('public'));
 
 //USING A ROUTER
 app.use('/', homeRouter);
-app.use('/user', userRouters);
+app.use('/user', userRouter);
 
 //START SERVER LISTENING
 app.listen(port, () => {
