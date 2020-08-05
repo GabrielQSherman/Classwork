@@ -6,31 +6,25 @@ const  userPost = require('./userPost.js')
 
 router.use('/post', userPost)
 
-/*
-@path   localhost:port/user/now/:day/:month
-@desc   returns to the client a page with todays current date,
-        the date can be changed using request parameters
-@access private
-*/
-router.get('/now/', (req, res) => {
+//@path LH user/login
+//@desc login a user
+//@access private 
+router.patch('login', (req, res) => {
+    console.log(req.body);
 
-    const { 
-        year: y = 2020,
-        day: d = 10,
-        hour: h = null, 
-        month: m = null, 
-        seconds: sec = null,
-        minutes: min = null,
-        ms =null
-    } = req.body;
+    try {
 
-    const date = new Date(y, m, d, h, sec, min, ms)
+        res.json({message: 'success!'})
+            
+    } catch (error) {
 
-    res.send(date)
-
+        res.status(500).json({
+            message: error.message
+        })
+        
+    }
 })
 
-//create a route handler
 
 
 //make viewable to other files
