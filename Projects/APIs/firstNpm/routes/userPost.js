@@ -2,11 +2,15 @@ const { Router } = require('express');
 
 const router = Router();
 
-router.post('/newUser', async (req, res) => {
-    //do this thing
-    try {
 
-        console.log(body);
+//@ path: LH/user/post/new
+//@ desp: make a new user document and stores their info to the database
+//@ access: public
+router.post('/new', async (req, res) => {
+    //do this thing
+    console.log(req.body);
+
+    try {
 
         res.json({message: 'success!'})
             
