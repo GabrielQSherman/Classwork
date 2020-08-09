@@ -694,3 +694,39 @@ class ColorfulText extends React.Component {
     );
   }
 };
+
+//A common practice to get styling out of the way of component logic is to set a styles object to a contant and store your styling this way
+const styles = {
+  
+  div: {
+    border: "2px solid purple",
+    margin: 10
+  },
+
+  text: {    
+    color: "purple",
+    fontSize: 40,
+    fontWeight: 300,
+
+  }
+}
+
+class ColorfulText2 extends React.Component {
+  render() {
+    return (
+      <div 
+        style={{...styles.div}}
+      >
+        <h1
+          style={{
+            ...styles.text,
+            textShadow: '1px 1px' //one can also combine the use of a spread style object and inline styling 
+          }}
+        >
+          This Text Is Styled By A Style Object
+        </h1>
+      </div>
+    );
+    
+  }
+};
