@@ -677,3 +677,20 @@ class Controller extends React.Component {
     );
   }
 };
+
+//React allows for inline styling of any element, 
+//you can also set the class and id of an elemnt and style that way too
+class ColorfulText extends React.Component {
+  render() {
+    return (
+      <div
+        style={{
+          color: "hotpink", 
+          textAlign: true,
+          marginBottom: 5,
+          fontSize: "72px" //you can also use numbers and 'px' will be assumed. othe units must be specified and a string used 
+        }}
+      >This Text Will Be Colorful</div>
+    );
+  }
+};
