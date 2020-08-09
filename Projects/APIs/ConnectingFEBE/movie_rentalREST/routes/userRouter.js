@@ -15,130 +15,130 @@ const adminAuth = require('../middleware/adminAuth');
 
 const newError = require('../utils/newError'); 
 
-//movie renting 
-router.patch(
-    '/rent',
-    userAuth,
-    async (req, res) => {
+// //movie renting 
+// router.patch(
+//     '/rent',
+//     userAuth,
+//     async (req, res) => {
         
-        const movieId = req.body.movieId;
+//         const movieId = req.body.movieId;
 
-        try {
+//         try {
 
-            const movie = await Movie.findOne({_id: movieId, 'inventory.available': { $gte: 1 } });
+//             const movie = await Movie.findOne({_id: movieId, 'inventory.available': { $gte: 1 } });
 
-            // console.log(`\nFound Movie: ${movie}\n`);
+//             // console.log(`\nFound Movie: ${movie}\n`);
 
-            if (movie === null) {
-                console.log(`Movie Id caused error renting ${movieId}`);
-                throw newError('Movie Not Found or Movie Unavailable', 404);
-            }
+//             if (movie === null) {
+//                 console.log(`Movie Id caused error renting ${movieId}`);
+//                 throw newError('Movie Not Found or Movie Unavailable', 404);
+//             }
             
-            //check if the user is already renting
-            if (req.user.rentedMovies.indexOf(movieId) != -1) {
-                console.log(`User tried rented movie twice\n movieId: ${movieId}\nUserId: ${req.user._id}`);
-                throw newError('Movie Not Found or Movie Unavailable', 409);
-            }
+//             //check if the user is already renting
+//             if (req.user.rentedMovies.indexOf(movieId) != -1) {
+//                 console.log(`User tried rented movie twice\n movieId: ${movieId}\nUserId: ${req.user._id}`);
+//                 throw newError('Movie Not Found or Movie Unavailable', 409);
+//             }
 
-            //modify the user doc
-            const newUser = await User.findByIdAndUpdate(
-                req.user._id,
-                { $addToSet: { rentedMovies: movieId} },
-                {new: 1}
-            )
+//             //modify the user doc
+//             const newUser = await User.findByIdAndUpdate(
+//                 req.user._id,
+//                 { $addToSet: { rentedMovies: movieId} },
+//                 {new: 1}
+//             )
 
-            //modifying the movie doc
-            const newMovie = await Movie.findByIdAndUpdate(
-                movieId,
-                {
-                    $addToSet: { 'inventory.rented': req.user._id },
-                    $inc: { 'inventory.available': -1 },
-                },
-                {new: 1}
-            )
+//             //modifying the movie doc
+//             const newMovie = await Movie.findByIdAndUpdate(
+//                 movieId,
+//                 {
+//                     $addToSet: { 'inventory.rented': req.user._id },
+//                     $inc: { 'inventory.available': -1 },
+//                 },
+//                 {new: 1}
+//             )
 
-            res.json({
-                message: "successs",
-                user: newUser,
-                movie: newMovie
-            })
+//             res.json({
+//                 message: "successs",
+//                 user: newUser,
+//                 movie: newMovie
+//             })
             
-        } catch (err) {
-            const errMsg = err.message || err;
-            const errCode = err.code || 500;
+//         } catch (err) {
+//             const errMsg = err.message || err;
+//             const errCode = err.code || 500;
 
-            console.log(`Error in movie renting: ${errMsg}`);
+//             console.log(`Error in movie renting: ${errMsg}`);
             
-            res.status(errCode).json({
-                error: errMsg
-            })
-        }
+//             res.status(errCode).json({
+//                 error: errMsg
+//             })
+//         }
 
-    }
-)
+//     }
+// )
 
-//movie return route
-//movie renting 
-router.patch(
-    '/return',
-    userAuth,
-    async (req, res) => {
+// //movie return route
+// //movie renting 
+// router.patch(
+//     '/return',
+//     userAuth,
+//     async (req, res) => {
         
-        const movieId = req.body.movieId;
+//         const movieId = req.body.movieId;
 
-        try {
+//         try {
 
-            const movie = await Movie.findOne({_id: movieId});
+//             const movie = await Movie.findOne({_id: movieId});
 
-            // console.log(`\nFound Movie: ${movie}\n`);
+//             // console.log(`\nFound Movie: ${movie}\n`);
 
-            if (movie === null) {
-                console.log(`Movie Id caused error renting ${movieId}`);
-                throw newError('Movie Not Found or Movie Unavailable', 404);
-            }
+//             if (movie === null) {
+//                 console.log(`Movie Id caused error renting ${movieId}`);
+//                 throw newError('Movie Not Found or Movie Unavailable', 404);
+//             }
             
-            //check if the user is renting
-            if (req.user.rentedMovies.indexOf(movieId) === -1) {
-                console.log(`User does not have movie and is trying to return\n movieId: ${movieId}\nUserId: ${req.user._id}`);
-                throw newError('Movie Not Found In User\'s Rented Movies', 409);
-            }
+//             //check if the user is renting
+//             if (req.user.rentedMovies.indexOf(movieId) === -1) {
+//                 console.log(`User does not have movie and is trying to return\n movieId: ${movieId}\nUserId: ${req.user._id}`);
+//                 throw newError('Movie Not Found In User\'s Rented Movies', 409);
+//             }
 
-            //modify the user doc
-            const newUser = await User.findByIdAndUpdate(
-                req.user._id,
-                { $pull: { rentedMovies: movieId} },
-                {new: 1}
-            )
+//             //modify the user doc
+//             const newUser = await User.findByIdAndUpdate(
+//                 req.user._id,
+//                 { $pull: { rentedMovies: movieId} },
+//                 {new: 1}
+//             )
 
-            //modifying the movie doc
-            const newMovie = await Movie.findByIdAndUpdate(
-                movieId,
-                {
-                    $pull: { 'inventory.rented': req.user._id },
-                    $inc: { 'inventory.available': 1 },
-                },
-                {new: 1}
-            )
+//             //modifying the movie doc
+//             const newMovie = await Movie.findByIdAndUpdate(
+//                 movieId,
+//                 {
+//                     $pull: { 'inventory.rented': req.user._id },
+//                     $inc: { 'inventory.available': 1 },
+//                 },
+//                 {new: 1}
+//             )
 
-            res.json({
-                message: "successs",
-                user: newUser,
-                movie: newMovie
-            })
+//             res.json({
+//                 message: "successs",
+//                 user: newUser,
+//                 movie: newMovie
+//             })
             
-        } catch (err) {
-            const errMsg = err.message || err;
-            const errCode = err.code || 500;
+//         } catch (err) {
+//             const errMsg = err.message || err;
+//             const errCode = err.code || 500;
 
-            console.log(`Error in movie renting: ${errMsg}`);
+//             console.log(`Error in movie renting: ${errMsg}`);
             
-            res.status(errCode).json({
-                error: errMsg
-            })
-        }
+//             res.status(errCode).json({
+//                 error: errMsg
+//             })
+//         }
 
-    }
-)
+//     }
+// )
 
 //movie renting 
 router.patch(
@@ -172,7 +172,6 @@ router.patch(
                 throw newError('Movie Not Found or Movie Unavailable', 404);
             }
             
-            //ToDo
             //check if the user is renting Or returning and that they did not already do that particular operation 
             const currentlyRenting = req.user.rentedMovies;
 

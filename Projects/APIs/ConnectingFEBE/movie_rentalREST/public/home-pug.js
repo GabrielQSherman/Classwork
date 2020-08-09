@@ -1,3 +1,6 @@
+// set event listers for button/s (rent/return)
+// set up xhr ('patch') in the 'onclick' event handler 
+// -- proper responses to the client (alert, error element/dom element update)
 
 window.onload = () => {
 
