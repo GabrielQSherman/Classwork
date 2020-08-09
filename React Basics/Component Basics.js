@@ -781,3 +781,50 @@ class MagicEightBall extends React.Component {
     );
   }
 };
+
+//one way to create dynamic displays within a component is to use if else conditionals. This is the least consise way
+//this is how one could created a dynamic display using if-else
+class ifElseDynamic extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      display: true
+    }
+    this.toggleDisplay = this.toggleDisplay.bind(this);
+  }
+  toggleDisplay() {
+    this.setState({
+      display: !this.state.display
+    });
+  }
+  render() {
+
+    if (this.state.display) {
+        return (
+          <div>
+            <button onClick={this.toggleDisplay}>Toggle Display</button>
+            <h1>Displayed!</h1>
+          </div>
+        );
+    } else {
+        return (
+          <div>
+            <button onClick={this.toggleDisplay}>Toggle Display</button>
+          </div>
+        );
+    }
+    
+  }
+};
+//notice the code in the render function is practicly doubled this goes against everything a developer knows about clean/DRY code
+//a better practice is to use && for more concise conditionals. This works well if only one thing is being changed with  a condtional
+// here is the same render method from above without 
+render = () => {
+    return (
+      <div>
+        <button onClick={this.toggleDisplay}>Toggle Display</button>
+        {/* much shorter code because only the h1 element relies on the conditional being true  */}
+        { this.state.display &&<h1>Displayed!</h1>}
+      </div>
+    );
+}
