@@ -11,4 +11,16 @@ router.get('/', (req, res) => {
     res.sendFile(filePath)
 })
 
+
+router.get(
+    '/login',
+    (req, res) => {
+
+        const filePath = process.cwd() + '\\public\\login.html';
+
+        res.sendFile(filePath);
+
+    }
+)
+
 module.exports = router;

@@ -17,8 +17,9 @@ const app = express();
 // MIDDLEWARE THAT ALL ROUTES USE 
 // (regardless of request-path or method) '/' /username
 app.use(express.json());
-app.use(firstMid);
 app.use(express.static('public'));
+
+app.use(firstMid);
 
 //USING A ROUTER
 app.use('/', homeRouter);

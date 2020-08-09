@@ -9,14 +9,19 @@ router.use('/post', userPost)
 //@path LH user/login
 //@desc login a user
 //@access private 
-router.patch('login', (req, res) => {
-    console.log(req.body);
+router.patch(
+    '/login',
+    (req, res) => {
+
+    console.log(req.body, 'Login Test');
 
     try {
 
         res.json({message: 'success!'})
             
     } catch (error) {
+
+        console.error(error.message)
 
         res.status(500).json({
             message: error.message
