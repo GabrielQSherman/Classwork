@@ -3,6 +3,37 @@ body {
     background-color: #333;
     text-align: center;
 }
+
+#navBar {
+    padding: 30;
+    background-color: rgb(39, 192, 179);
+    margin-bottom: 2%;
+    border-radius:  0px 0px 100px 100px;
+
+    margin-top: -10;
+    /* width: 100vw; */
+}
+
+.navBtns {
+    font-size: larger;
+    font-weight: 500;
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    padding-left: 35px;
+    padding-right: 35px;
+    transition: all ease-in-out .5s;
+    margin-left: 20px;
+    margin-right: 20px;
+
+}
+
+.navBtns:hover {
+    background-color: #777;
+    transform: scale(.9,.9);
+    transition-duration: .5s;
+ }
+
 #allMovies {
     
     display: none;
@@ -53,6 +84,15 @@ body {
     border-radius: 10px;
     padding: 10px;
     margin-top: 5px;
+    transition: all ease-in-out .5s;
+    cursor: pointer;
+
+}
+
+.rentMovie:hover {
+    background-color: rgba(101, 186, 255, 0.541);
+    transform: scale(.9,.9);
+
 }
 
 .editMovie {
@@ -73,6 +113,23 @@ body {
     flex-direction: column;
 }
 
+.displayMovie a {
+    text-shadow: black 2px 1px;
+    font-weight: 700;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    margin: 15px;
+    margin-top: 10px;
+}
+
+h6 {
+    background-color: black;
+    color: white;
+    margin-left: 10%;
+    margin-right: 10%;
+    border-radius: 3px;
+}
+
 .adminBtns { 
     display: flex;
     flex-direction: column;
@@ -82,8 +139,13 @@ body {
     width: 80%;
     margin: 0 auto;
     margin-bottom: 1%;
+    cursor: pointer;
+    transition-duration: .5s;
+    font-weight: 444;
 }
 
 .adminBtns button:hover {
     opacity: 50%;
+    transform: scale(.95,.95);
+
 }

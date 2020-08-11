@@ -39,6 +39,11 @@ function setEventListeners() {
 
         for (const button of editSubmitButtons) { button.onclick = submitEditReq};
 
+    const rentButtons = document.getElementsByClassName('rentMovie');
+
+        for (const button of rentButtons) { button.onclick = rentReq};
+
+
     const logoutBtn = document.getElementById('logoutBtn');
     const loginBtn = document.getElementById('loginBtn');
     const adminBtn = document.getElementById('adminPage');
@@ -61,6 +66,50 @@ function setEventListeners() {
 
  
     
+}
+
+function rentReq() {
+    const movieId = this.parentElement.id;
+    
+    const movieTitle = this.parentElement.title;
+
+    const isRenting = this.innerText.includes('Rent');
+
+    const reqBody = {
+        movieId: movieId,
+        isRenting: isRenting,
+    }
+
+    const endpoint = `${location.origin}/user/rent_or_return`, 
+          reqObj = {
+              method: "PATCH",
+              body: JSON.stringify(reqBody),
+              headers: {
+                  'Access-Control-Allow-Origin': '*',
+                  Accept: 'application/json',
+                  'content-type': 'application/json'
+              }
+          };
+
+    fetch(endpoint, reqObj)
+    .then( rs => {
+        const action = isRenting ? 'Rent' : 'Return';
+
+        if (rs.status == 200) {
+            const newText = !isRenting ?  `Rent ${movieTitle}` : `Return ${movieTitle}`;
+            this.innerText = newText;
+            alert(`You Successfully ${action}ed ${movieTitle}`)
+        } else {
+            alert(`A Problem Occured Attempting To ${action} ${movieTitle}`)
+        }
+
+        return rs.json()
+    })
+    .then( res => {
+        console.log(res);
+        
+        
+    })
 }
 
 function redirectAdmin() {

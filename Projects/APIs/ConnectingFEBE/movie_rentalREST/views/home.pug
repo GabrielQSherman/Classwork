@@ -8,19 +8,22 @@ html
         include ../public/home-pug.css
 
     body    
-        if isLoggedIn
-            button#logoutBtn Logout
-        else
-            button#loginBtn Login
-        
-        if isAdmin
-            button#adminPage Admin Page
+
+        div#navBar
+            if isLoggedIn
+                button#logoutBtn.navBtns Logout
+            else
+                button#loginBtn.navBtns Login
+            
+            if isAdmin
+                button#adminPage.navBtns Admin Page
             
 
         #allMovies
             each movieData in all_movies
-                if movieData.inventory.available > 0
-                    .Movie(id=movieData._id)
+                - const isRenting = all_movies.includes(movieData._id) 
+                if movieData.inventory.available > 0 || isRenting
+                    .Movie(id=movieData._id title=movieData.title)
                         .displayMovie
                             h1=movieData.title
                             h3=movieData.release
@@ -40,12 +43,9 @@ html
                                 button.editMovieBtn Edit Movie Data
                         else 
                             if isLoggedIn
-                                button.rentMovie Rent This Movie
-                                -// 1 NEWBUTTON: add a new button for rented
-                                -// 1.5: ONLY the button needed is shown --> make it clear to the user if they are already renting
-                                -// 2: modify current button to serve both purposes (backend modification possibily)
-                                -// button.getMovie Get More DB Info
+                                - const btnText = isRenting ? `Rent ${movieData.title}` : `Return ${movieData.title}`;
+                                button.rentMovie=btnText
                             else 
-                                h4 Login in to rent
+                                h6 Login in to rent this movie
 
 

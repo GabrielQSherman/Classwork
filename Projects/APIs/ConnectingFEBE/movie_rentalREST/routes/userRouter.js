@@ -10,6 +10,7 @@ const jwt = require("jsonwebtoken");
 
 const validateUser = require('../middleware/validateUser');
 const loginUser = require('../middleware/loginUser');
+const extractToken = require('../middleware/extractToken');
 const userAuth = require('../middleware/userAuth');
 const adminAuth = require('../middleware/adminAuth');
 
@@ -143,6 +144,7 @@ const newError = require('../utils/newError');
 //movie renting 
 router.patch(
     '/rent_or_return',
+    extractToken,
     userAuth,
     async (req, res) => {
         
