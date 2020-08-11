@@ -4,6 +4,8 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
 
+    console.log(req);
+
     const filePath = process.cwd() + '\\public\\home.html';
 
     console.log(filePath);

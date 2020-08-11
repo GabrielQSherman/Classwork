@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 //PACKAGES
 const express = require('express');
 const mongoose = require('mongoose');
@@ -7,8 +9,8 @@ const firstMid = require('./middleware/firstMiddleware');
 const homeRouter = require('./routes/homeRouter');
 const userRouter = require('./routes/userRouters');
 
-// CONTANTS
-const port = 3000;
+// CONSTANTS
+const port = process.env.PORT || 3000;
 //MAIN APPLICATION VAR
 const app = express();
 
@@ -27,5 +29,6 @@ app.use('/user', userRouter);
 
 //START SERVER LISTENING
 app.listen(port, () => {
+    
     console.log(`Server is now listening on port ${port}`);
 })
