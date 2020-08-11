@@ -39,10 +39,13 @@ html
                                 button.deleteMovie Delete From Database
                                 button.editMovieBtn Edit Movie Data
                         else 
-                            button.rentMovie Rent This Movie
-                            -// 1 NEWBUTTON: add a new button for rented
-                            -// 1.5: ONLY the button needed is shown --> make it clear to the user if they are already renting
-                            -// 2: modify current button to serve both purposes (backend modification possibily)
-                            -// button.getMovie Get More DB Info
+                            if isLoggedIn
+                                button.rentMovie Rent This Movie
+                                -// 1 NEWBUTTON: add a new button for rented
+                                -// 1.5: ONLY the button needed is shown --> make it clear to the user if they are already renting
+                                -// 2: modify current button to serve both purposes (backend modification possibily)
+                                -// button.getMovie Get More DB Info
+                            else 
+                                h4 Login in to rent
 
 
