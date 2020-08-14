@@ -69,19 +69,36 @@ function submitReg() {
         
     }
 
-    const endpoint = location.origin + '/user/post/new';
+    let passedValidation = true;
 
-    // //XHR
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:3000/user/post/new');
-    xhr.onload = () => {
-        console.log(xhr.responseText);
-        const res = JSON.parse(xhr.responseText);
-        console.log(res);
+    if (reqBody.username.length > 33 || reqBody.username.length < 3) {
+        alert('Username must be within the range of 3-33 characters');
+        passedValidation = false;
     }
 
-    xhr.setRequestHeader("Content-Type", "application/json");
+    if (reqBody.password !== reqBody.password2) {
+        alert('Passwords did not match');
+        passedValidation = false;
+    }
 
-    xhr.send(JSON.stringify(reqBody))
+
+    if (passedValidation) {
+        
+        const endpoint = location.origin + '/user/register';
+    
+        // //XHR
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', endpoint);
+        xhr.onload = () => {
+            console.log(xhr.responseText);
+            const res = JSON.parse(xhr.responseText);
+            console.log(res);
+        }
+    
+        xhr.setRequestHeader("Content-Type", "application/json");
+    
+        xhr.send(JSON.stringify(reqBody))
+
+    }
 
 }
