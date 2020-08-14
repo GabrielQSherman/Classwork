@@ -30,14 +30,19 @@ app.use('/user', userRouter);
 
 if (typeof URI === 'string') {
     
-    const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true };
+    const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true };
 
     //CONNECTION TO DATABASE
+    //Clusters (only need one)
+    //Databases (one per project)
+    //Collections (one per docuement type ie Users, Movies, Patients, Foods)
+    //Documents ( Familiar Object Notation ) ex { _id: *value auto assigned by Mongo, 24 chars. , __v: version, (created/updated)At, username: 'user1', password: *hashedPass }
+
     mongoose.connect(URI, mongoOptions, (err) => {
         
         if (err) {
 
-            console.error( `\nError Connecting To MongoDB: ${err.message || err}\n`);
+            console.error( `\nError Connecting To MongoDB: ${err.message || err }\n`);
 
         } else {
             console.log('Server Connected To DB') 
