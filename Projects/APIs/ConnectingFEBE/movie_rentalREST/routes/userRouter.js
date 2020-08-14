@@ -249,8 +249,8 @@ router.post(
             const newUser = await User.create(req.body);
 
             res.json({
-                msg: "user created successfully",
-                document: newUser
+                msg: "success",
+                // document: newUser
             });
             
         } catch (error) {

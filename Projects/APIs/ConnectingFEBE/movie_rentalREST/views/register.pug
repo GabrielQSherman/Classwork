@@ -1,0 +1,20 @@
+html
+    head
+        title Register for Movie Rental *title pending
+
+        style
+            include ../public/register.css
+
+        script
+            include ../public/register.js
+
+    body
+        #formDiv
+            form#regForm
+            input(placeholder='Enter Email', name='email', type='email')
+            input(placeholder='Enter Password', name='password', type='password', minLength=7)
+            input(placeholder='Enter Password Again', name='passwordRepeat', type='password', minLength=7)
+        
+        button#submitReg Create Your Account 
+
+

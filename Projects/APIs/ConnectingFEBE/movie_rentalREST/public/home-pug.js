@@ -107,8 +107,6 @@ function rentReq() {
     })
     .then( res => {
         console.log(res);
-        
-        
     })
 }
 
