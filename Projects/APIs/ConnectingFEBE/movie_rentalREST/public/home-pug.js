@@ -45,12 +45,18 @@ function setEventListeners() {
 
 
     const logoutBtn = document.getElementById('logoutBtn');
+    const regBtn = document.getElementById('regBtn');
     const loginBtn = document.getElementById('loginBtn');
     const adminBtn = document.getElementById('adminPage');
 
     if (loginBtn) {
         
         loginBtn.onclick = loginUser;
+    } 
+
+    if (regBtn) {
+        
+        regBtn.onclick = registerRedirect;
     } 
 
     if (logoutBtn) {
@@ -119,6 +125,10 @@ function redirectAdmin() {
 function loginUser() {
 
     location = location.origin+'/login';
+}
+
+function registerRedirect() {
+    location = location.origin+'/register';
 }
 
 
