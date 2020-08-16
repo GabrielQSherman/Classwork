@@ -1,6 +1,6 @@
 html
     head
-        title Register for Movie Rental *title pending
+        title Register
 
         style
             include ../public/register.css
@@ -9,12 +9,16 @@ html
             include ../public/register.js
 
     body
-        #formDiv
-            form#regForm
-            input(placeholder='Enter Email', name='email', type='email')
-            input(placeholder='Enter Password', name='password', type='password', minLength=7)
-            input(placeholder='Enter Password Again', name='passwordRepeat', type='password', minLength=7)
         
-        button#submitReg Create Your Account 
+        #formDiv
+            h1#regHead Register Today
+            form#regForm
+                label.lables Email
+                input(placeholder='Enter Email', name='email', type='email')
+                label.lables Password
+                input(placeholder='Enter Password', name='password', type='password', minLength=7)
+                label.lables Enter Password Again 
+                input(placeholder='Enter Password Again', name='passwordRepeat', type='password', minLength=7)
+            button#submitReg Create Your Account 
 
 
