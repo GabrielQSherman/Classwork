@@ -1060,3 +1060,15 @@ class MyComponent extends React.Component {
     );
   }
 };
+
+//You can render react element server side to increase page loadtime, allow for search engine cralwers to see html elements instead of just react js bundles
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return <div/>
+  }
+};
+
+ReactDOMServer.renderToString(<App />)
