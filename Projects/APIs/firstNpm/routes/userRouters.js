@@ -67,6 +67,55 @@ router.post(
 })
 
 //TODO create a GET route for finding all the users currently in DB
+//@ path: LH/user/all
+//@ desp: fetch all user data in the data, do not include sensitive user info
+//@ access: public
+router.get(
+    '/all',
+    async (req, res) => {
+        
+        try {
+            const allUsers = await User.find({});
 
+            // console.log(allUsers);
+
+            res.json(allUsers);
+            
+        } catch (err) {
+            const msg = err.message || err;
+            console.error(msg);
+            res.status(500).json({
+                message: msg
+            })          
+        }   
+    }
+)
+
+//@ path: LH/user/username/:username
+//@ desp: fetch all user data in the data, do not include sensitive user info
+//@ access: public
+router.get(
+    '/username/:un',
+    async (req, res) => {
+
+        try {
+
+            const query = { username: req.params.un };
+
+            const projection = { email: 1, username: 1, _id: 0};
+
+            const foundUser = await User.findOne( query, projection );
+
+            res.json(foundUser)
+            
+        } catch (err) {
+            const msg = err.message || err;
+            console.error(msg);
+            res.status(500).json({
+                message: msg
+            })          
+        }
+    }
+)
 //make viewable to other files
 module.exports = router;

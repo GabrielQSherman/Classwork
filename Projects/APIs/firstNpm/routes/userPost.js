@@ -11,7 +11,7 @@ const router = Router();
 router.post('/new', async (req, res) => {
     //do this thing
     console.log(req.body);
-
+    
     try {
 
         res.json({message: 'success!'})
