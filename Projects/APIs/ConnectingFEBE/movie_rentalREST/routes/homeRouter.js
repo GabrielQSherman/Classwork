@@ -23,7 +23,7 @@ router.get('/',
     isAdmin,
     async (req, res) => {
 
-        const loggedIn = req.authKey != undefined;
+        const loggedIn = req.authKey != undefined && token.trim() != '';
         
         const allMovies = await Movie.find({ 'inventory.available': {$gte: 1}});
 

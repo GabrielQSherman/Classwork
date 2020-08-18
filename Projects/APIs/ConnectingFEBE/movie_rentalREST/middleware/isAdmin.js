@@ -7,8 +7,7 @@ module.exports = async (req, res, next) => {
 
     const token = req.authKey;
 
-    if (token === undefined ) {
-
+    if (token === undefined || token.trim() === '') {
         return next()
     } 
 
