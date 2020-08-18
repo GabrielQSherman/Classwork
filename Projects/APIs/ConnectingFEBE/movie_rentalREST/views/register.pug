@@ -16,9 +16,10 @@ html
                 label.lables Email
                 input(placeholder='Enter Email', name='email', type='email')
                 label.lables Password
-                input(placeholder='Enter Password', name='password', type='password', minLength=7)
+                input#p1(placeholder='Enter Password', name='password', type='password', minLength=7)
                 label.lables Enter Password Again 
-                input(placeholder='Enter Password Again', name='passwordRepeat', type='password', minLength=7)
+                input#p2(placeholder='Enter Password Again', name='enter_password_Again', type='password', minLength=7)
+                h4#passmsg(style='display: none')
             button#submitReg Create Your Account 
 
 

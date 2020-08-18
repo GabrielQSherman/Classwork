@@ -5,19 +5,36 @@ window.onload = () => {
 
     submitReg.onclick = submitRegistration;
 
+    document.getElementById('p1').onkeyup = passwordCheck;
+    document.getElementById('p2').onkeyup = passwordCheck;
+
 }
 
 //xhr post for users
 function submitRegistration() {
 
     const regForm = document.getElementById('regForm'),
-          formInfo = {}; 
+          formInfo = {},
+          missingInputs = [];
 
     for (const input of regForm) {
         formInfo[input.name] = input.value
+        if (input.value.trim() === '') {
+            missingInputs.push(input.name);
+        }
     }
 
-    if (formInfo.password !== formInfo.passwordRepeat) {
+    if (missingInputs.length > 0) {
+        
+        missingMsg = missingInputs.map( key => {
+            return `${titleCase(key)} is required`
+        }).join('\n\n')
+
+        return alert(missingMsg)
+        
+    }
+
+    if (formInfo.password !== formInfo.enter_password_Again) {
         return alert('Password inputs must match')
     }
 
@@ -37,15 +54,30 @@ function submitRegistration() {
     fetch(endpoint, requestObj)
     .then( rs => {return rs.json()})
     .then( res => {
-        if (res.hasOwnProperty('validation_error')) {
+        if (res.validation_error != undefined) { //res.hasOwnProperty('validation_error')
             let errMsg = '';
-            res.validation_error.map( error => {
+            res.validation_error.forEach( error => {
                 errMsg += `Error With ${titleCase(error.key)}:\n${error.message}\n\n\n`
             })
             alert(errMsg)
         }
     })
+}
 
+function passwordCheck() {
+    const pass1 = document.getElementById('p1'),
+          pass2 = document.getElementById('p2'),
+          passMsg = document.getElementById('passmsg');
+        
+    passMsg.style.display = 'inline';
+
+    if (pass1.value != pass2.value) {
+        passMsg.style.color = 'red'
+        passMsg.innerText = 'Passwords Do Not Match'
+    } else {
+        passMsg.style.color = 'green'
+        passMsg.innerText = 'Passwords Match'
+    }
 }
 
 function titleCase(str) {
