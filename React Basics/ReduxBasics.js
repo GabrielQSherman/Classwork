@@ -22,4 +22,17 @@ Using the getState method you can retrieve the current state of the applicaition
 */
   
 const currentState = store.getState()
+
+//Defining a Redux action
+
+/* 
+In Redux in order to update the state of an applicaiton (update the store)
+You must dispatch actions 
+This is how you can define a action with Redux
+*/
+
+//this simple action only has a type defined and will be identifed as 'LOGIN'
+const action = {
+    type: 'LOGIN'
+  }
   
