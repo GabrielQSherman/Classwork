@@ -9,3 +9,17 @@ const reducer = (state = 5) => {
   }
 
 const store = Redux.createStore(reducer)
+
+//Using React getState
+const store = Redux.createStore(
+    (state = 5) => state
+);
+
+/*
+Once a Redux store is assigned to a var a getState method can be called
+
+Using the getState method you can retrieve the current state of the applicaition
+*/
+  
+const currentState = store.getState()
+  
