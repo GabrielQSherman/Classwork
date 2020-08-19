@@ -4,6 +4,7 @@ const  router = new Router();
 
 const User = require('../models/User');
 
+const findUser = require('../middleware/findUser');
 // const  userPost = require('./userPost.js');
 // router.use('/post', userPost)
 
@@ -75,9 +76,11 @@ router.get(
     async (req, res) => {
         
         try {
+            console.log('test');
             const allUsers = await User.find({});
 
-            // console.log(allUsers);
+            console.log(allUsers);
+
 
             res.json(allUsers);
             
@@ -117,5 +120,33 @@ router.get(
         }
     }
 )
+
+//put /updateinfo/:id *uses req.body to pass moddifying values of user
+// what do we want want to update, how is that info being passed to the REST api?
+// 
+
+
+//delete /delete/:id ( mongodb docuement id )
+router.delete(
+    '/delete/:id',
+    findUser,
+    async ( req, res ) => {
+
+        try {
+
+            await User.findByIdAndDelete(req.userId);
+
+            res.send('Deleted User!')
+            
+        } catch (err) {
+            const msg = err.message || err;
+            console.error(msg);
+            res.status(500).json({
+                message: msg
+            })
+        }
+    }
+)
+
 //make viewable to other files
 module.exports = router;
