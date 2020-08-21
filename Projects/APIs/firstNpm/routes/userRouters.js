@@ -5,6 +5,7 @@ const  router = new Router();
 const User = require('../models/User');
 
 const findUser = require('../middleware/findUser');
+const { findByIdAndUpdate, findOneAndUpdate } = require('../models/User');
 // const  userPost = require('./userPost.js');
 // router.use('/post', userPost)
 
@@ -123,7 +124,53 @@ router.get(
 
 //put /updateinfo/:id *uses req.body to pass moddifying values of user
 // what do we want want to update, how is that info being passed to the REST api?
-// 
+//@ path: PUT LH/user/updateinfo/:id
+//@ desp: fetch all user data in the data, do not include sensitive user info
+//@ access: public
+router.put(
+    '/update/:id',
+    findUser,
+    async (req, res) => {
+
+        try {
+
+            const updated = await User.findByIdAndUpdate( 
+                req.params.id, 
+                req.body,
+                {new: true}
+            );
+            
+            res.json({
+                updateDoc: updated
+            })
+            
+        } catch (err) {
+            const msg = err.message || err;
+            console.error(msg)
+            res.status(500).json({
+                message: msg
+            })
+        }
+
+    }
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //delete /delete/:id ( mongodb docuement id )
