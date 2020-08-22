@@ -21,6 +21,8 @@ module.exports = async (req, res, next) => {
         
         req.isAdmin = data != null && data.adminProp.isAdmin === true;
 
+        req.userId = decodedJWT.id;
+
         next()
 
     } catch (err) {
