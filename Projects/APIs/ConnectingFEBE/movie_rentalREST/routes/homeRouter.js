@@ -4,7 +4,7 @@ const Movie = require('../models/Movie');
 const adminAuth = require('../middleware/adminAuth');
 const extractToken = require('../middleware/extractToken');
 const isAdmin = require('../middleware/isAdmin');
-// const User = require('../models/User');
+const User = require('../models/User');
 
 router.get('/login', (req, res) => {
 
@@ -23,7 +23,7 @@ router.get('/',
     isAdmin,
     async (req, res) => {
 
-        const loggedIn = req.authKey != undefined && token.trim() != '';
+        const loggedIn = req.authKey != undefined;
         
         const allMovies = await Movie.find({ 'inventory.available': {$gte: 1}});
 
@@ -56,6 +56,27 @@ router.get('/mrental/static', (req, res) => {
 
     res.sendFile(fileLoc)
 })
+
+router.get(
+    '/profile/:username', 
+    extractToken,
+    isAdmin,
+    async (req, res) => {
+
+        const profileOwner = await User.findOne({username: req.params.username})
+
+        if (profileOwner === null) return res.redirect('/');
+
+        const viewingUser = await User.findById(req.userId)
+
+        const renderOption = {
+            proUsername: profileOwner.username,
+            rented: profileOwner.rentedMovies
+        }
+        
+        res.render('profile', renderOption);
+    }
+)
 
 
 module.exports = router;
