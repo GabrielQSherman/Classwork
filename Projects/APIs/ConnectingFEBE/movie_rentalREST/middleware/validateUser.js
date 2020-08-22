@@ -5,6 +5,7 @@ const validate = async (req, res, next) => {
 
   const email = req.body.email,
         pass = req.body.password,
+        username = req.body.username,
         failedValues = [];
         
         if (!validator.isEmail(email)) {
@@ -20,6 +21,27 @@ const validate = async (req, res, next) => {
             failedValues.push({
                 key: "email",
                 message: "Email Already In Use"
+            })
+        }
+
+        const usernameExist = await User.findOne({ username: username }) != null; //expected outcome: boolean
+
+        if (usernameExist) {
+            failedValues.push({
+                key: "username",
+                message: "Username Already In Use"
+            })
+        }
+
+        if ( 
+
+            !validator.isLength(username, {min: 3, max: 20}) 
+            || !validator.isAlphanumeric(username, 'en-US') 
+
+        ) {
+            failedValues.push({
+                key: "username",
+                message: "Length Failed Requirements OR Used Invalid Characters"
             })
         }
 
