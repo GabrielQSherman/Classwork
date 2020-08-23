@@ -5,29 +5,45 @@ window.onload = () => {
     submitNew.onclick = newMovieReq;
     const formDiv = document.getElementById('formDiv');
 
+    // hsl(0, 70%, 50%), 
+    // hsl(30, 70%, 50%), 
+    // hsl(45, 70%, 50%), 
+    // hsl(60, 70%, 50%), 
+    // hsl(75, 70%, 50%), 
+    // hsl(90, 70%, 50%), 
+    // hsl(120, 70%, 50%),
+    // hsl(150, 70%, 50%),
+    // hsl(165, 70%, 50%),
+    // hsl(180, 70%, 50%),
+    // hsl(210, 70%, 50%),
+    // hsl(240, 70%, 50%),
+    // hsl(270, 70%, 50%),
+    // hsl(285, 70%, 50%),
+    // hsl(300, 70%, 50%),
+    // hsl(330, 70%, 50%),
+    // hsl(345, 70%, 50%)
+    
     setInterval( () => {
+        
+        const cNum = 10, //numer of colors
+              nums = Array.from({length: cNum}, (_, index) => index), //empty array to map over
+              colors = nums.map( (i) => {
+                const 
+                hue = Math.round(i*360/cNum),
+                color =`hsl(${hue},70%,57%)`;
+                return color
+              })
+              .join(',')
 
         formDiv.style.backgroundImage = 
-        `
+        `           
             linear-gradient(rgb(164, 0, 206), rgb(255, 157, 226)),
-            repeating-linear-gradient(${(Date.now()/222)%360}deg, 
-            hsl(0, 70%, 50%), 
-            hsl(30, 70%, 50%), 
-            hsl(60, 70%, 50%), 
-            hsl(90, 70%, 50%), 
-            hsl(120, 70%, 50%),
-            hsl(150, 70%, 50%),
-            hsl(180, 70%, 50%),
-            hsl(210, 70%, 50%),
-            hsl(240, 70%, 50%),
-            hsl(240, 70%, 50%),
-            hsl(300, 70%, 50%),
-            hsl(330, 70%, 50%)
-            
-            370px)
+            repeating-linear-gradient(${(Date.now()/111)%360}deg, 
+            ${colors}
+            420px)
         `
 
-    }, 10)
+    }, 15)
 }
 
 function newMovieReq() {
