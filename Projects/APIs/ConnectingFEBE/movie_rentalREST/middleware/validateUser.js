@@ -24,32 +24,30 @@ const validate = async (req, res, next) => {
             })
         }
 
-        const usernameExist = await User.findOne({ username: username }) != null; //expected outcome: boolean
-
-        if (usernameExist) {
+        if (username == undefined || username.trim().length == 0) {
+            failedValues.push({
+                key: "username",
+                message: "Length Failed Requirements OR Used Invalid Characters"
+            })
+        } else if ( 
+            !validator.isLength(username, {min: 3, max: 20}) 
+            || !validator.isAlphanumeric(username, 'en-US') 
+        ) 
+        {
+            failedValues.push({
+                key: "username",
+                message: "Length Failed Requirements OR Used Invalid Characters"
+            })
+        } else if (await User.findOne({ username: username }) != null) {
             failedValues.push({
                 key: "username",
                 message: "Username Already In Use"
             })
         }
-
+            
         if ( 
-
-            !validator.isLength(username, {min: 3, max: 20}) 
-            || !validator.isAlphanumeric(username, 'en-US') 
-
-        ) {
-            failedValues.push({
-                key: "username",
-                message: "Length Failed Requirements OR Used Invalid Characters"
-            })
-        }
-
-        if ( 
-
             !validator.isLength(pass, {min: 7, max: 100}) 
             || !validator.isAlphanumeric(pass, 'en-US') 
-
         ) {
             failedValues.push({
                 key: "password",

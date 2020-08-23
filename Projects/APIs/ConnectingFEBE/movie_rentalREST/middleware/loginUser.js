@@ -18,14 +18,14 @@ module.exports = async (req, res, next) => {
 
         if (!emailValid) {
             console.error('\nLogin Failed: Email Not Valid');
-            failedLogin(req, res)    
+            return failedLogin(req, res)    
         }
 
         const user = await User.findOne({email: req.body.email});
 
         if (user === null) {
             console.error('\nLogin Failed: Email Not In Use');
-            failedLogin(req, res)    
+            return failedLogin(req, res)    
         }
         const pass = req.body.password,
               passTest = 
@@ -35,7 +35,7 @@ module.exports = async (req, res, next) => {
 
         if (!passTest) {
             console.error('\nLogin Failed: Password Invalid');
-            failedLogin(req, res)    
+            return failedLogin(req, res)    
         }
 
         req.id = user._id;
