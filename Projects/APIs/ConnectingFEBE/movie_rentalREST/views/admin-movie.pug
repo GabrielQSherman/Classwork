@@ -17,14 +17,15 @@ html
             input(placeholder='Enter Movie Release Year',  type='number', name='release', value=currentYear, min=currentYear-100, max=currentYear+2)
             input(placeholder='Enter Movie Order Quantity',  type='number', min=0, name='available')
 
-        h1(style="margin-top:5%") Post A New Movie
-        form#newMovieForm
-            +movieInputs
-        button#submitNew Add Movie To DB
+        #formDiv
+            h1(style="margin-top:5%") Post A New Movie
+            form#newMovieForm.form
+                +movieInputs.inputs
+            button#submitNew Add Movie To DB
 
-        h1(style="margin-top:5%") Update A Movie Document
-        form#updateMovieForm
-            input(type="text", placeholder="Enter ID", name="id")#idInput
-            +movieInputs
-        button#submitUpdate Submit Your Movie Update
-        
+            h1(style="margin-top:5%") Update A Movie Document
+            form#updateMovieFormv.form
+                input(type="text", placeholder="Enter ID", name="id")#idInput
+                +movieInputs.inputs
+            button#submitUpdate Submit Your Movie Update
+            
