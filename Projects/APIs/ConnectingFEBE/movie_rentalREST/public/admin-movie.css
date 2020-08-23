@@ -2,7 +2,53 @@ body {
     text-align: center;
     justify-content: center;
     background-color: #333;
-    color: white
+    color: rgb(255, 255, 255)
+}
+
+#formDiv {
+    width: 50%;
+    margin: auto;
+    margin-top: 10%;
+    text-align: center;
+    
+    border: double 1em transparent;
+    border-radius: 30px;
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+}
+
+.form {
+    margin: 2%;
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    color: rgb(200, 244, 255);
+    background-color: rgba(34, 34, 34, 0.335);
+    margin-bottom: 1%;
+    margin-left: 10%;
+    margin-right: 10%;
+    border: none;
+    text-align: center;
+}
+
+button {
+    font-size: larger;
+    border: none;
+    border-radius: 20px;
+    background-color: rgb(204, 51, 153);
+    color: white;
+    cursor: pointer;
+    padding: 10;
+    margin-bottom: 3%;
+    transition: all ease-in-out .5s;
+}
+
+button:hover {
+    transform: scale(.9,.9);
+    border-radius: 10px;
+
 }
 
 #updateForm {
