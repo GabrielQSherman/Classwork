@@ -20,11 +20,11 @@ html
             if isAdmin
                 button#adminPage.navBtns Admin Page
             
-
+        
         #allMovies
             each movieData in all_movies
-                - const isRenting = all_movies.includes(movieData._id) 
-                if movieData.inventory.available > 0 || isRenting
+                - const isRenting = rentedMovies.includes(movieData._id) 
+                if !isRenting
                     .Movie(id=movieData._id title=movieData.title)
                         .displayMovie
                             h1=movieData.title
@@ -45,7 +45,7 @@ html
                                 button.editMovieBtn Edit Movie Data
                         else 
                             if isLoggedIn
-                                - const btnText = isRenting ? `Rent ${movieData.title}` : `Return ${movieData.title}`;
+                                - const btnText = !isRenting ? `Rent ${movieData.title}` : `Return ${movieData.title}`;
                                 button.rentMovie=btnText
                             else 
                                 h6 Login in to rent this movie
