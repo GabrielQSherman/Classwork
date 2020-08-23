@@ -27,12 +27,17 @@ router.get('/',
         
         const allMovies = await Movie.find({ 'inventory.available': {$gte: 1}});
 
+        const {rentedMovies} = loggedIn 
+            ? await User.findOne({_id: req.userId}, {rentedMovies: 1}) 
+            : {rentedMovies: []}; 
+
         const isAdmin = req.isAdmin || false ;
 
         const renderOption = {
             all_movies: allMovies, 
             isLoggedIn: loggedIn,
-            isAdmin: isAdmin 
+            isAdmin: isAdmin,
+            rentedMovies: rentedMovies 
         }
 
         res.render('home', renderOption )
@@ -67,11 +72,12 @@ router.get(
 
         if (profileOwner === null) return res.redirect('/');
 
-        const viewingUser = await User.findById(req.userId)
+        const viewingUser = await User.findById(req.userId);
 
         const renderOption = {
             proUsername: profileOwner.username,
-            rented: profileOwner.rentedMovies
+            rented: profileOwner.rentedMovies,
+            viewerRented: viewingUser === null ? [] : viewingUser.rentedMovies, 
         }
         
         res.render('profile', renderOption);
