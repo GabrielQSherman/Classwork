@@ -56,7 +56,7 @@ const Movie = new mongoose.Schema({
             available: {
                 type: Number,
                 min: 0,
-                default: 1
+                default: 10
             },
             rented: {
                 type: [mongoose.Schema.Types.ObjectId],
