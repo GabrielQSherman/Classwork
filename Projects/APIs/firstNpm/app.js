@@ -22,7 +22,6 @@ const app = express();
 // (regardless of request-path or method) '/' /username
 app.use(express.static('public'));
 app.use(express.json());
-app.use(firstMid);
 app.use(morgan('dev'));
 
 //USING A ROUTER
