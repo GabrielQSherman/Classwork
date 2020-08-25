@@ -74,13 +74,15 @@ router.get(
 
         const viewingUser = await User.findById(req.userId);
 
-        const renderOption = {
+        const renderOptions = {
             proUsername: profileOwner.username,
             rented: profileOwner.rentedMovies,
             viewerRented: viewingUser === null ? [] : viewingUser.rentedMovies, 
         }
+
+        console.log(renderOptions);
         
-        res.render('profile', renderOption);
+        res.render('profile', renderOptions);
     }
 )
 

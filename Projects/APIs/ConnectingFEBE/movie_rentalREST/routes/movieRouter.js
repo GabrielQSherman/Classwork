@@ -9,6 +9,7 @@ const User = require('../models/User');
 const findMovie = require('../middleware/findMovie');
 const adminAuth = require('../middleware/adminAuth');
 const extractToken = require('../middleware/extractToken');
+const movieVal = require('../middleware/movieValidation');
 //utilies
 const newError = require('../utils/newError');
 
@@ -170,15 +171,18 @@ router.post(
     '/post', 
     extractToken,
     adminAuth,
+    movieVal,
     async (req, res) => {
 
     try {
 
-        const newMovie = await Movie.create(req.body);
+        // const newMovie = await Movie.create(req.body);
+
+        console.log(req.body);
 
         res.status(201).json({
             status: 201,
-            new_movie: newMovie,
+            // new_movie: newMovie,
             message: 'New Movie document added to the database\'s'
         })
 
