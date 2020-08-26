@@ -40,23 +40,41 @@ router.post(
     '/register', 
     async (req, res) => {
     //do this thing
-    console.log('test', req.body);
+    
+    const { email: e, username: u, password: p } = req.body;
+
+    if (e === undefined || u === undefined || p === undefined) {
+        return res.status(400).json({
+            message: 'Fields missing needed to create account'
+        })
+    }
 
     try {
 
         /*backend validation
-            [] ensure email/username are not duplicates
-            [] check password length
-            [] validate email and username for constriants (before mongoose does for us)
+        [*] ensure email/username are not duplicates
+        [] check password length
+        [] validate email and username for constriants (before mongoose does for us)
         */
+        const validationErrors = [];
+        
+        const emailExist = User.findOne({email: e}) !== null;
+        if ( emailExist ) validationErrors.push({key: 'email', error: 'Email In Use'})
+        
+        const usernameExist = User.findOne({username: u}) !== null;
+        if ( usernameExist ) validationErrors.push({key: 'username', error: 'Username In Use'})
+
+        if ( p.length < 7) validationErrors.push({key: 'password', error: 'Password Did Not Meet Requirements'})
         //old way (deprecated)
         // const newUserDoc = new User(req.body);
         // await newUserDoc.save();
 
+        //if this array has than 0 elms res with 400 and res with the array of errors
+
         //new way (perfered)
         await User.create(req.body);
 
-        res.json({message: 'success!'});
+        res.status(201).json({message: 'success!'});
         
     } catch (error) {
 
