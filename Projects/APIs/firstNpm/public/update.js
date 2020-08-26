@@ -70,26 +70,36 @@ window.onload = function () {
         const formElm = document.getElementById('updateForm');
         const reqBody = {};
         const userID = formElm.id.value.trim();
+
+        //validating the ID
         if ( userID == '') {
             return alert('Must provide user ID');
         } else if (userID.length != 24) {
             return alert('Id must be in proper format');
         }
-    
+
+        const nonIdInputsFilled = 0;
+        
+        //building the request body
         for (const input of formElm) {
             
             const val = input.value.trim();
 
+            //filters out empty values and the id input
             if (val != '' && input.name != 'id') { //only add non-empty values and exclude id from the request body
-            
+                nonIdInputsFilled++
                 reqBody[input.name] = val
             
             }
         }
 
-        if (Object.keys(reqBody).length == 0) {
-            return alert('One input must be filled');
+        if (nonIdInputsFilled == 0) {
+            return alert('One input must be filled');   
         }
+
+        // if (Object.keys(reqBody).length == 0) {
+        //     return alert('One input must be filled');
+        // }
 
     console.log(Object.keys(reqBody).length);
     
