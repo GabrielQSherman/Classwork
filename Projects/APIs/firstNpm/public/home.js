@@ -29,6 +29,9 @@ window.onload = () => {
     usernameInput.placeholder = 'Enter Username';
     usernameInput.class = 'input';
     usernameInput.name = 'username';
+    usernameInput.minLength = 3;
+    usernameInput.maxLength = 33;
+
 
     passInput.placeholder = 'Enter Password'
     passInput.type = 'password';
@@ -65,7 +68,7 @@ function submitReg() {
 
     for (const input of formElm) {
 
-        reqBody[input.name] = input.value;
+        reqBody[input.name] = input.value.trim();
         
     }
 
@@ -76,11 +79,27 @@ function submitReg() {
         passedValidation = false;
     }
 
+    if (reqBody.password.length < 7) {
+        alert('Password did not meet requirements');
+        passedValidation = false;
+    }
+
     if (reqBody.password !== reqBody.password2) {
         alert('Passwords did not match');
         passedValidation = false;
     }
 
+    const email = reqBody.email;
+    
+    if (
+           email.length < 6 
+        || email.length > 200 
+        || !email.includes('@') //does not account for multipule @ 
+        || !email.substring(email.indexOf('@')).includes('.') //does not account for multipule . after the @
+    ) {
+        alert('Please Enter Valid Email');
+        passedValidation = false;
+    }
 
     if (passedValidation) {
         
