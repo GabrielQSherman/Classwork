@@ -10,6 +10,7 @@ const URI = process.env.MONGO;
 
 //IMPORT SELF CREATED MODULES/ROUTERS
 const homeRouter = require('./routes/homeRouter');
+const userRouter = require('./routes/userRouter');
 const mongoConnect = require('./mongo/mongo-connect');
 const simpleLog = require('./middleware/simpleLogger');
 
@@ -20,6 +21,7 @@ app.use(express.static('static'));
 app.use(simpleLog);
 
 app.use('/', homeRouter)
+app.use('/user', userRouter)
 
 //START SERVER LISTENING
 app.listen(port, () => {
