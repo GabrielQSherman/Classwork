@@ -11,11 +11,13 @@ const URI = process.env.MONGO;
 //IMPORT SELF CREATED MODULES/ROUTERS
 const homeRouter = require('./routes/homeRouter');
 const mongoConnect = require('./mongo/mongo-connect');
+const simpleLog = require('./middleware/simpleLogger');
 
 // MAIN APPLICATION VAR
 const app = express()
 
-app.use(express.static('static'))
+app.use(express.static('static'));
+app.use(simpleLog);
 
 app.use('/', homeRouter)
 
