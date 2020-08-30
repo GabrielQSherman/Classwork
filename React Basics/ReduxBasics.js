@@ -45,3 +45,20 @@ const actionCreator = () => {
   
 //once the action creator is defined it can be passed to the store through the dispatch method
 store.dispatch(actionCreator())
+
+//a reducer is a function with a very simple purpose. It takes a state and an action an returns an updated state. 
+//Because best practice with Redux calls for states to be 'read only' a reducer returns the state without directly modifying the state object passed to the funciton
+const defaultState = {
+  login: false
+};
+
+//using a switch statement here is ideal when you have more than one possible action which will always be the case
+const reducer = (state = defaultState, action) => {
+  const newState = {...state}
+  switch(action.type) {
+    case 'LOGIN':
+      newState.login = true
+  }
+  return newState
+};
+
