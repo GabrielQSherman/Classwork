@@ -36,3 +36,12 @@ const action = {
     type: 'LOGIN'
   }
   
+//it is best practice to have all actions be return to the dispatch method with an action creator, this will return the action object
+
+//this one is simply called actionCreator
+const actionCreator = () => {
+  return action
+}
+  
+//once the action creator is defined it can be passed to the store through the dispatch method
+store.dispatch(actionCreator())
