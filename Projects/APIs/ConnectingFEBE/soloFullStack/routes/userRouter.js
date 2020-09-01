@@ -1,6 +1,8 @@
 const router = require('express').Router();
 
 const validateUser = require('../middleware/validateUser');
+const checkUserCreds = require('../middleware/checkUserCreds');
+const createJWT = require('../middleware/createJWT');
 
 const User = require('../models/User');
 
@@ -32,6 +34,25 @@ router.get(
         }
     }
 
+)
+
+//@desc put/login a new user and store in users collection
+//@path *server*/user/login
+//@access public
+router.put(
+    "/login", 
+    checkUserCreds,
+    createJWT,
+    (req, res) => {
+        try {
+            res.json(req.token);
+        } catch (err) {
+            res.status(500).json({
+                message: err.message,
+                error: err
+            })
+        }
+    }
 )
 
 module.exports = router
