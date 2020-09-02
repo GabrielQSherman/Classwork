@@ -102,3 +102,28 @@ const logoutUser = () => {
 //here is how the actions for the example above would be defined
 const LOGIN = 'LOGIN';
 const LOGOUT = 'LOGOUT';
+//also note that the all the string literals in the example above would be replaced by the const vars
+
+//how to use Redux.store subscribe method 
+
+const ADD = 'ADD'; //define the actions time
+
+const reducer = (state = 0, action) => { //create reducer for the actions defined above
+  switch(action.type) {
+    case ADD:
+      return state + 1;
+    default:
+      return state;
+  }
+};
+
+const store = Redux.createStore(reducer); //create the store, attach reducer
+
+let count = 0;
+
+const addOne = () => (count += 1); //function will be tied to the dipatch event
+//this will attach the event listener dispatch to the addOne function so cound increases every time an action is dipatched
+store.subscribe(addOne)
+
+store.dispatch({type: ADD});
+//count now equals 1, also the store could be accessed this way too
