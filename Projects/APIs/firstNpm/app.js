@@ -4,8 +4,8 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
-//MIDDLES
-const firstMid = require('./middleware/firstMiddleware');
+//MIDDLE-WARES
+
 //ROUTERS
 const homeRouter = require('./routes/homeRouter');
 const userRouter = require('./routes/userRouters');
