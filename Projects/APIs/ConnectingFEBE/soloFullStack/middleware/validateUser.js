@@ -2,13 +2,13 @@ const User = require('../models/User');
 const validator = require("validator");
 
 const msgs = {
-    emailLength: 'The Given Email Did Not Meet Length Requirements',
     emailInUse: 'Email Already In Use',
     emailVaild: 'Valid Email Required',
-    userLength: "The Given Username Did Not Meet Length Requirements",
     userChars: "Username Must Use Alphanumeric Characters Only",
     userInUse: "Username Already In Use",
-    passLength: "The Given Password Did Not Meet Length Requirements",
+    legthInvalid: (feild) => {
+        return `The Given ${feild} Did Not Meet Length Requirements`
+    }
 }
 
 const validate = async (req, res, next) => {
@@ -32,19 +32,27 @@ const validate = async (req, res, next) => {
         })
     }
 
+    if (e != undefined && e.length < 6 || e.length > 254) {
+        failedValues.push({
+            key: "email",
+            message: msgs.legthInvalid('Email')
+        })
+    }
+
     if (username == undefined || username.trim().length == 0 || !validator.isLength(username, { min: 3, max: 21 })) {
         failedValues.push({
             key: "username",
-            message: msgs.userLength
+            message: msgs.legthInvalid('Username')
         })
     } else if ( !validator.isAlphanumeric(username, 'en-US') ) {
+
         failedValues.push({
             key: "username",
             message: msgs.userChars
         })
     } 
     
-    const userInUse = await User.findOne({ username: username }) != null;
+    const userInUse = await User.findOne({ username: u }) != null;
     if (userInUse) {
         failedValues.push({
             key: "username",
@@ -55,7 +63,7 @@ const validate = async (req, res, next) => {
     if ( !validator.isLength(pass, { min: 7, max: 1000 }) ) {
         failedValues.push({
             key: "password",
-            message: msgs.passLength
+            message: msgs.legthInvalid('Password')
         })
     }
 
