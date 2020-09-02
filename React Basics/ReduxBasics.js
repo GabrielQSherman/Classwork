@@ -98,3 +98,7 @@ const logoutUser = () => {
   }
 };
 
+//types should be defined as const so they are read-only once set, that can be read from the same file as the reducer or imported from another
+//here is how the actions for the example above would be defined
+const LOGIN = 'LOGIN';
+const LOGOUT = 'LOGOUT';
