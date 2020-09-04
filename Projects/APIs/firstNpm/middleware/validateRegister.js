@@ -47,6 +47,30 @@ module.exports = async ( req, res, next ) => {
                valErrors: validationErrors
            })
        } else {
+
+            //sanitize individual fields
+            const 
+            username = u.trim(),
+            email = e.trim(),
+            password = p.trim(),
+
+            //1) create a new object, only include the fields we need (user, email, password)
+            sanitizedData = {
+                username: username,
+                email: email,
+                password: password,
+            }
+
+            req.newUser = sanitizedData
+            //2) remove unneeded/security risking fields
+            
+            // //its defined on our frontend form
+            // delete req.body.password2 
+
+            // //could possbily be sent via Postmans
+            // delete req.body.emailValidated
+            
+
             next()
        }
 
