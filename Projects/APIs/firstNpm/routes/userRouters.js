@@ -8,6 +8,7 @@ const findUser = require('../middleware/findUser');
 
 const validateReg = require('../middleware/validateRegister');
 
+const passEncrypt = require('../middleware/passEncrypt');
 // const  userPost = require('./userPost.js');
 // router.use('/post', userPost)
 
@@ -16,6 +17,9 @@ const validateReg = require('../middleware/validateRegister');
 //@access private 
 router.patch(
     '/login',
+    //check the users credentials, make sure they match whats in the DB
+    //create a JWT
+    //send the JSON to the FE
     (req, res) => {
 
     console.log(req.body, 'Login Test');
@@ -41,6 +45,7 @@ router.patch(
 router.post(
     '/register', 
     validateReg,
+    passEncrypt,
     async (req, res) => {
     try {
 
@@ -49,7 +54,9 @@ router.post(
         // await newUserDoc.save();
 
         //new way (perfered)
-        await User.create(req.body);
+
+        // req.newUser is defined in the validateReq middleware and passed to this function
+        await User.create(req.newUser);
 
         res.status(201).json({message: 'success!'});
         
