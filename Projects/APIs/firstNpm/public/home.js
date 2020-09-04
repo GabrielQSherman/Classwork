@@ -111,7 +111,27 @@ function submitReg() {
         xhr.onload = () => {
             console.log(xhr.responseText);
             const res = JSON.parse(xhr.responseText);
-            console.log(res);
+            
+            if (xhr.status === 201) {
+                alert('Your Account Was Created Successfully')
+            } else if (xhr.status === 400 && res.valErrors != undefined) {
+                
+                //1
+                const errMsg = res.valErrors.map( err => {
+                    return `Error with ${err.key}: ${err.error}`;
+                }).join('\n\n')
+
+                //2
+                // let errMsg = '';
+                // for (let i = 0; i < res.valErrors.length; i++) {
+                //     const err = res.valErrors[i]; 
+                //     errMsg += `Error with ${err.key}: ${err.error}\n\n`
+                // }
+
+                alert(errMsg)
+            } else {
+                alert('Unknown Server Error Occured')
+            }
         }
     
         xhr.setRequestHeader("Content-Type", "application/json");
