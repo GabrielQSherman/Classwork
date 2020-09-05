@@ -127,3 +127,27 @@ store.subscribe(addOne)
 
 store.dispatch({type: ADD});
 //count now equals 1, also the store could be accessed this way too
+
+
+//it is common once you have more than one component with seperate reducers that you combine the reducers, there is a handy function that will allow devs to do this
+const INCREMENT = 'INCREMENT';
+const DECREMENT = 'DECREMENT';
+
+const counterReducer = (state = 0, action) => {
+  switch(action.type) {
+    case INCREMENT:
+      return state + 1;
+    case DECREMENT:
+      return state - 1;
+    default:
+      return state;
+  }
+};
+//Now that the counterReducer is defined it will be combined with the auth reducer so one reducer is used to create the Redux store
+const rootReducer = Redux.combineReducers({
+  auth: authReducer,
+  count: counterReducer
+  }
+)// define the root reducer here
+
+const store = Redux.createStore(rootReducer);
