@@ -9,6 +9,10 @@ const findUser = require('../middleware/findUser');
 const validateReg = require('../middleware/validateRegister');
 
 const passEncrypt = require('../middleware/passEncrypt');
+
+const checkUserCred = require('../middleware/checkUserCred');
+
+const createJWT = require('../middleware/createJWT');
 // const  userPost = require('./userPost.js');
 // router.use('/post', userPost)
 
@@ -17,16 +21,14 @@ const passEncrypt = require('../middleware/passEncrypt');
 //@access private 
 router.patch(
     '/login',
-    //check the users credentials, make sure they match whats in the DB
-    //create a JWT
-    //send the JSON to the FE
+    checkUserCred,
+    createJWT,
     (req, res) => {
-
-    console.log(req.body, 'Login Test');
+    // console.log(req.body, 'Login Test');
 
     try {
 
-        res.json({message: 'success!'})
+        res.json({token: req.createdJWT})
             
     } catch (error) {
 
