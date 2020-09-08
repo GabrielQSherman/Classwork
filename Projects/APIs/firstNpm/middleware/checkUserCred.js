@@ -8,10 +8,14 @@ module.exports = async ( req, res, next ) => {
 
     try {
 
-        const { password: p, credential: c } = req.body;
+        const { password, credential } = req.body;
 
-        p = p.trim();
-        c = c.trim();
+        if (password == undefined || credential == undefined  ) {
+            return res.status(400).json({message: 'Credentials Do Not Match'})
+        }
+
+        const p = password.trim();
+        const c = credential.trim();
 
         //first is the user logging in with their email or their username?
         const field = validate.isEmail(c) ? 'email' : 'username';
