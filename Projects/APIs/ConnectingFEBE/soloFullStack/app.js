@@ -17,6 +17,7 @@ const simpleLog = require('./middleware/simpleLogger');
 // MAIN APPLICATION VAR
 const app = express()
 
+app.use(express.json())
 app.use(express.static('static'));
 app.use(simpleLog);
 
