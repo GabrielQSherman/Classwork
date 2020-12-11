@@ -27,25 +27,41 @@
 // console.log(mainContainer);
 
 
-const buttonClickFunc = (event) => {
-  event.target.style.color = "pink";
-  event.target.style.backgroundColor = "blue";
-}
+
 
 //initalize
 const mainContainer = document.createElement("div");
 const button = document.createElement("button");
 
-
+mainContainer.style.textAlign = "center";
 //props
 button.innerText = "Click";
-button.style.width = "300px";
-button.onclick = buttonClickFunc;
+button.style.width = "100px";
 
+button.onclick = buttonClickFunc;
 
 //append
 document.body.appendChild(mainContainer);
 mainContainer.appendChild(button);
 
 
+function buttonClickFunc (event) {
+  event.target.style.color = "pink";
+  event.target.style.backgroundColor = "blue";
+
+  const xhr = new XMLHttpRequest();
+  
+  xhr.open("GET", "https://api.nasa.gov/planetary/apod?api_key=2Y4dgeGYMnhG3XrzoYfrUSeOBkcEfhCBK936CLfJ" );
+
+  xhr.onload = () => {
+
+      const rawResponse = xhr.responseText;
+
+      console.log(rawResponse);
+
+  }
+
+  xhr.send();
+
+}
 
