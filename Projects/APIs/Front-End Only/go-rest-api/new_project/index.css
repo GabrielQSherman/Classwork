@@ -1,0 +1,30 @@
+body {
+  background-color: black;
+}
+
+
+#postDiv, #getDiv {
+
+  text-align: center;
+  margin: 100px;
+
+}
+
+.text-input {
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  font-size: x-large;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.buttons {
+  background-color: white;
+  color: black;
+  padding: 10px;
+  font-size: x-large;
+  text-align: center;
+  border-radius: 10px;
+  
+}
