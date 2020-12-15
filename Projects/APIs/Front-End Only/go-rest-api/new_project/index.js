@@ -23,7 +23,7 @@ function initalizePage () {
   displayDiv.id = "displayDiv";
 
   getUserInputBox.className = "text-input";
-  getUserInputBox.placeholder = "Enter a user's ID to search";
+  getUserInputBox.placeholder = "Enter a user's ID";
   getUserInputBox.type = "number";
   getUserInputBox.min = 1;
   getUserInputBox.max = 2000;
@@ -39,6 +39,38 @@ function initalizePage () {
   
   getDiv.appendChild(getUserInputBox);
   getDiv.appendChild(getUserButton);
+
+  createPostForm(postDiv);
+
+}
+
+function createPostForm(div) {
+  
+  const nameInputBox = document.createElement("input");
+  const emailInputBox = document.createElement("input");
+  const postUserButton = document.createElement("button");
+  
+  //name
+  nameInputBox.className = "text-input";
+  nameInputBox.placeholder = "Enter a name";
+  nameInputBox.type = "text";
+
+  //email
+  emailInputBox.className = "text-input";
+  emailInputBox.placeholder = "Enter a email";
+  emailInputBox.type = "text";
+
+  postUserButton.className = "buttons";
+  postUserButton.innerText = "Post New User";
+  postUserButton.onclick = postUserRequest;
+
+  div.appendChild(nameInputBox)
+  div.appendChild(emailInputBox)
+  div.appendChild(postUserButton)
+
+}
+
+function postUserRequest () {
 
 }
 
