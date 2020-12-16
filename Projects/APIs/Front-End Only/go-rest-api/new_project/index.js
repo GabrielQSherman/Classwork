@@ -53,11 +53,13 @@ function createPostForm(div) {
   //name
   nameInputBox.className = "text-input";
   nameInputBox.placeholder = "Enter a name";
+  nameInputBox.name = "name";
   nameInputBox.type = "text";
 
   //email
   emailInputBox.className = "text-input";
   emailInputBox.placeholder = "Enter a email";
+  emailInputBox.name = "email";
   emailInputBox.type = "text";
 
   postUserButton.className = "buttons";
@@ -71,7 +73,15 @@ function createPostForm(div) {
 }
 
 function postUserRequest () {
+  const children = this.parentElement.children;
 
+  let userData = {};
+
+  for (const element of children)
+    if (element.type === "text")
+      userData[element.name] = element.value;
+
+  console.log(userData);
 }
 
 function getUserRequest () {
