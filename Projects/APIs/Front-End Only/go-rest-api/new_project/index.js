@@ -82,6 +82,20 @@ function postUserRequest () {
       userData[element.name] = element.value;
 
   console.log(userData);
+  const endpoint = "https://gorest.co.in/public-api/users/";
+  const xhr = new XMLHttpRequest();
+
+  xhr.open("POST", endpoint);
+
+  //add headers
+
+  xhr.onload = () => {
+      const rawRes = xhr.responseText;
+      const parsedData = JSON.parse(rawRes);
+      console.log(parsedData);
+  }
+
+  xhr.send(JSON.stringify(userData));
 }
 
 function getUserRequest () {
