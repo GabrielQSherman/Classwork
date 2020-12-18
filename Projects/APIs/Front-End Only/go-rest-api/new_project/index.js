@@ -1,5 +1,5 @@
-// console.log("Testing Testing, 123");
 
+const apiKey = "enter your own"; //get a key from https://gorest.co.in/
 
 window.onload = () => {
   initalizePage();
@@ -75,7 +75,10 @@ function createPostForm(div) {
 function postUserRequest () {
   const children = this.parentElement.children;
 
-  let userData = {};
+  let userData = {
+    active: true,
+    gender: "Female"
+  };
 
   for (const element of children)
     if (element.type === "text")
@@ -88,6 +91,7 @@ function postUserRequest () {
   xhr.open("POST", endpoint);
 
   //add headers
+  xhr.setRequestHeader("Authorization", `Bearer ${apiKey}`);
 
   xhr.onload = () => {
       const rawRes = xhr.responseText;
