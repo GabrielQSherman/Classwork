@@ -75,22 +75,25 @@ function createPostForm(div) {
 function postUserRequest () {
   const children = this.parentElement.children;
 
-  let userData = {
-    active: true,
-    gender: "Female"
-  };
+  let userData = {};
 
   for (const element of children)
     if (element.type === "text")
       userData[element.name] = element.value;
 
-  console.log(userData);
+  userData.status = "Inactive";
+  userData.gender = "Female";
+
+  const requestData = JSON.stringify(userData);
+
+  console.log(requestData);
   const endpoint = "https://gorest.co.in/public-api/users/";
   const xhr = new XMLHttpRequest();
 
   xhr.open("POST", endpoint);
 
   //add headers
+  xhr.setRequestHeader("Content-Type", "application/json");
   xhr.setRequestHeader("Authorization", `Bearer ${apiKey}`);
 
   xhr.onload = () => {
@@ -99,7 +102,7 @@ function postUserRequest () {
       console.log(parsedData);
   }
 
-  xhr.send(JSON.stringify(userData));
+  xhr.send(requestData);
 }
 
 function getUserRequest () {
