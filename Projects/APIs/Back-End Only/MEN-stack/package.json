@@ -1,0 +1,20 @@
+{
+  "name": "men-stack",
+  "version": "1.0.0",
+  "description": "a new MEN stack",
+  "main": "server.js",
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "nodemon server.js",
+    "pro": "node server.js"
+  },
+  "author": "Gabriel",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.8",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.6"
+  }
+}
