@@ -1,4 +1,4 @@
 module.exports = (req, res, next) => {
-  console.log("First Middleware Function!!");
+  console.log("Request Recieved");
   next()
 }
