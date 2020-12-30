@@ -4,19 +4,24 @@ const {default: axios} = require('axios')
 
 const nasaEndpoint = 'https://api.nasa.gov/planetary/apod'
 
-const nasaKey = process.env.NASA_KEY;
+const nasaKey = process.env.NASA_API_KEY;
 
-router.get('/today', async (req, res) => {
+//@path: POST /nasa/bydate
+//@access: public
+//@desc: get a nasa apod post by a given date
+router.post("/bydate", async (req, res) => {
+
   try {
-    const today = new Date().toISOString().substring(0,10);
 
-    const data = await axios.get(`${nasaEndpoint}?date=${today}&api_key=${nasaKey}`)
-  
-    res.json(data)
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({error: "server error"})
+    console.log(req.body);
+
+    res.json(req.body)
+    
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({message: error.message || "An Unknown Error Occured" })
   }
-});
+})
+
 
 module.exports = router;
