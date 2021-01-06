@@ -6,6 +6,10 @@ const express = require("express");
 
 const server = express();
 
+const databaseConnect = require('./databaseConnect')
+
+databaseConnect()
+
 server.use(express.json())
 if (process.env.NODE_ENV === 'development') { 
     const morgan = require('morgan');
