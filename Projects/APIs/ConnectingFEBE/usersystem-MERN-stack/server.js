@@ -11,18 +11,17 @@ const databaseConnect = require('./databaseConnect')
 databaseConnect()
 
 server.use(express.json())
+
+
 if (process.env.NODE_ENV === 'development') { 
     const morgan = require('morgan');
     server.use(morgan('dev'))
 }
 
-const firstMiddleware = require('./middlewares/firstMiddleware')
-const nasaRouter = require('./routes/nasa');
-
-server.use(firstMiddleware)
-
-server.use('/nasa', nasaRouter)
+const usersRouter = require('./routes/users');
+server.use('/users', usersRouter)
 
 server.listen(PORT, () => {
   console.log('listening on port ' + PORT)
 })
+
