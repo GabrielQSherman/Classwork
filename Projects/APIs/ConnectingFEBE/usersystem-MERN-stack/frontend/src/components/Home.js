@@ -1,11 +1,11 @@
 import React from 'react'
-import {homeTitle} from '../config/styles'
+import {pageTitle} from '../config/styles'
 
 export default function Home() {
   return (
-    <div>
+    <div id='home'>
       <h1
-        style={{...homeTitle}}
+        style={{...pageTitle}}
       >
         Welcome To Our Site
       </h1>
