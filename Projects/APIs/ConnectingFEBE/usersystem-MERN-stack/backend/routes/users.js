@@ -32,4 +32,8 @@ router.post(
   }
 })
 
+router.put('/login', (req, res) => {
+  res.send('token')
+})
+
 module.exports = router
