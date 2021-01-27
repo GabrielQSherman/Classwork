@@ -12,7 +12,7 @@ export default function Login() {
       {name: 'password', type: 'password', placeholder: 'Enter A Password'},
     ],
     submitFunc: (formData) => {
-      axios.post('http://localhost:4000/users/login')
+      axios.put('http://localhost:4000/users/login', formData)
       .then( res => {
 
         alert('You are logged in')
